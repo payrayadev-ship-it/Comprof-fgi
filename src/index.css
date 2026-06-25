@@ -1,0 +1,60 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Poppins:wght@300;400;500;600;700;800;900&display=swap');
+@import "tailwindcss";
+
+@theme {
+  --font-sans: "Inter", "Poppins", system-ui, -apple-system, sans-serif;
+  --font-mono: "JetBrains Mono", monospace;
+
+  /* Custom Corporate Colors - Blue, White, and Gold Theme */
+  --color-navy: #0B0F19;
+  --color-brand-blue: #1E40AF;
+  --color-brand-gold: #D4AF37;
+  --color-brand-red: #D4AF37; /* Map legacy brand red to premium brand gold */
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+/* Custom scrollbar */
+::-webkit-scrollbar {
+  width: 8px;
+}
+::-webkit-scrollbar-track {
+  background: #0B0F19;
+}
+::-webkit-scrollbar-thumb {
+  background: #1e293b;
+  border-radius: 4px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #1e40af;
+}
+
+/* Premium gradient overlays */
+.premium-glow-blue {
+  background: radial-gradient(circle at 50% 50%, rgba(30, 64, 175, 0.2) 0%, transparent 65%);
+}
+
+.premium-glow-gold {
+  background: radial-gradient(circle at 50% 50%, rgba(212, 175, 55, 0.15) 0%, transparent 65%);
+}
+
+.text-gold-gradient {
+  background: linear-gradient(135deg, #FBBF24 0%, #D4AF37 50%, #B45309 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.bg-blue-white-gradient {
+  background: linear-gradient(135deg, #1E3A8A 0%, #3B82F6 50%, #F8FAFC 100%);
+}
+
+.bg-blue-gold-dark {
+  background: linear-gradient(135deg, #090D16 0%, #111827 50%, #1e293b 100%);
+}
+
