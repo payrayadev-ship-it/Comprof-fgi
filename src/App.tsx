@@ -36,7 +36,9 @@ import {
   Instagram,
   Facebook,
   Calculator,
-  Ruler
+  Ruler,
+  ChevronLeft,
+  ChevronRight
 } from "lucide-react";
 
 // --- CUSTOM LOGO FOR PT. FORESYNDO GLOBAL INDONESIA (FGI) ---
@@ -236,6 +238,7 @@ const TRANSLATIONS = {
       proyek: "Proyek",
       "visi-misi": "Visi & Misi",
       "mengapa-kami": "Mengapa Kami",
+      karir: "Karir",
       kontak: "Kontak",
       cta: "WhatsApp",
     },
@@ -413,6 +416,16 @@ const TRANSLATIONS = {
           name: "Ir. Hendra Wijaya",
           role: "Direktur Mitra Infrastruktur Swasta",
           comment: "Sangat puas dengan pengerjaan pematangan lahan dan aspal hotmix dari FGI. Rekayasa sipil matang, tim kooperatif, dan patuh standar keselamatan.",
+        },
+        {
+          name: "Amelia Putri",
+          role: "Pemilik Villa Dago Haven",
+          comment: "FGI mewujudkan villa impian kami dengan detail yang sangat menakjubkan. Tim mereka sangat responsif dari tahap perencanaan arsitektur hingga serah terima kunci.",
+        },
+        {
+          name: "Rian Hidayat",
+          role: "Manajer Konstruksi Retail",
+          comment: "Bekerja sama dengan FGI untuk renovasi outlet komersial kami sangat memuaskan. Pekerjaan selesai sesuai standar kualitas tinggi dan minim hambatan birokrasi.",
         }
       ]
     },
@@ -436,6 +449,63 @@ const TRANSLATIONS = {
         {
           q: "Dapatkah saya berkonsultasi mengenai RAB dan desain?",
           a: "Sangat bisa. Kami menyediakan sesi konsultasi gratis bagi calon mitra untuk mendiskusikan Rencana Anggaran Biaya (RAB), peninjauan denah lokasi, serta visualisasi desain arsitektur 3D.",
+        }
+      ]
+    },
+    careers: {
+      sub: "KARIR & BUDAYA",
+      title: "Bergabung & Tumbuh Bersama PT. FGI",
+      cultureTitle: "Budaya Kerja FGI",
+      cultureDesc: "Di PT. FORESYNDO GLOBAL INDONESIA, kami percaya bahwa kesuksesan jangka panjang dibangun di atas integritas, kolaborasi yang solid, dan standar keunggulan yang tanpa kompromi. Kami menawarkan lingkungan kerja dinamis, pelatihan berkelanjutan, dan peluang besar bagi Anda untuk membentuk masa depan lanskap properti Indonesia.",
+      culturePoints: [
+        { title: "Integritas & Hukum Utama", desc: "Menjamin seluruh aktivitas kerja dan legalitas proyek berjalan dengan kepatuhan hukum 100%." },
+        { title: "Standar Emas Konstruksi", desc: "Mengutamakan kualitas material premium dan ketepatan struktur di setiap proyek kami." },
+        { title: "Keseimbangan & Kesejahteraan", desc: "Mendukung perkembangan karir profesional sekaligus menghargai kehidupan pribadi setiap individu." }
+      ],
+      openPositions: "Posisi yang Sedang Dibuka",
+      applyBtn: "Lamar Sekarang",
+      btnDetails: "Detail Persyaratan",
+      location: "Lokasi",
+      jobType: "Tipe Pekerjaan",
+      positions: [
+        {
+          title: "Site Engineer / Civil Engineer",
+          location: "Bandung, Jawa Barat",
+          type: "Full-Time (Kontrak/Tetap)",
+          desc: "Mengawasi, memantau, dan mengarahkan seluruh pengerjaan fisik struktur dan infrastruktur lapangan sesuai gambar kerja (DED) dan standar kualitas FGI.",
+          reqs: [
+            "Pendidikan minimal S1 Teknik Sipil.",
+            "Pengalaman minimal 3 tahun sebagai Site Engineer proyek perumahan atau komersial.",
+            "Menguasai AutoCAD, SAP2000, MS Project, dan manajemen lapangan.",
+            "Memiliki sertifikat keahlian konstruksi (SKA/SKK) adalah nilai tambah.",
+            "Kemampuan kepemimpinan yang kuat dan komunikasi yang taktis."
+          ]
+        },
+        {
+          title: "Project Architect & BIM Modeler",
+          location: "Bandung, Jawa Barat",
+          type: "Full-Time",
+          desc: "Merancang denah tapak (site plan), layout arsitektur 3D, serta membuat pemodelan BIM/DED komprehensif untuk proyek residensial premium & ruko komersial.",
+          reqs: [
+            "Pendidikan minimal S1 Arsitektur.",
+            "Pengalaman minimal 2 tahun dalam merancang proyek perumahan premium.",
+            "Sangat mahir menggunakan Revit, SketchUp, V-Ray/Enscape, dan AutoCAD.",
+            "Memiliki portfolio desain arsitektur modern minimalis yang kuat.",
+            "Kreatif, teliti terhadap detail estetika dan kepraktisan struktur."
+          ]
+        },
+        {
+          title: "Legal Real Estate & Land Acquisition Specialist",
+          location: "Bandung, Jawa Barat",
+          type: "Full-Time",
+          desc: "Mengelola seluruh legalitas akuisisi tanah, verifikasi keaslian sertifikat, kepengurusan izin PBG/IMB, dan memastikan compliance hukum di setiap tahap operasional.",
+          reqs: [
+            "Pendidikan S1 Hukum (diutamakan spesialisasi hukum agraria atau bisnis).",
+            "Pengalaman minimal 3 tahun di industri developer properti / notaris pertanahan.",
+            "Memiliki jaringan kuat dengan dinas tata ruang, BPN, dan pejabat daerah terkait.",
+            "Memahami regulasi terbaru terkait perizinan konstruksi, KKPR, dan tata ruang.",
+            "Keterampilan negosiasi yang andal dan pemecahan masalah hukum yang solutif."
+          ]
         }
       ]
     },
@@ -500,6 +570,7 @@ const TRANSLATIONS = {
       proyek: "Projects",
       "visi-misi": "Vision & Mission",
       "mengapa-kami": "Why Us",
+      karir: "Careers",
       kontak: "Contact",
       cta: "WhatsApp",
     },
@@ -677,6 +748,16 @@ const TRANSLATIONS = {
           name: "Ir. Hendra Wijaya",
           role: "Director, Private Infrastructure Partner",
           comment: "Extremely satisfied with FGI's land preparation and asphalt paving work. Mature civil engineering, highly cooperative team, and safe practices.",
+        },
+        {
+          name: "Amelia Putri",
+          role: "Villa Owner at Dago Haven",
+          comment: "FGI brought our dream villa to life with incredible attention to detail. Their team was super responsive from architectural planning all the way to key handover.",
+        },
+        {
+          name: "Rian Hidayat",
+          role: "Retail Construction Manager",
+          comment: "Partnering with FGI for our commercial outlet renovation was highly satisfying. The work was completed to high standards with zero bureaucratic hassle.",
         }
       ]
     },
@@ -700,6 +781,63 @@ const TRANSLATIONS = {
         {
           q: "Can I consult about construction budgets and layout designs?",
           a: "Certainly. We offer complimentary consultation sessions for prospective partners to discuss budget estimates (RAB), assess site designs, and view photorealistic 3D architectural renders.",
+        }
+      ]
+    },
+    careers: {
+      sub: "CAREER & CULTURE",
+      title: "Join & Grow with PT. FGI",
+      cultureTitle: "FGI Company Culture",
+      cultureDesc: "At PT. FORESYNDO GLOBAL INDONESIA, we believe that sustainable success is built on absolute integrity, solid teamwork, and an uncompromising standard of excellence. We offer a dynamic work environment, ongoing professional development, and high-growth opportunities for you to shape the future of real estate in Indonesia.",
+      culturePoints: [
+        { title: "Integrity & Legal Excellence", desc: "We ensure all business operations and project layouts comply 100% with Indonesian legal and land regulatory frameworks." },
+        { title: "Gold Standard Construction", desc: "Prioritizing structural stability, premium materials, and architectural beauty in every development." },
+        { title: "Growth & Work-Life Balance", desc: "Supporting career advancement while valuing the personal well-being and life balance of our teams." }
+      ],
+      openPositions: "Current Open Positions",
+      applyBtn: "Apply Now",
+      btnDetails: "Requirements",
+      location: "Location",
+      jobType: "Job Type",
+      positions: [
+        {
+          title: "Site Engineer / Civil Engineer",
+          location: "Bandung, West Java",
+          type: "Full-Time",
+          desc: "Supervise, monitor, and direct all structural and infrastructural physical work on-site based on detailed architectural blueprints (DED) and FGI's quality benchmarks.",
+          reqs: [
+            "Bachelor's degree (S1) in Civil Engineering.",
+            "At least 3 years of experience as a Site Engineer in residential or commercial developments.",
+            "Proficient in AutoCAD, SAP2000, MS Project, and on-site workforce management.",
+            "Possession of a professional construction expertise certificate (SKA/SKK) is highly preferred.",
+            "Strong leadership skills and tactical communication capabilities."
+          ]
+        },
+        {
+          title: "Project Architect & BIM Modeler",
+          location: "Bandung, West Java",
+          type: "Full-Time",
+          desc: "Design detailed master site plans, photorealistic 3D architectural renders, and produce full BIM/DED sets for upcoming luxury residential and commercial shophouses.",
+          reqs: [
+            "Bachelor's degree (S1) in Architecture.",
+            "Minimum 2 years of experience designing premium residential and housing concepts.",
+            "Highly proficient in Revit, SketchUp, V-Ray/Enscape, and AutoCAD.",
+            "A strong portfolio of modern, minimalist, high-end architectural works.",
+            "Creative mindset with a keen eye for aesthetic details and practical structural design."
+          ]
+        },
+        {
+          title: "Legal Real Estate & Land Acquisition Specialist",
+          location: "Bandung, West Java",
+          type: "Full-Time",
+          desc: "Manage the entire legal pipeline for land acquisition, verify deeds/land authenticity, secure PBG/IMB building licenses, and ensure 100% regulatory compliance.",
+          reqs: [
+            "Bachelor's degree (S1) in Law (focus on Land or Business law is preferred).",
+            "At least 3 years of experience in property development companies or land notary offices.",
+            "Established connection network with spatial planning boards, BPN, and local authorities.",
+            "Solid knowledge of recent regulatory codes on construction licenses, KKPR, and land zoning.",
+            "Excellent negotiation skills and a solutions-oriented approach to complex legal scenarios."
+          ]
         }
       ]
     },
@@ -768,6 +906,9 @@ export default function App() {
   const [scrolled, setScrolled] = useState<boolean>(false);
   const [showBackToTop, setShowBackToTop] = useState<boolean>(false);
   const [faqOpen, setFaqOpen] = useState<number | null>(null);
+  const [activeJobDetails, setActiveJobDetails] = useState<number | null>(null);
+  const [testimonialSlide, setTestimonialSlide] = useState<number>(0);
+  const [windowWidth, setWindowWidth] = useState<number>(typeof window !== "undefined" ? window.innerWidth : 1200);
 
   // Form State
   const [formName, setFormName] = useState("");
@@ -775,6 +916,8 @@ export default function App() {
   const [formPhone, setFormPhone] = useState("");
   const [formSubject, setFormSubject] = useState("");
   const [formMessage, setFormMessage] = useState("");
+  const [formTone, setFormTone] = useState<"standard" | "formal" | "urgent">("standard");
+  const [copiedMessage, setCopiedMessage] = useState<boolean>(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [formSuccess, setFormSuccess] = useState(false);
 
@@ -821,9 +964,18 @@ export default function App() {
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
+  // Handle window resize detection for responsive layout sizes (e.g. carousel testimonial)
+  useEffect(() => {
+    const handleResize = () => {
+      setWindowWidth(window.innerWidth);
+    };
+    window.addEventListener("resize", handleResize);
+    return () => window.removeEventListener("resize", handleResize);
+  }, []);
+
   // Intersection Observer to highlight active navigation link
   useEffect(() => {
-    const sections = ["beranda", "tentang-kami", "layanan", "proyek", "visi-misi", "mengapa-kami", "kontak"];
+    const sections = ["beranda", "tentang-kami", "layanan", "proyek", "visi-misi", "mengapa-kami", "karir", "kontak"];
     const observerOptions = {
       root: null,
       rootMargin: "-20% 0px -60% 0px", // Active when section covers a good center portion
@@ -933,10 +1085,59 @@ export default function App() {
     }, 1200);
   };
 
+  // Generate a formatted professional message
+  const formattedEnquiryMessage = React.useMemo(() => {
+    const isId = lang === "id";
+    const name = formName.trim() || (isId ? "[Nama Anda]" : "[Your Name]");
+    const subject = formSubject.trim() || (isId ? "Informasi Proyek FGI" : "FGI Project Inquiry");
+    const email = formEmail.trim() || "-";
+    const phone = formPhone.trim() || (isId ? "[Nomor Kontak]" : "[Contact Number]");
+    const message = formMessage.trim() || (isId ? "[Pesan Pertanyaan Anda]" : "[Your Inquiry Message]");
+
+    if (formTone === "formal") {
+      return isId
+        ? `Yth. Manajemen PT. Foresyndo Global Indonesia (FGI)\n\nDengan hormat,\nSaya yang bertanda tangan di bawah ini:\n- Nama: ${name}\n- No. HP/WA: ${phone}\n- Email: ${email}\n\nIngin menyampaikan kueri dengan subjek: *${subject}*.\n\nDetail Pesan:\n"${message}"\n\nDemikian pesan ini saya sampaikan secara formal. Terima kasih atas tanggapan dan waktu Bapak/Ibu.\n\nHormat kami,\n${name}`
+        : `To the Management of PT. Foresyndo Global Indonesia (FGI)\n\nDear Sir/Madam,\nI am writing to formally submit a professional inquiry:\n- Name: ${name}\n- WhatsApp: ${phone}\n- Email: ${email}\n\nSubject: *${subject}*\n\nInquiry Details:\n"${message}"\n\nThank you for your valuable time. I look forward to hearing from your representative.\n\nSincerely,\n${name}`;
+    }
+
+    if (formTone === "urgent") {
+      return isId
+        ? `[PERMINTAAN HUBUNGI CEPAT / URGENT]\n\nHalo PT. FGI, mohon hubungi saya sesegera mungkin mengenai proyek:\n- Nama: ${name}\n- No. HP/WA: ${phone}\n- Email: ${email}\n- Topik Utama: *${subject}*\n\nDetail Kebutuhan:\n"${message}"\n\nTerima kasih, mohon bantuan respons cepat tim admin FGI.`
+        : `[URGENT CALLBACK REQUEST]\n\nHello PT. FGI, please contact me as soon as possible regarding this project:\n- Name: ${name}\n- WhatsApp: ${phone}\n- Email: ${email}\n- Main Topic: *${subject}*\n\nDetailed Request:\n"${message}"\n\nThank you, looking forward to a prompt response from the FGI team.`;
+    }
+
+    // Default Standard tone
+    return isId
+      ? `Halo FGI, saya ${name}.\n\n*Subjek:* ${subject}\n*Email:* ${email}\n*Telepon:* ${phone}\n\n*Pesan:* ${message}`
+      : `Hello FGI, I am ${name}.\n\n*Subject:* ${subject}\n*Email:* ${email}\n*WhatsApp:* ${phone}\n\n*Message:* ${message}`;
+  }, [formName, formSubject, formEmail, formPhone, formMessage, formTone, lang]);
+
+  // Copy professional formatted message to clipboard
+  const copyFormattedMessage = () => {
+    try {
+      if (navigator.clipboard && navigator.clipboard.writeText) {
+        navigator.clipboard.writeText(formattedEnquiryMessage);
+        setCopiedMessage(true);
+        setTimeout(() => setCopiedMessage(false), 2000);
+      } else {
+        const textarea = document.createElement("textarea");
+        textarea.value = formattedEnquiryMessage;
+        document.body.appendChild(textarea);
+        textarea.select();
+        document.execCommand("copy");
+        document.body.removeChild(textarea);
+        setCopiedMessage(true);
+        setTimeout(() => setCopiedMessage(false), 2000);
+      }
+    } catch (err) {
+      console.error("Failed to copy message:", err);
+    }
+  };
+
   // Convert contact form to WhatsApp message link
   const sendToWhatsApp = () => {
-    const messageText = `Halo FGI, saya ${formName || "Klien"}.%0A%0A*Subjek:* ${formSubject || "Informasi Proyek FGI"}%0A*Email:* ${formEmail || "-"}%0A*Telepon:* ${formPhone || "-"}%0A*Pesan:* ${formMessage || "Saya tertarik dengan layanan properti FGI."}`;
-    window.open(`https://wa.me/6282338609205?text=${messageText}`, "_blank");
+    const encodedText = encodeURIComponent(formattedEnquiryMessage);
+    window.open(`https://wa.me/6282338609205?text=${encodedText}`, "_blank");
   };
 
   // Filtered projects
@@ -975,6 +1176,7 @@ export default function App() {
               { id: "proyek", label: TRANSLATIONS[lang].nav.proyek },
               { id: "visi-misi", label: TRANSLATIONS[lang].nav["visi-misi"] },
               { id: "mengapa-kami", label: TRANSLATIONS[lang].nav["mengapa-kami"] },
+              { id: "karir", label: TRANSLATIONS[lang].nav.karir },
               { id: "kontak", label: TRANSLATIONS[lang].nav.kontak }
             ].map((item) => (
               <button
@@ -1083,49 +1285,127 @@ export default function App() {
         {/* Mobile Navigation Drawer */}
         <AnimatePresence>
           {mobileMenuOpen && (
-            <motion.div
-              initial={{ opacity: 0, height: 0 }}
-              animate={{ opacity: 1, height: "auto" }}
-              exit={{ opacity: 0, height: 0 }}
-              className={`lg:hidden border-t mt-3 ${
-                darkMode ? "bg-slate-950 border-slate-800" : "bg-white border-slate-200"
-              }`}
-              id="mobile-menu-dropdown"
-            >
-              <div className="px-4 pt-2 pb-6 space-y-1">
-                {[
-                  { id: "beranda", label: TRANSLATIONS[lang].nav.beranda },
-                  { id: "tentang-kami", label: TRANSLATIONS[lang].nav["tentang-kami"] },
-                  { id: "layanan", label: TRANSLATIONS[lang].nav.layanan },
-                  { id: "proyek", label: TRANSLATIONS[lang].nav.proyek },
-                  { id: "visi-misi", label: TRANSLATIONS[lang].nav["visi-misi"] },
-                  { id: "mengapa-kami", label: TRANSLATIONS[lang].nav["mengapa-kami"] },
-                  { id: "kontak", label: TRANSLATIONS[lang].nav.kontak }
-                ].map((item) => (
-                  <button
-                    key={item.id}
-                    onClick={() => scrollTo(item.id)}
-                    className={`block w-full text-left px-4 py-3 rounded-lg text-base font-semibold ${
-                      activeSection === item.id
-                        ? "text-amber-500 bg-amber-500/10"
-                        : darkMode
-                        ? "text-slate-300 hover:bg-slate-900"
-                        : "text-slate-600 hover:bg-slate-100"
-                    }`}
-                  >
-                    {item.label}
-                  </button>
-                ))}
-                <div className="pt-4 px-4">
-                  <button
-                    onClick={() => scrollTo("kontak")}
-                    className="w-full text-center bg-gradient-to-r from-amber-400 via-yellow-500 to-amber-600 text-slate-950 font-black py-3 rounded-lg block shadow-md"
-                  >
-                    {TRANSLATIONS[lang].contact.btnContactWa}
-                  </button>
+            <>
+              {/* Semi-transparent Backdrop Overlay */}
+              <motion.div
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                exit={{ opacity: 0 }}
+                onClick={() => setMobileMenuOpen(false)}
+                className="fixed inset-0 bg-slate-950/60 backdrop-blur-sm z-50 lg:hidden"
+                id="mobile-menu-backdrop"
+              />
+
+              {/* Drawer Sliding Panel */}
+              <motion.div
+                initial={{ x: "100%" }}
+                animate={{ x: 0 }}
+                exit={{ x: "100%" }}
+                transition={{ type: "spring", bounce: 0, duration: 0.4 }}
+                className={`fixed top-0 right-0 bottom-0 w-[300px] sm:w-[350px] z-50 h-screen shadow-2xl flex flex-col justify-between p-6 lg:hidden ${
+                  darkMode ? "bg-slate-950 text-white" : "bg-white text-slate-900"
+                }`}
+                id="mobile-menu-drawer"
+              >
+                <div className="flex flex-col h-full">
+                  {/* Drawer Header */}
+                  <div className="flex items-center justify-between pb-6 border-b border-slate-200/20 dark:border-slate-800/20">
+                    <FGILogo className="scale-90 origin-left" darkMode={darkMode} />
+                    <button
+                      onClick={() => setMobileMenuOpen(false)}
+                      className={`p-2 rounded-lg transition-colors cursor-pointer ${
+                        darkMode
+                          ? "text-slate-400 hover:text-amber-400 hover:bg-slate-900"
+                          : "text-slate-500 hover:text-amber-500 hover:bg-slate-100"
+                      }`}
+                      aria-label="Close Mobile Menu"
+                    >
+                      <X size={20} />
+                    </button>
+                  </div>
+
+                  {/* Drawer Navigation Links */}
+                  <div className="flex-1 overflow-y-auto py-6 space-y-1 pr-1 scrollbar-thin scrollbar-thumb-slate-800">
+                    {[
+                      { id: "beranda", label: TRANSLATIONS[lang].nav.beranda },
+                      { id: "tentang-kami", label: TRANSLATIONS[lang].nav["tentang-kami"] },
+                      { id: "layanan", label: TRANSLATIONS[lang].nav.layanan },
+                      { id: "proyek", label: TRANSLATIONS[lang].nav.proyek },
+                      { id: "visi-misi", label: TRANSLATIONS[lang].nav["visi-misi"] },
+                      { id: "mengapa-kami", label: TRANSLATIONS[lang].nav["mengapa-kami"] },
+                      { id: "karir", label: TRANSLATIONS[lang].nav.karir },
+                      { id: "kontak", label: TRANSLATIONS[lang].nav.kontak }
+                    ].map((item) => (
+                      <button
+                        key={item.id}
+                        onClick={() => scrollTo(item.id)}
+                        className={`block w-full text-left px-4 py-3 rounded-lg text-base font-bold transition-all cursor-pointer ${
+                          activeSection === item.id
+                            ? "text-amber-500 bg-amber-500/10 border-l-4 border-amber-500 rounded-l-none"
+                            : darkMode
+                            ? "text-slate-300 hover:text-white hover:bg-slate-900"
+                            : "text-slate-600 hover:text-slate-900 hover:bg-slate-100"
+                        }`}
+                      >
+                        {item.label}
+                      </button>
+                    ))}
+                  </div>
+
+                  {/* Drawer Footer Controls */}
+                  <div className="pt-6 border-t border-slate-200/20 dark:border-slate-800/20 space-y-4">
+                    <div className="flex items-center justify-between px-2">
+                      <span className="text-[10px] font-black text-slate-400 dark:text-slate-500 uppercase tracking-widest">
+                        {lang === "id" ? "Pengaturan" : "Settings"}
+                      </span>
+                      <div className="flex items-center gap-3">
+                        {/* Drawer Language Switcher */}
+                        <div className="flex items-center bg-slate-850 p-0.5 rounded border border-slate-800">
+                          <button
+                            onClick={() => setLang("id")}
+                            className={`px-1.5 py-0.5 text-[8px] font-black uppercase transition-all rounded-[3px] ${
+                              lang === "id"
+                                ? "bg-amber-500 text-slate-950 shadow-sm"
+                                : "text-slate-400 hover:text-slate-200 cursor-pointer"
+                            }`}
+                          >
+                            ID
+                          </button>
+                          <button
+                            onClick={() => setLang("en")}
+                            className={`px-1.5 py-0.5 text-[8px] font-black uppercase transition-all rounded-[3px] ${
+                              lang === "en"
+                                ? "bg-amber-500 text-slate-950 shadow-sm"
+                                : "text-slate-400 hover:text-slate-200 cursor-pointer"
+                            }`}
+                          >
+                            EN
+                          </button>
+                        </div>
+
+                        {/* Drawer Theme Toggle */}
+                        <button
+                          onClick={() => setDarkMode(!darkMode)}
+                          className={`p-1.5 rounded-lg transition-colors cursor-pointer ${
+                            darkMode ? "text-slate-400 hover:text-amber-400" : "text-slate-500 hover:text-amber-500"
+                          }`}
+                        >
+                          {darkMode ? <Sun size={18} /> : <Moon size={18} />}
+                        </button>
+                      </div>
+                    </div>
+
+                    {/* Premium CTA Button */}
+                    <button
+                      onClick={() => scrollTo("kontak")}
+                      className="w-full text-center bg-gradient-to-r from-amber-400 via-yellow-500 to-amber-600 text-slate-950 font-black py-3.5 rounded-lg block shadow-lg cursor-pointer transform hover:scale-[1.01] active:scale-95 transition-all text-sm uppercase tracking-wider"
+                    >
+                      {TRANSLATIONS[lang].contact.btnContactWa}
+                    </button>
+                  </div>
                 </div>
-              </div>
-            </motion.div>
+              </motion.div>
+            </>
           )}
         </AnimatePresence>
       </header>
@@ -2005,81 +2285,193 @@ export default function App() {
 
 
       {/* --- TESTIMONIALS SECTION --- */}
-      <section id="testimoni" className={`py-24 relative z-10 border-y ${darkMode ? "bg-[#0e1422] border-slate-900/50" : "bg-slate-50/50 border-slate-100"}`}>
+      <section id="testimoni" className={`py-24 relative z-10 border-y overflow-hidden ${darkMode ? "bg-[#0e1422] border-slate-900/50" : "bg-slate-50/50 border-slate-100"}`}>
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           
-          {/* Section Header */}
-          <div className="max-w-7xl mx-auto mb-16 space-y-4" id="testimonials-header">
-            <div className="flex justify-between items-end mb-4">
-              <h3 className="text-xs font-black uppercase tracking-[0.25em] text-slate-400">{TRANSLATIONS[lang].testimoni.sub}</h3>
-              <div className="h-[1px] flex-grow mx-4 bg-slate-200 dark:bg-slate-800 mb-2"></div>
-            </div>
-            <h2 className="text-3xl sm:text-4xl font-extrabold tracking-tight">
-              {TRANSLATIONS[lang].testimoni.title}
-            </h2>
-            <p className={`text-base max-w-3xl ${darkMode ? "text-slate-400" : "text-slate-600"}`}>
-              {TRANSLATIONS[lang].testimoni.desc}
-            </p>
-          </div>
+          {/* Section Header with Controls */}
+          {(() => {
+            const testimonials = TRANSLATIONS[lang].testimoni.items;
+            const visibleCount = windowWidth >= 1024 ? 3 : windowWidth >= 768 ? 2 : 1;
+            const maxSlide = Math.max(0, testimonials.length - visibleCount);
+            const clampedSlide = Math.min(testimonialSlide, maxSlide);
 
-          {/* Testimonial Cards */}
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6" id="testimonials-list">
-            {TRANSLATIONS[lang].testimoni.items.map((testi, idx) => {
-              const staticImages = [
-                "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?q=80&w=150&auto=format&fit=crop",
-                "https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?q=80&w=150&auto=format&fit=crop",
-                "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?q=80&w=150&auto=format&fit=crop"
-              ];
-              return (
-                <motion.div
-                  key={idx}
-                  initial={{ opacity: 0, y: 30 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  viewport={{ once: true, margin: "-50px" }}
-                  transition={{ duration: 0.5, delay: idx * 0.1 }}
-                  className={`p-6 rounded border relative flex flex-col justify-between ${
-                    darkMode ? "bg-[#131926] border-slate-800" : "bg-white border-slate-200 shadow-sm"
-                  }`}
-                >
-                  {/* Quote Icon Background */}
-                  <div className="absolute top-6 right-6 text-slate-500/10 pointer-events-none">
-                    <MessageSquare size={40} />
-                  </div>
-                  
-                  <div className="space-y-4">
-                    {/* Stars */}
-                    <div className="flex gap-0.5 text-yellow-500">
-                      {[...Array(5)].map((_, i) => (
-                        <Star key={i} size={14} fill="currentColor" />
-                      ))}
+            const nextSlide = () => {
+              setTestimonialSlide((prev) => (prev >= maxSlide ? 0 : prev + 1));
+            };
+
+            const prevSlide = () => {
+              setTestimonialSlide((prev) => (prev <= 0 ? maxSlide : prev - 1));
+            };
+
+            const staticImages = [
+              "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?q=80&w=150&auto=format&fit=crop",
+              "https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?q=80&w=150&auto=format&fit=crop",
+              "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?q=80&w=150&auto=format&fit=crop",
+              "https://images.unsplash.com/photo-1534528741775-53994a69daeb?q=80&w=150&auto=format&fit=crop",
+              "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?q=80&w=150&auto=format&fit=crop"
+            ];
+
+            return (
+              <>
+                <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-6 mb-16" id="testimonials-header">
+                  <div className="space-y-4 max-w-3xl">
+                    <div className="flex items-center mb-1">
+                      <h3 className="text-xs font-black uppercase tracking-[0.25em] text-slate-400">{TRANSLATIONS[lang].testimoni.sub}</h3>
+                      <div className="h-[1px] flex-grow ml-4 bg-slate-200 dark:bg-slate-800"></div>
                     </div>
-
-                    <p className={`text-xs sm:text-sm italic leading-relaxed ${darkMode ? "text-slate-300" : "text-slate-600"}`}>
-                      "{testi.comment}"
+                    <h2 className="text-3xl sm:text-4xl font-extrabold tracking-tight">
+                      {TRANSLATIONS[lang].testimoni.title}
+                    </h2>
+                    <p className={`text-base ${darkMode ? "text-slate-400" : "text-slate-600"}`}>
+                      {TRANSLATIONS[lang].testimoni.desc}
                     </p>
                   </div>
 
-                  <div className="flex items-center gap-3 mt-6 pt-4 border-t border-slate-500/10">
-                    <img
-                      src={staticImages[idx]}
-                      alt={testi.name}
-                      className="w-10 h-10 rounded-full object-cover"
-                      loading="lazy"
-                    />
-                    <div>
-                      <h4 className="font-bold text-xs uppercase tracking-wide">
-                        {testi.name}
-                      </h4>
-                      <p className="text-[10px] text-amber-500 font-bold uppercase tracking-wider">
-                        {testi.role}
-                      </p>
-                    </div>
+                  {/* Desktop slider controls */}
+                  <div className="hidden sm:flex items-center gap-2 flex-shrink-0">
+                    <button
+                      onClick={prevSlide}
+                      className={`p-3 rounded-full border transition-all cursor-pointer ${
+                        darkMode
+                          ? "bg-[#131926] border-slate-800 hover:border-slate-700 text-slate-400 hover:text-white"
+                          : "bg-white border-slate-200 hover:border-slate-300 text-slate-600 hover:text-slate-900 shadow-sm"
+                      }`}
+                      aria-label="Previous testimonial"
+                    >
+                      <ChevronLeft size={18} />
+                    </button>
+                    <button
+                      onClick={nextSlide}
+                      className={`p-3 rounded-full border transition-all cursor-pointer ${
+                        darkMode
+                          ? "bg-[#131926] border-slate-800 hover:border-slate-700 text-slate-400 hover:text-white"
+                          : "bg-white border-slate-200 hover:border-slate-300 text-slate-600 hover:text-slate-900 shadow-sm"
+                      }`}
+                      aria-label="Next testimonial"
+                    >
+                      <ChevronRight size={18} />
+                    </button>
                   </div>
-                </motion.div>
-              );
-            })}
-          </div>
+                </div>
 
+                {/* Slider viewport container */}
+                <div className="relative w-full overflow-hidden" id="testimonials-list-slider">
+                  <div 
+                    className="flex transition-transform duration-500 ease-out"
+                    style={{ 
+                      transform: `translateX(-${clampedSlide * (100 / visibleCount)}%)`,
+                      width: `${(testimonials.length / visibleCount) * 100}%`
+                    }}
+                  >
+                    {testimonials.map((testi: any, idx: number) => (
+                      <div 
+                        key={idx} 
+                        className="flex-shrink-0 px-3"
+                        style={{ width: `${100 / testimonials.length}%` }}
+                      >
+                        <motion.div
+                          initial={{ opacity: 0, y: 15 }}
+                          whileInView={{ opacity: 1, y: 0 }}
+                          viewport={{ once: true, margin: "-50px" }}
+                          transition={{ duration: 0.4, delay: (idx % visibleCount) * 0.08 }}
+                          className={`p-8 rounded-xl border relative flex flex-col justify-between h-full min-h-[260px] ${
+                            darkMode ? "bg-[#131926] border-slate-800" : "bg-white border-slate-200 shadow-sm"
+                          }`}
+                        >
+                          {/* Quote Icon Background */}
+                          <div className="absolute top-6 right-6 text-slate-500/10 pointer-events-none">
+                            <MessageSquare size={44} />
+                          </div>
+                          
+                          <div className="space-y-4">
+                            {/* Stars */}
+                            <div className="flex gap-0.5 text-amber-500">
+                              {[...Array(5)].map((_, i) => (
+                                <Star key={i} size={14} fill="currentColor" />
+                              ))}
+                            </div>
+
+                            <p className={`text-xs sm:text-sm italic leading-relaxed ${darkMode ? "text-slate-300" : "text-slate-600"}`}>
+                              "{testi.comment}"
+                            </p>
+                          </div>
+
+                          <div className="flex items-center gap-3 mt-8 pt-4 border-t border-slate-500/10">
+                            <img
+                              src={staticImages[idx % staticImages.length]}
+                              alt={testi.name}
+                              className="w-10 h-10 rounded-full object-cover border border-amber-500/20"
+                              loading="lazy"
+                            />
+                            <div>
+                              <h4 className="font-bold text-xs uppercase tracking-wide">
+                                {testi.name}
+                              </h4>
+                              <p className="text-[10px] text-amber-500 font-bold uppercase tracking-wider">
+                                {testi.role}
+                              </p>
+                            </div>
+                          </div>
+                        </motion.div>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+
+                {/* Mobile & Tablet Slider Controls + Dot Pagination Indicators */}
+                <div className="flex items-center justify-between mt-10">
+                  {/* Mobile navigation controls */}
+                  <div className="flex sm:hidden items-center gap-2">
+                    <button
+                      onClick={prevSlide}
+                      className={`p-2.5 rounded-full border transition-all cursor-pointer ${
+                        darkMode
+                          ? "bg-[#131926] border-slate-800 text-slate-400"
+                          : "bg-white border-slate-200 text-slate-600 shadow-sm"
+                      }`}
+                      aria-label="Previous testimonial mobile"
+                    >
+                      <ChevronLeft size={16} />
+                    </button>
+                    <button
+                      onClick={nextSlide}
+                      className={`p-2.5 rounded-full border transition-all cursor-pointer ${
+                        darkMode
+                          ? "bg-[#131926] border-slate-800 text-slate-400"
+                          : "bg-white border-slate-200 text-slate-600 shadow-sm"
+                      }`}
+                      aria-label="Next testimonial mobile"
+                    >
+                      <ChevronRight size={16} />
+                    </button>
+                  </div>
+
+                  {/* Carousel Page Dots */}
+                  <div className="flex items-center gap-1.5 mx-auto">
+                    {Array.from({ length: maxSlide + 1 }).map((_, dIdx) => (
+                      <button
+                        key={dIdx}
+                        onClick={() => setTestimonialSlide(dIdx)}
+                        className={`h-2.5 rounded-full transition-all duration-300 cursor-pointer ${
+                          clampedSlide === dIdx
+                            ? "w-6 bg-amber-500"
+                            : darkMode
+                              ? "w-2.5 bg-slate-800 hover:bg-slate-700"
+                              : "w-2.5 bg-slate-300 hover:bg-slate-400"
+                        }`}
+                        aria-label={`Go to slide ${dIdx + 1}`}
+                      />
+                    ))}
+                  </div>
+
+                  {/* Slide index info badge */}
+                  <div className={`text-xs font-mono font-extrabold tracking-wider uppercase ${darkMode ? "text-slate-500" : "text-slate-400"}`}>
+                    {clampedSlide + 1} / {maxSlide + 1}
+                  </div>
+                </div>
+              </>
+            );
+          })()}
         </div>
       </section>
 
@@ -2141,6 +2533,191 @@ export default function App() {
                 </AnimatePresence>
               </div>
             ))}
+          </div>
+
+        </div>
+      </section>
+
+
+      {/* --- CAREERS SECTION --- */}
+      <section id="karir" className={`py-24 relative z-10 border-b ${darkMode ? "bg-[#0e1422] border-slate-900/50" : "bg-gradient-to-r from-blue-50/20 via-white to-blue-50/10 border-slate-100"}`}>
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          
+          {/* Section Header */}
+          <div className="text-center mb-16 space-y-4" id="careers-header">
+            <span className="text-xs font-black tracking-[0.25em] text-amber-500 uppercase bg-amber-500/10 px-3.5 py-1.5 rounded-full">
+              {TRANSLATIONS[lang].careers.sub}
+            </span>
+            <h2 className="text-3xl md:text-4xl font-black tracking-tight text-slate-900 dark:text-white">
+              <span className="bg-gradient-to-r from-slate-900 via-slate-800 to-amber-600 dark:from-white dark:via-slate-200 dark:to-amber-400 bg-clip-text text-transparent">
+                {TRANSLATIONS[lang].careers.title.split("PT. FGI")[0]}
+              </span>
+              <span className="text-amber-500 dark:text-amber-400">PT. FGI</span>
+            </h2>
+            <div className="w-16 h-1 bg-amber-500 mx-auto rounded-full" />
+          </div>
+
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-start">
+            
+            {/* Left Side: Culture Blurb */}
+            <div className="lg:col-span-5 space-y-8 lg:sticky lg:top-28">
+              <div className="space-y-4">
+                <h3 className={`text-xl font-extrabold tracking-tight ${darkMode ? "text-slate-100" : "text-slate-900"}`}>
+                  {TRANSLATIONS[lang].careers.cultureTitle}
+                </h3>
+                <p className={`text-sm leading-relaxed ${darkMode ? "text-slate-400" : "text-slate-600"}`}>
+                  {TRANSLATIONS[lang].careers.cultureDesc}
+                </p>
+              </div>
+
+              {/* Culture points list */}
+              <div className="space-y-6">
+                {TRANSLATIONS[lang].careers.culturePoints.map((point: any, idx: number) => {
+                  const icons = [
+                    <ShieldCheck className="text-amber-500" size={24} />,
+                    <Award className="text-amber-500" size={24} />,
+                    <Users className="text-amber-500" size={24} />
+                  ];
+                  return (
+                    <div key={idx} className="flex gap-4 items-start">
+                      <div className={`p-3 rounded-lg flex-shrink-0 ${darkMode ? "bg-slate-900/85 border border-slate-800" : "bg-amber-50/60 border border-amber-200/50"}`}>
+                        {icons[idx]}
+                      </div>
+                      <div className="space-y-1">
+                        <h4 className={`text-sm font-bold ${darkMode ? "text-slate-200" : "text-slate-900"}`}>
+                          {point.title}
+                        </h4>
+                        <p className={`text-xs leading-relaxed ${darkMode ? "text-slate-400" : "text-slate-600"}`}>
+                          {point.desc}
+                        </p>
+                      </div>
+                    </div>
+                  );
+                })}
+              </div>
+            </div>
+
+            {/* Right Side: Open Positions */}
+            <div className="lg:col-span-7 space-y-6">
+              <div className="flex items-center justify-between mb-4">
+                <h3 className={`text-sm font-black uppercase tracking-wider ${darkMode ? "text-slate-400" : "text-slate-500"}`}>
+                  {TRANSLATIONS[lang].careers.openPositions}
+                </h3>
+                <span className="text-xs font-bold text-amber-500 bg-amber-500/10 px-2.5 py-1 rounded-md">
+                  {TRANSLATIONS[lang].careers.positions.length} Positions
+                </span>
+              </div>
+
+              <div className="space-y-4" id="job-cards-container">
+                {TRANSLATIONS[lang].careers.positions.map((job: any, idx: number) => {
+                  const isOpen = activeJobDetails === idx;
+                  return (
+                    <div 
+                      key={idx}
+                      className={`rounded-xl border transition-all duration-300 p-6 ${
+                        isOpen 
+                          ? darkMode 
+                            ? "bg-[#111726] border-amber-500/50 shadow-lg shadow-amber-500/5" 
+                            : "bg-amber-50/40 border-amber-500/40 shadow-md"
+                          : darkMode
+                            ? "bg-[#0c101d] border-slate-800/80 hover:border-slate-700 hover:bg-[#101526]"
+                            : "bg-white border-slate-200/80 hover:border-slate-300 hover:shadow-sm"
+                      }`}
+                    >
+                      {/* Job Header */}
+                      <div className="flex flex-col sm:flex-row sm:items-start justify-between gap-4">
+                        <div className="space-y-2">
+                          <div className="flex items-center gap-2">
+                            <Briefcase size={16} className="text-amber-500 flex-shrink-0" />
+                            <h4 className={`text-base font-black ${darkMode ? "text-slate-100" : "text-slate-900"}`}>
+                              {job.title}
+                            </h4>
+                          </div>
+                          
+                          {/* Metadata */}
+                          <div className="flex flex-wrap items-center gap-x-4 gap-y-2 text-xs">
+                            <span className="flex items-center gap-1 text-slate-400 font-medium">
+                              <MapPin size={12} className="text-amber-500" />
+                              {job.location}
+                            </span>
+                            <span className="flex items-center gap-1 text-slate-400 font-medium">
+                              <Clock size={12} className="text-amber-500" />
+                              {job.type}
+                            </span>
+                          </div>
+                        </div>
+
+                        {/* Apply Now Button */}
+                        <button
+                          onClick={() => {
+                            const isId = lang === "id";
+                            const subject = isId 
+                              ? `Lamar Pekerjaan: ${job.title} - PT. FGI`
+                              : `Job Application: ${job.title} - PT. FGI`;
+                            
+                            const message = isId
+                              ? `Halo Tim HRD PT. Foresyndo Global Indonesia,\n\nSaya ingin melamar untuk posisi *${job.title}* di FGI.\n\nBerikut detail singkat saya:\n- Nama Lengkap: \n- No. WhatsApp: \n- Email: \n\nMohon petunjuk lebih lanjut mengenai pengiriman CV dan proses selanjutnya.\n\nTerima kasih.`
+                              : `Dear HR Team at PT. Foresyndo Global Indonesia,\n\nI would like to apply for the *${job.title}* position.\n\nHere are my details:\n- Full Name: \n- WhatsApp Number: \n- Email: \n\nPlease guide me on the next steps and CV submission.\n\nThank you.`;
+
+                            setFormSubject(subject);
+                            setFormMessage(message);
+                            scrollTo("kontak");
+                          }}
+                          className="sm:self-center px-4 py-2 bg-gradient-to-r from-amber-400 to-amber-600 hover:from-amber-500 hover:to-amber-700 text-slate-950 font-extrabold text-xs rounded-lg shadow-md hover:shadow-amber-500/15 cursor-pointer transition-all uppercase tracking-wider flex-shrink-0"
+                        >
+                          {TRANSLATIONS[lang].careers.applyBtn}
+                        </button>
+                      </div>
+
+                      {/* Job Description */}
+                      <p className={`text-xs leading-relaxed mt-4 ${darkMode ? "text-slate-400" : "text-slate-600"}`}>
+                        {job.desc}
+                      </p>
+
+                      {/* Toggle Requirements Button */}
+                      <div className="mt-4 pt-4 border-t border-slate-200/10 dark:border-slate-800/50 flex justify-between items-center">
+                        <button
+                          onClick={() => setActiveJobDetails(isOpen ? null : idx)}
+                          className={`text-xs font-bold flex items-center gap-1 cursor-pointer transition-colors ${
+                            isOpen 
+                              ? "text-amber-500" 
+                              : darkMode 
+                                ? "text-slate-400 hover:text-white" 
+                                : "text-slate-500 hover:text-slate-900"
+                          }`}
+                        >
+                          <span>{TRANSLATIONS[lang].careers.btnDetails}</span>
+                          {isOpen ? <ChevronUp size={14} /> : <ChevronDown size={14} />}
+                        </button>
+                      </div>
+
+                      {/* Expanded Requirements List */}
+                      <AnimatePresence>
+                        {isOpen && (
+                          <motion.div
+                            initial={{ opacity: 0, height: 0 }}
+                            animate={{ opacity: 1, height: "auto" }}
+                            exit={{ opacity: 0, height: 0 }}
+                            transition={{ duration: 0.3 }}
+                            className="overflow-hidden"
+                          >
+                            <div className="mt-4 space-y-2.5 pl-2 pb-2">
+                              {job.reqs.map((req: string, rIdx: number) => (
+                                <div key={rIdx} className="flex gap-2 items-start text-xs leading-relaxed">
+                                  <Check size={12} className="text-amber-500 mt-1 flex-shrink-0" />
+                                  <span className={darkMode ? "text-slate-300" : "text-slate-700"}>{req}</span>
+                                </div>
+                              ))}
+                            </div>
+                          </motion.div>
+                        )}
+                      </AnimatePresence>
+                    </div>
+                  );
+                })}
+              </div>
+            </div>
+
           </div>
 
         </div>
@@ -2278,6 +2855,94 @@ export default function App() {
                           darkMode ? "bg-slate-900 border-slate-800 text-white placeholder-slate-500" : "bg-slate-50 border-slate-200 text-slate-900 placeholder-slate-400"
                         }`}
                       />
+                    </div>
+
+                    {/* Professional Message Live Preview & Format Helper */}
+                    <div className={`p-4 rounded-lg border space-y-3 ${
+                      darkMode ? "bg-slate-900/35 border-slate-800/80" : "bg-slate-50/70 border-slate-200/80"
+                    }`}>
+                      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2">
+                        <div>
+                          <label className={`block text-[10px] font-black uppercase tracking-[0.12em] ${
+                            darkMode ? "text-slate-400" : "text-slate-500"
+                          }`}>
+                            {lang === "id" ? "Template Format WhatsApp" : "WhatsApp Format Template"}
+                          </label>
+                          <p className={`text-[9px] ${darkMode ? "text-slate-500" : "text-slate-400"}`}>
+                            {lang === "id" ? "Sesuaikan nada bicara pesan otomatis Anda" : "Tailor the tone of your pre-filled inquiry"}
+                          </p>
+                        </div>
+
+                        {/* Tone Selector Pills */}
+                        <div className="flex items-center gap-1.5 self-start sm:self-center">
+                          {[
+                            { id: "standard", label: lang === "id" ? "Standar" : "Standard" },
+                            { id: "formal", label: lang === "id" ? "Formal" : "Formal" },
+                            { id: "urgent", label: lang === "id" ? "Mendesak" : "Urgent" }
+                          ].map((tone) => (
+                            <button
+                              key={tone.id}
+                              type="button"
+                              onClick={() => setFormTone(tone.id as any)}
+                              className={`px-2.5 py-1 text-[10px] font-bold rounded transition-all cursor-pointer ${
+                                formTone === tone.id
+                                  ? "bg-amber-500 text-slate-950 font-extrabold shadow-sm"
+                                  : darkMode
+                                    ? "bg-slate-900 hover:bg-slate-800 text-slate-400 hover:text-slate-200"
+                                    : "bg-slate-200 hover:bg-slate-300 text-slate-600 hover:text-slate-900"
+                              }`}
+                            >
+                              {tone.label}
+                            </button>
+                          ))}
+                        </div>
+                      </div>
+
+                      {/* Live Preview Text Area & Copy Trigger */}
+                      <div className="relative group">
+                        <div className="absolute top-2 right-2 z-10">
+                          <button
+                            type="button"
+                            onClick={copyFormattedMessage}
+                            className={`p-2 rounded-md transition-all flex items-center gap-1.5 cursor-pointer text-[10px] font-black uppercase shadow-sm ${
+                              copiedMessage
+                                ? "bg-emerald-500 text-white"
+                                : darkMode
+                                  ? "bg-slate-900 hover:bg-slate-800 text-slate-300 hover:text-white border border-slate-800"
+                                  : "bg-white hover:bg-slate-100 text-slate-700 hover:text-slate-900 border border-slate-200"
+                            }`}
+                            title={lang === "id" ? "Salin ke clipboard" : "Copy to clipboard"}
+                          >
+                            {copiedMessage ? (
+                              <>
+                                <Check size={12} className="text-white animate-bounce" />
+                                <span>{lang === "id" ? "Tersalin!" : "Copied!"}</span>
+                              </>
+                            ) : (
+                              <>
+                                <Copy size={12} className={darkMode ? "text-slate-400" : "text-slate-500"} />
+                                <span>{lang === "id" ? "Salin Pesan" : "Copy Message"}</span>
+                              </>
+                            )}
+                          </button>
+                        </div>
+
+                        {/* Readonly preview textarea block */}
+                        <div 
+                          className={`w-full max-h-[140px] min-h-[100px] overflow-y-auto p-4 rounded font-mono text-[10px] leading-relaxed whitespace-pre-wrap select-all pr-28 scrollbar-thin ${
+                            darkMode 
+                              ? "bg-slate-950/80 text-slate-300 border border-slate-850 animate-pulse-subtle" 
+                              : "bg-slate-100/80 text-slate-700 border border-slate-200"
+                          }`}
+                        >
+                          {formattedEnquiryMessage}
+                        </div>
+                        <div className={`absolute bottom-2 right-2 text-[8px] font-medium pointer-events-none uppercase tracking-wider ${
+                          darkMode ? "text-slate-600" : "text-slate-400"
+                        }`}>
+                          {lang === "id" ? "Pratinjau Real-time" : "Real-time Preview"}
+                        </div>
+                      </div>
                     </div>
 
                     <div className="flex flex-col sm:flex-row gap-3 pt-2">
@@ -2450,7 +3115,8 @@ export default function App() {
                   { id: "proyek", label: TRANSLATIONS[lang].projects.sub },
                   { id: "visi-misi", label: TRANSLATIONS[lang].nav["visi-misi"] },
                   { id: "mengapa-kami", label: TRANSLATIONS[lang].nav["mengapa-kami"] },
-                  { id: "faq", label: TRANSLATIONS[lang].faq.sub }
+                  { id: "faq", label: TRANSLATIONS[lang].faq.sub },
+                  { id: "karir", label: TRANSLATIONS[lang].nav.karir }
                 ].map((item) => (
                   <li key={item.id}>
                     <button
