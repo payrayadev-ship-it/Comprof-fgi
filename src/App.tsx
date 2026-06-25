@@ -44,9 +44,9 @@ import {
 // --- CUSTOM LOGO FOR PT. FORESYNDO GLOBAL INDONESIA (FGI) ---
 const FGILogo = ({ className = "", darkMode = true }: { className?: string; darkMode?: boolean }) => (
   <div className={`flex items-center space-x-3 ${className}`} id="fgi-logo">
-    <div className="w-11 h-11 flex items-center justify-center rounded-lg overflow-hidden bg-white shadow-md flex-shrink-0 border border-amber-500/40 p-0.5">
+    <div className="w-11 h-11 flex items-center justify-center rounded-lg overflow-hidden bg-white shadow-md flex-shrink-0 border border-slate-200 p-0.5">
       <img
-        src="/src/assets/images/fgi_logo_clear_1782398761691.jpg"
+        src="/src/assets/images/fgi_bold_navy_logo_1782399447952.jpg"
         alt="PT. Foresyndo Global Indonesia Logo"
         className="w-full h-full object-contain rounded-md"
         referrerPolicy="no-referrer"
