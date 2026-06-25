@@ -44,11 +44,11 @@ import {
 // --- CUSTOM LOGO FOR PT. FORESYNDO GLOBAL INDONESIA (FGI) ---
 const FGILogo = ({ className = "", darkMode = true }: { className?: string; darkMode?: boolean }) => (
   <div className={`flex items-center space-x-3 ${className}`} id="fgi-logo">
-    <div className="w-10 h-10 flex items-center justify-center rounded-lg overflow-hidden bg-white shadow-md flex-shrink-0 border border-amber-500/30 p-0.5">
+    <div className="w-11 h-11 flex items-center justify-center rounded-lg overflow-hidden bg-white shadow-md flex-shrink-0 border border-amber-500/40 p-0.5">
       <img
-        src="/src/assets/images/fgi_logo_1782398313226.jpg"
-        alt="FGI Logo"
-        className="w-full h-full object-contain rounded"
+        src="/src/assets/images/fgi_logo_clear_1782398761691.jpg"
+        alt="PT. Foresyndo Global Indonesia Logo"
+        className="w-full h-full object-contain rounded-md"
         referrerPolicy="no-referrer"
       />
     </div>
@@ -1014,6 +1014,139 @@ export default function App() {
     }
   }, [darkMode]);
 
+  // Dynamic document title and meta tags for SEO optimization based on active section & language
+  useEffect(() => {
+    const seoData: Record<"id" | "en", Record<string, { title: string; desc: string }>> = {
+      id: {
+        beranda: {
+          title: "PT. FORESYNDO GLOBAL INDONESIA | Beranda & Profil Perusahaan",
+          desc: "PT. FORESYNDO GLOBAL INDONESIA (FGI) menghadirkan solusi pengembangan properti, konstruksi, perumahan, investasi, dan infrastruktur premium yang profesional."
+        },
+        "tentang-kami": {
+          title: "Tentang Kami | PT. FORESYNDO GLOBAL INDONESIA",
+          desc: "Profil PT. FORESYNDO GLOBAL INDONESIA (FGI), pengembang properti dan kontraktor premium terpercaya berkomitmen membangun masa depan berkelanjutan."
+        },
+        layanan: {
+          title: "Layanan Kami | PT. FORESYNDO GLOBAL INDONESIA",
+          desc: "Solusi lengkap konstruksi sipil, pematangan lahan, aspal hotmix, desain arsitektur, dan investasi properti berkualitas tinggi dari PT. FORESYNDO GLOBAL INDONESIA."
+        },
+        proyek: {
+          title: "Proyek Portofolio | PT. FORESYNDO GLOBAL INDONESIA",
+          desc: "Lihat portofolio proyek real estate, perumahan eksklusif, infrastruktur, dan renovasi komersial berstandar tinggi yang berhasil diselesaikan oleh FGI."
+        },
+        "visi-misi": {
+          title: "Visi & Misi | PT. FORESYNDO GLOBAL INDONESIA",
+          desc: "Komitmen FGI menjadi perusahaan pengembang dan kontraktor terdepan dengan mengutamakan kualitas, inovasi, rekayasa matang, dan kepuasan mitra."
+        },
+        "mengapa-kami": {
+          title: "Mengapa Memilih FGI | PT. FORESYNDO GLOBAL INDONESIA",
+          desc: "Keunggulan PT. FORESYNDO GLOBAL INDONESIA: legalitas resmi lengkap, rekayasa sipil berstandar tinggi, tim ahli berpengalaman, dan garansi kualitas kerja."
+        },
+        testimoni: {
+          title: "Testimoni Klien | PT. FORESYNDO GLOBAL INDONESIA",
+          desc: "Apa kata mitra dan pemilik properti tentang kami? Simak review kepuasan pengerjaan proyek dari PT. FORESYNDO GLOBAL INDONESIA."
+        },
+        karir: {
+          title: "Karir & Lowongan Kerja | PT. FORESYNDO GLOBAL INDONESIA",
+          desc: "Bergabunglah bersama tim profesional PT. FORESYNDO GLOBAL INDONESIA dan bangun karir impian Anda di industri konstruksi dan pengembangan properti."
+        },
+        kontak: {
+          title: "Hubungi Kami | PT. FORESYNDO GLOBAL INDONESIA",
+          desc: "Hubungi kantor pemasaran dan tim teknis PT. FORESYNDO GLOBAL INDONESIA (FGI) untuk konsultasi rencana proyek konstruksi atau pembelian unit properti."
+        }
+      },
+      en: {
+        beranda: {
+          title: "PT. FORESYNDO GLOBAL INDONESIA | Home & Corporate Profile",
+          desc: "PT. FORESYNDO GLOBAL INDONESIA (FGI) delivers premium, professional, and sustainable property development, construction, investment, and infrastructure solutions."
+        },
+        "tentang-kami": {
+          title: "About Us | PT. FORESYNDO GLOBAL INDONESIA",
+          desc: "Company profile of PT. FORESYNDO GLOBAL INDONESIA (FGI), a trusted premium real estate developer and contractor committed to building a sustainable future."
+        },
+        layanan: {
+          title: "Our Services | PT. FORESYNDO GLOBAL INDONESIA",
+          desc: "Comprehensive solutions in civil construction, land preparation, asphalt paving, architectural design, and high-yield property investment from FGI."
+        },
+        proyek: {
+          title: "Project Portfolio | PT. FORESYNDO GLOBAL INDONESIA",
+          desc: "Explore our portfolio of high-standard real estate, exclusive housing developments, public infrastructure, and commercial renovations completed by FGI."
+        },
+        "visi-misi": {
+          title: "Vision & Mission | PT. FORESYNDO GLOBAL INDONESIA",
+          desc: "FGI's commitment to being a leading developer and contractor by prioritizing quality, innovation, meticulous engineering, and partner satisfaction."
+        },
+        "mengapa-kami": {
+          title: "Why Choose FGI | PT. FORESYNDO GLOBAL INDONESIA",
+          desc: "The advantages of PT. FORESYNDO GLOBAL INDONESIA: full legal compliance, robust civil engineering standards, expert teams, and work quality guarantees."
+        },
+        testimoni: {
+          title: "Client Testimonials | PT. FORESYNDO GLOBAL INDONESIA",
+          desc: "Hear from our partners and property owners about their satisfaction with PT. FORESYNDO GLOBAL INDONESIA's high-quality project execution."
+        },
+        karir: {
+          title: "Careers & Jobs | PT. FORESYNDO GLOBAL INDONESIA",
+          desc: "Join the professional team of PT. FORESYNDO GLOBAL INDONESIA and build your dream career in the construction and real estate development industry."
+        },
+        kontak: {
+          title: "Contact Us | PT. FORESYNDO GLOBAL INDONESIA",
+          desc: "Get in touch with PT. FORESYNDO GLOBAL INDONESIA (FGI). Reach out for construction project consultations or premium property unit inquiries."
+        }
+      }
+    };
+
+    const currentSeo = seoData[lang][activeSection] || seoData[lang]["beranda"];
+    
+    // Update Document Title
+    document.title = currentSeo.title;
+
+    // Update Meta Description
+    let metaDescription = document.querySelector('meta[name="description"]');
+    if (!metaDescription) {
+      metaDescription = document.createElement("meta");
+      metaDescription.setAttribute("name", "description");
+      document.head.appendChild(metaDescription);
+    }
+    metaDescription.setAttribute("content", currentSeo.desc);
+
+    // Update Open Graph (OG) Title
+    let ogTitle = document.querySelector('meta[property="og:title"]');
+    if (!ogTitle) {
+      ogTitle = document.createElement("meta");
+      ogTitle.setAttribute("property", "og:title");
+      document.head.appendChild(ogTitle);
+    }
+    ogTitle.setAttribute("content", currentSeo.title);
+
+    // Update Open Graph (OG) Description
+    let ogDescription = document.querySelector('meta[property="og:description"]');
+    if (!ogDescription) {
+      ogDescription = document.createElement("meta");
+      ogDescription.setAttribute("property", "og:description");
+      document.head.appendChild(ogDescription);
+    }
+    ogDescription.setAttribute("content", currentSeo.desc);
+
+    // Update Twitter Title
+    let twitterTitle = document.querySelector('meta[property="twitter:title"]');
+    if (!twitterTitle) {
+      twitterTitle = document.createElement("meta");
+      twitterTitle.setAttribute("property", "twitter:title");
+      document.head.appendChild(twitterTitle);
+    }
+    twitterTitle.setAttribute("content", currentSeo.title);
+
+    // Update Twitter Description
+    let twitterDescription = document.querySelector('meta[property="twitter:description"]');
+    if (!twitterDescription) {
+      twitterDescription = document.createElement("meta");
+      twitterDescription.setAttribute("property", "twitter:description");
+      document.head.appendChild(twitterDescription);
+    }
+    twitterDescription.setAttribute("content", currentSeo.desc);
+
+  }, [activeSection, lang]);
+
   const scrollTo = (id: string) => {
     setMobileMenuOpen(false);
     const element = document.getElementById(id);
@@ -1142,7 +1275,7 @@ export default function App() {
   // Convert contact form to WhatsApp message link
   const sendToWhatsApp = () => {
     const encodedText = encodeURIComponent(formattedEnquiryMessage);
-    window.open(`https://wa.me/6282338609205?text=${encodedText}`, "_blank");
+    window.open(`https://wa.me/6282338094205?text=${encodedText}`, "_blank");
   };
 
   // Filtered projects
@@ -3011,8 +3144,8 @@ export default function App() {
                     </div>
                     <div>
                       <h4 className="text-[10px] font-bold uppercase text-slate-400 tracking-wider">{TRANSLATIONS[lang].contact.officeHotlineLabel}</h4>
-                      <a href="https://wa.me/6282338609205" target="_blank" rel="noopener noreferrer" className="text-xs font-bold text-amber-500 hover:text-amber-400 hover:underline mt-1 block">
-                        0823 3860 9205
+                      <a href="https://wa.me/6282338094205" target="_blank" rel="noopener noreferrer" className="text-xs font-bold text-amber-500 hover:text-amber-400 hover:underline mt-1 block">
+                        0823 3809 4205
                       </a>
                     </div>
                   </div>
@@ -3145,8 +3278,8 @@ export default function App() {
                 <p className="flex items-center gap-2">
                   <Phone size={12} className="text-amber-500" />
                   <span className="text-slate-400">{TRANSLATIONS[lang].contact.officeHotlineLabel}:</span> 
-                  <a href="https://wa.me/6282338609205" target="_blank" rel="noopener noreferrer" className="hover:text-amber-500 hover:underline font-bold">
-                    0823 3860 9205
+                  <a href="https://wa.me/6282338094205" target="_blank" rel="noopener noreferrer" className="hover:text-amber-500 hover:underline font-bold">
+                    0823 3809 4205
                   </a>
                 </p>
                 <p className="flex items-center gap-2">
@@ -3290,7 +3423,7 @@ export default function App() {
 
         {/* WhatsApp Icon Trigger */}
         <a
-          href="https://wa.me/6282338609205"
+          href="https://wa.me/6282338094205"
           target="_blank"
           rel="noopener noreferrer"
           className="relative w-14 h-14 bg-emerald-500 hover:bg-emerald-600 rounded-full flex items-center justify-center text-white shadow-xl hover:scale-110 active:scale-95 transition-all cursor-pointer group"
@@ -3501,7 +3634,7 @@ export default function App() {
                         const messageText = lang === "en"
                           ? `Hello FGI, I am interested in inquiring about the project: *${selectedProject.enTitle || selectedProject.title}* in *${selectedProject.enLocation || selectedProject.location}*. Please send me more information.`
                           : `Halo FGI, saya tertarik menanyakan tentang proyek: *${selectedProject.title}* di *${selectedProject.location}*. Mohon informasi unit / pelaksanaannya lebih lanjut.`;
-                        window.open(`https://wa.me/6282338609205?text=${encodeURIComponent(messageText)}`, "_blank");
+                        window.open(`https://wa.me/6282338094205?text=${encodeURIComponent(messageText)}`, "_blank");
                       }}
                       className="bg-emerald-600 hover:bg-emerald-700 text-white font-bold text-xs uppercase tracking-wider px-6 py-3 rounded shadow-sm flex items-center justify-center gap-2 flex-1 cursor-pointer"
                     >
