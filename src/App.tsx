@@ -931,6 +931,7 @@ export default function App() {
   const [newsletterSubmitting, setNewsletterSubmitting] = useState(false);
   const [newsletterSuccess, setNewsletterSuccess] = useState(false);
   const [newsletterError, setNewsletterError] = useState("");
+  const [privacyModalOpen, setPrivacyModalOpen] = useState(false);
 
   // Floating WA pop-up state
   const [showWaPopup, setShowWaPopup] = useState<boolean>(true);
@@ -3358,7 +3359,7 @@ export default function App() {
             <p>{TRANSLATIONS[lang].footer.copyright}</p>
             <div className="flex gap-4">
               <span className="hover:text-amber-500 cursor-pointer">{TRANSLATIONS[lang].footer.siteMap}</span>
-              <span className="hover:text-amber-500 cursor-pointer">{lang === "id" ? "Kebijakan Privasi" : "Privacy Policy"}</span>
+              <span onClick={() => setPrivacyModalOpen(true)} className="hover:text-amber-500 cursor-pointer text-amber-500 font-semibold">{lang === "id" ? "Kebijakan Privasi" : "Privacy Policy"}</span>
               <span className="hover:text-amber-500 cursor-pointer">{lang === "id" ? "Syarat & Ketentuan" : "Terms & Conditions"}</span>
             </div>
           </div>
@@ -3651,6 +3652,198 @@ export default function App() {
                   </div>
 
                 </div>
+              </div>
+            </motion.div>
+          </div>
+        )}
+      </AnimatePresence>
+
+      {/* --- PRIVACY POLICY MODAL --- */}
+      <AnimatePresence>
+        {privacyModalOpen && (
+          <div className="fixed inset-0 z-50 flex items-center justify-center p-4" id="privacy-policy-modal">
+            {/* Modal Backdrop */}
+            <motion.div
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              onClick={() => setPrivacyModalOpen(false)}
+              className="absolute inset-0 bg-slate-950/80 backdrop-blur-xs"
+            />
+            
+            {/* Modal Box */}
+            <motion.div
+              initial={{ opacity: 0, scale: 0.95, y: 30 }}
+              animate={{ opacity: 1, scale: 1, y: 0 }}
+              exit={{ opacity: 0, scale: 0.95, y: 30 }}
+              transition={{ duration: 0.3 }}
+              className={`relative max-w-2xl w-full rounded border shadow-2xl overflow-hidden z-10 flex flex-col max-h-[85vh] ${
+                darkMode ? "bg-[#131926] border-slate-800 text-slate-100" : "bg-white border-slate-200 text-slate-800"
+              }`}
+            >
+              {/* Header */}
+              <div className={`p-6 border-b flex items-center justify-between ${
+                darkMode ? "border-slate-800 bg-slate-950/30" : "border-slate-100 bg-slate-50/50"
+              }`}>
+                <div className="flex items-center gap-3">
+                  <div className="p-2 rounded-lg bg-amber-500/10 text-amber-500">
+                    <ShieldCheck size={24} />
+                  </div>
+                  <div>
+                    <h3 className="text-base font-black uppercase tracking-wider">
+                      {lang === "id" ? "Kebijakan Privasi" : "Privacy Policy"}
+                    </h3>
+                    <p className="text-[10px] text-slate-400 uppercase tracking-widest mt-0.5">
+                      PT. FORESYNDO GLOBAL INDONESIA
+                    </p>
+                  </div>
+                </div>
+                <button
+                  onClick={() => setPrivacyModalOpen(false)}
+                  className={`p-1.5 rounded-full hover:scale-105 active:scale-95 transition-all ${
+                    darkMode ? "hover:bg-slate-800 text-slate-400 hover:text-white" : "hover:bg-slate-100 text-slate-500 hover:text-slate-900"
+                  }`}
+                  aria-label="Close modal"
+                >
+                  <X size={18} />
+                </button>
+              </div>
+
+              {/* Scrollable Content */}
+              <div className="p-6 overflow-y-auto space-y-6 text-sm leading-relaxed scrollbar-thin">
+                {lang === "id" ? (
+                  <>
+                    <section className="space-y-2">
+                      <p className="text-slate-400 italic text-xs">Terakhir Diperbarui: 25 Juni 2026</p>
+                      <p>
+                        Selamat datang di kebijakan privasi PT. Foresyndo Global Indonesia (FGI). Kami berkomitmen penuh untuk melindungi privasi pelanggan, klien, serta pengunjung situs web kami. Kebijakan ini menjelaskan bagaimana kami mengumpulkan, menggunakan, menyimpan, dan menjaga informasi pribadi Anda dengan aman.
+                      </p>
+                    </section>
+
+                    <section className="p-4 rounded-lg bg-amber-500/5 border border-amber-500/20 space-y-2">
+                      <h4 className="font-bold text-amber-500 uppercase tracking-wider text-xs flex items-center gap-2">
+                        <Check size={14} /> JAMINAN PERLINDUNGAN SUBSKRIPSI NEWSLETTER
+                      </h4>
+                      <p className="text-xs">
+                        Bagi Anda yang mendaftarkan alamat email melalui formulir langganan buletin (newsletter) kami, PT. Foresyndo Global Indonesia menjamin 100% data Anda dilindungi secara penuh:
+                      </p>
+                      <ul className="list-disc pl-5 text-xs space-y-1 text-slate-300">
+                        <li><strong>Kerahasiaan Mutlak:</strong> Kami tidak akan pernah menjual, menyewakan, membagikan, atau memperdagangkan daftar email pelanggan buletin kepada pihak ketiga mana pun di luar grup FGI.</li>
+                        <li><strong>Penggunaan Terbatas:</strong> Email Anda hanya akan digunakan untuk mengirimkan pembaruan proyek perumahan, info rilis unit baru, artikel edukatif konstruksi, dan penawaran eksklusif internal FGI.</li>
+                        <li><strong>Kontrol Penuh:</strong> Anda dapat berhenti berlangganan (opt-out / unsubscribe) kapan saja dengan mudah melalui tautan yang tertera di bagian bawah setiap email kami atau dengan menghubungi layanan pelanggan kami langsung.</li>
+                      </ul>
+                    </section>
+
+                    <section className="space-y-2">
+                      <h4 className="font-bold uppercase tracking-wider text-xs text-slate-300">1. Data yang Kami Kumpulkan</h4>
+                      <p>Kami mengumpulkan informasi dari Anda ketika Anda mengisi formulir konsultasi/kontak, mengajukan permohonan karir, atau berlangganan newsletter kami. Informasi ini mencakup:</p>
+                      <ul className="list-disc pl-5 space-y-1 text-slate-300">
+                        <li>Nama Lengkap</li>
+                        <li>Alamat Email</li>
+                        <li>Nomor Telepon / WhatsApp</li>
+                        <li>Detail pesan, ketertarikan proyek, anggaran kalkulator, atau berkas CV lamaran kerja.</li>
+                      </ul>
+                    </section>
+
+                    <section className="space-y-2">
+                      <h4 className="font-bold uppercase tracking-wider text-xs text-slate-300">2. Bagaimana Kami Menggunakan Informasi Anda</h4>
+                      <p>Semua data yang kami kumpulkan digunakan secara bertanggung jawab untuk tujuan berikut:</p>
+                      <ul className="list-disc pl-5 space-y-1 text-slate-300">
+                        <li>Memproses pertanyaan, konsultasi rancangan, dan permintaan pemesanan unit proyek perumahan/komersial.</li>
+                        <li>Menghubungi Anda kembali via WhatsApp, telepon, atau email mengenai penawaran proyek yang Anda minati.</li>
+                        <li>Mengirimkan informasi berkala dan rilis properti terbaru kepada pelanggan buletin.</li>
+                        <li>Mengevaluasi berkas lamaran kerja secara profesional pada modul karir.</li>
+                      </ul>
+                    </section>
+
+                    <section className="space-y-2">
+                      <h4 className="font-bold uppercase tracking-wider text-xs text-slate-300">3. Keamanan Data & Server</h4>
+                      <p>
+                        PT. Foresyndo Global Indonesia menerapkan langkah-langkah keamanan teknis dan organisasi yang ketat untuk mencegah akses tidak sah, pengungkapan, perubahan, atau penghancuran data pribadi Anda. Server penyimpanan kami dilengkapi enkripsi SSL standar industri dan akses terbatas hanya untuk staf internal resmi.
+                      </p>
+                    </section>
+
+                    <section className="space-y-2">
+                      <h4 className="font-bold uppercase tracking-wider text-xs text-slate-300">4. Kontak & Konsultasi Hak</h4>
+                      <p>
+                        Anda memiliki hak penuh untuk menanyakan data pribadi apa saja yang kami simpan, memperbaruinya, atau meminta penghapusan total informasi Anda dari basis data kami. Hubungi layanan pelanggan resmi FGI via nomor Hotline kami di <strong>0823 3809 4205</strong> untuk bantuan lebih lanjut.
+                      </p>
+                    </section>
+                  </>
+                ) : (
+                  <>
+                    <section className="space-y-2">
+                      <p className="text-slate-400 italic text-xs">Last Updated: June 25, 2026</p>
+                      <p>
+                        Welcome to the Privacy Policy of PT. Foresyndo Global Indonesia (FGI). We are committed to protecting the privacy of our clients, partners, and website visitors. This policy outlines how we collect, use, store, and secure your personal information.
+                      </p>
+                    </section>
+
+                    <section className="p-4 rounded-lg bg-amber-500/5 border border-amber-500/20 space-y-2">
+                      <h4 className="font-bold text-amber-500 uppercase tracking-wider text-xs flex items-center gap-2">
+                        <Check size={14} /> NEWSLETTER SUBSCRIBER PROTECTION GUARANTEE
+                      </h4>
+                      <p className="text-xs">
+                        For users who register their email address through our newsletter subscription form, PT. Foresyndo Global Indonesia guarantees 100% data protection:
+                      </p>
+                      <ul className="list-disc pl-5 text-xs space-y-1 text-slate-300">
+                        <li><strong>Absolute Confidentiality:</strong> We will never sell, rent, lease, share, or trade subscriber email lists with any third party outside the FGI corporate group.</li>
+                        <li><strong>Restricted Usage:</strong> Your email will only be used to deliver official project updates, new housing unit releases, civil engineering newsletters, and exclusive internal promotions.</li>
+                        <li><strong>Full Control:</strong> You can opt-out or unsubscribe at any time using the link provided at the bottom of our emails, or by directly contacting our support team.</li>
+                      </ul>
+                    </section>
+
+                    <section className="space-y-2">
+                      <h4 className="font-bold uppercase tracking-wider text-xs text-slate-300">1. Information We Collect</h4>
+                      <p>We collect details from you when you complete our consultation forms, apply for careers, or subscribe to our newsletter. This includes:</p>
+                      <ul className="list-disc pl-5 space-y-1 text-slate-300">
+                        <li>Full Name</li>
+                        <li>Email Address</li>
+                        <li>Phone / WhatsApp Number</li>
+                        <li>Message inquiries, project interests, cost calculation results, or uploaded CV files for job vacancies.</li>
+                      </ul>
+                    </section>
+
+                    <section className="space-y-2">
+                      <h4 className="font-bold uppercase tracking-wider text-xs text-slate-300">2. How We Use Your Data</h4>
+                      <p>Any personal details collected are processed securely for the following scopes:</p>
+                      <ul className="list-disc pl-5 space-y-1 text-slate-300">
+                        <li>Processing your project consultation requests, design inquiries, and housing bookings.</li>
+                        <li>Reaching out to you via WhatsApp, telephone, or email to discuss architectural planning or property details.</li>
+                        <li>Sending periodic newsletters and news about premium developments to subscribers.</li>
+                        <li>Evaluating job applicants' resumes objectively on our career portal.</li>
+                      </ul>
+                    </section>
+
+                    <section className="space-y-2">
+                      <h4 className="font-bold uppercase tracking-wider text-xs text-slate-300">3. Information Security & Storage</h4>
+                      <p>
+                        PT. Foresyndo Global Indonesia deploys robust technical and organizational measures to prevent unauthorized data access, disclosure, alteration, or destruction. Our database servers utilize industry-standard SSL encryption and restricted, audited access policies.
+                      </p>
+                    </section>
+
+                    <section className="space-y-2">
+                      <h4 className="font-bold uppercase tracking-wider text-xs text-slate-300">4. Contact & Your Rights</h4>
+                      <p>
+                        You maintain full rights to inquire about what personal information we hold, update it, or request complete deletion of your records from our servers. Contact the official FGI customer helpline directly at <strong>0823 3809 4205</strong> for quick assistance.
+                      </p>
+                    </section>
+                  </>
+                )}
+              </div>
+
+              {/* Footer Controls */}
+              <div className={`p-4 border-t flex justify-end gap-3 ${
+                darkMode ? "border-slate-800 bg-slate-950/30" : "border-slate-100 bg-slate-50/50"
+              }`}>
+                <button
+                  onClick={() => setPrivacyModalOpen(false)}
+                  className={`px-5 py-2 rounded text-xs font-bold uppercase tracking-wider cursor-pointer ${
+                    darkMode ? "bg-slate-800 hover:bg-slate-700 text-white" : "bg-slate-100 hover:bg-slate-200 text-slate-800"
+                  }`}
+                >
+                  {lang === "id" ? "Tutup" : "Close"}
+                </button>
               </div>
             </motion.div>
           </div>
