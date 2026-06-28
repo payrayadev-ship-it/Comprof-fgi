@@ -119,6 +119,7 @@ interface Project {
   enTitle?: string;
   category: "Perumahan" | "Komersial" | "Infrastruktur";
   image: string;
+  images?: string[];
   location: string;
   enLocation?: string;
   desc: string;
@@ -138,6 +139,12 @@ const PROJECTS_DATA: Project[] = [
     enTitle: "Modern Housing - Grand Foresyndo Hills",
     category: "Perumahan",
     image: "https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?q=80&w=800&auto=format&fit=crop",
+    images: [
+      "https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?q=80&w=800&auto=format&fit=crop",
+      "https://images.unsplash.com/photo-1600585154340-be6161a56a0c?q=80&w=800&auto=format&fit=crop",
+      "https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?q=80&w=800&auto=format&fit=crop",
+      "https://images.unsplash.com/photo-1600566753190-17f0baa2a6c3?q=80&w=800&auto=format&fit=crop"
+    ],
     location: "Bandung Selatan, Jawa Barat",
     enLocation: "South Bandung, West Java",
     desc: "Kawasan hunian modern eksklusif dengan konsep Smart Eco-Living, memadukan keasrian alam pegunungan Bandung dengan fasilitas teknologi rumah pintar tercanggih.",
@@ -154,6 +161,12 @@ const PROJECTS_DATA: Project[] = [
     enTitle: "Premium Cluster - Emerald Residence",
     category: "Perumahan",
     image: "https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?q=80&w=800&auto=format&fit=crop",
+    images: [
+      "https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?q=80&w=800&auto=format&fit=crop",
+      "https://images.unsplash.com/photo-1600566752355-35792bedcfea?q=80&w=800&auto=format&fit=crop",
+      "https://images.unsplash.com/photo-1600210492486-724fe5c67fb0?q=80&w=800&auto=format&fit=crop",
+      "https://images.unsplash.com/photo-1512917774080-9991f1c4c750?q=80&w=800&auto=format&fit=crop"
+    ],
     location: "Pameungpeuk, Kabupaten Bandung",
     enLocation: "Pameungpeuk, Bandung Regency",
     desc: "Cluster premium berdesain Arsitektur Tropis Modern dengan spesifikasi material berkualitas tinggi, didesain khusus untuk kenyamanan dan nilai investasi jangka panjang keluarga Anda.",
@@ -171,6 +184,12 @@ const PROJECTS_DATA: Project[] = [
     enTitle: "Commercial Shophouse - Golden Square Boulevard",
     category: "Komersial",
     image: "https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?q=80&w=800&auto=format&fit=crop",
+    images: [
+      "https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?q=80&w=800&auto=format&fit=crop",
+      "https://images.unsplash.com/photo-1497366216548-37526070297c?q=80&w=800&auto=format&fit=crop",
+      "https://images.unsplash.com/photo-1497215728101-856f4ea42174?q=80&w=800&auto=format&fit=crop",
+      "https://images.unsplash.com/photo-1497366811353-6870744d04b2?q=80&w=800&auto=format&fit=crop"
+    ],
     location: "Banjaran Raya, Bandung",
     enLocation: "Banjaran Raya, Bandung",
     desc: "Kawasan ruko bisnis modern 3 lantai yang terletak strategis di jalan utama, dirancang khusus untuk mengakomodasi perkantoran, ritel premium, kuliner, dan pusat perbelanjaan.",
@@ -188,6 +207,12 @@ const PROJECTS_DATA: Project[] = [
     enTitle: "Industrial Warehouse - FGI Logistics Park",
     category: "Komersial",
     image: "https://images.unsplash.com/photo-1586528116311-ad8dd3c8310d?q=80&w=800&auto=format&fit=crop",
+    images: [
+      "https://images.unsplash.com/photo-1586528116311-ad8dd3c8310d?q=80&w=800&auto=format&fit=crop",
+      "https://images.unsplash.com/photo-1587293852726-70cdb56c2866?q=80&w=800&auto=format&fit=crop",
+      "https://images.unsplash.com/photo-1553413719-875871274712?q=80&w=800&auto=format&fit=crop",
+      "https://images.unsplash.com/photo-1494412574643-ff11b0a5c1c3?q=80&w=800&auto=format&fit=crop"
+    ],
     location: "Kawasan Industri Bandung, Jawa Barat",
     enLocation: "Bandung Industrial Area, West Java",
     desc: "Kompleks pergudangan modern berstandar internasional yang dilengkapi infrastruktur kokoh, ruang manuver kontainer luas, serta sistem keamanan terintegrasi untuk logistik modern.",
@@ -205,6 +230,12 @@ const PROJECTS_DATA: Project[] = [
     enTitle: "Business District - Central Plaza & Commercial Hub",
     category: "Komersial",
     image: "https://images.unsplash.com/photo-1497366216548-37526070297c?q=80&w=800&auto=format&fit=crop",
+    images: [
+      "https://images.unsplash.com/photo-1497366216548-37526070297c?q=80&w=800&auto=format&fit=crop",
+      "https://images.unsplash.com/photo-1497366811353-6870744d04b2?q=80&w=800&auto=format&fit=crop",
+      "https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?q=80&w=800&auto=format&fit=crop",
+      "https://images.unsplash.com/photo-1497215728101-856f4ea42174?q=80&w=800&auto=format&fit=crop"
+    ],
     location: "Pusat Kota Bandung, Jawa Barat",
     enLocation: "Bandung City Center, West Java",
     desc: "Pembangunan gedung perkantoran dan ruang usaha terpadu berlantai 6 dengan sertifikasi Green Building, menciptakan atmosfer kerja produktif, prestisius, dan hemat energi.",
@@ -221,6 +252,12 @@ const PROJECTS_DATA: Project[] = [
     enTitle: "Regional Infrastructure - Site Development & Access Road",
     category: "Infrastruktur",
     image: "https://images.unsplash.com/photo-1541888946425-d81bb19240f5?q=80&w=800&auto=format&fit=crop",
+    images: [
+      "https://images.unsplash.com/photo-1541888946425-d81bb19240f5?q=80&w=800&auto=format&fit=crop",
+      "https://images.unsplash.com/photo-1574169208507-84376144848b?q=80&w=800&auto=format&fit=crop",
+      "https://images.unsplash.com/photo-1504307651254-35680f356dfd?q=80&w=800&auto=format&fit=crop",
+      "https://images.unsplash.com/photo-1590069261209-f8e9b8642343?q=80&w=800&auto=format&fit=crop"
+    ],
     location: "Langonsari, Kabupaten Bandung",
     enLocation: "Langonsari, Bandung Regency",
     desc: "Pengerjaan matang site development, pengurukan lahan, sistem drainase modern beton pracetak, serta pengerasan jalan aspal hotmix untuk menyokong konektivitas kawasan perkotaan baru.",
@@ -231,6 +268,29 @@ const PROJECTS_DATA: Project[] = [
     enYear: "2025 - Ongoing",
     highlights: ["U-Ditch Concrete Drainage", "Aspal Hotmix Kelas II", "Retaining Wall Anti Longsor", "Penerangan Jalan Umum LED Solar"],
     enHighlights: ["U-Ditch Concrete Drainage", "Class II Hotmix Asphalt", "Anti-landslide Retaining Wall", "LED Solar Public Street Lighting"]
+  },
+  {
+    id: 7,
+    title: "Hunian Hotel & Smart Living - Foresyndo Residence 2",
+    enTitle: "Boutique Hotel & Smart Living - Foresyndo Residence 2",
+    category: "Perumahan",
+    image: "/src/assets/images/foresyndo_residence_two_1782634018176.jpg",
+    images: [
+      "/src/assets/images/foresyndo_residence_two_1782634018176.jpg",
+      "https://images.unsplash.com/photo-1566073771259-6a8506099945?q=80&w=800&auto=format&fit=crop",
+      "https://images.unsplash.com/photo-1582719478250-c89cae4dc85b?q=80&w=800&auto=format&fit=crop",
+      "https://images.unsplash.com/photo-1551882547-ff40c63fe5fa?q=80&w=800&auto=format&fit=crop"
+    ],
+    location: "Jatitujuh, Kabupaten Majalengka, Jawa Barat",
+    enLocation: "Jatitujuh, Majalengka Regency, West Java",
+    desc: "Proyek hunian hotel (boutique hotel) eksklusif dengan integrasi teknologi Smart Living terdepan. Dirancang untuk efisiensi energi, kenyamanan premium, dan gaya hidup modern yang prestisius.",
+    enDesc: "An exclusive boutique hotel residential project integrated with cutting-edge Smart Living technology. Designed for energy efficiency, premium comfort, and a prestigious modern lifestyle.",
+    size: "250 m² Luas Lahan",
+    enSize: "250 m² Land Area",
+    year: "2026 - Baru Diluncurkan",
+    enYear: "2026 - Newly Launched",
+    highlights: ["Sistem IoT Smart Living Terintegrasi", "Boutique Hotel Concept Suite", "Desain Arsitektur Modern Tropis", "Sertifikasi Efisiensi Energi Terpadu"],
+    enHighlights: ["Integrated IoT Smart Living System", "Boutique Hotel Concept Suite", "Modern Tropical Architectural Design", "Integrated Energy Efficiency Certification"]
   }
 ];
 
@@ -239,6 +299,7 @@ const TRANSLATIONS = {
     nav: {
       beranda: "Beranda",
       "tentang-kami": "Tentang Kami",
+      struktur: "Struktur",
       layanan: "Layanan",
       proyek: "Proyek",
       "visi-misi": "Visi & Misi",
@@ -277,6 +338,33 @@ const TRANSLATIONS = {
       p3Sub: "Dari perencanaan hingga konstruksi fisik.",
       p4: "Kemitraan Terpercaya",
       p4Sub: "Melayani instansi, swasta, dan individu.",
+    },
+    org: {
+      sub: "STRUKTUR ORGANISASI",
+      title: "Tata Kelola & Struktur Organisasi FGI",
+      desc: "Struktur manajemen PT. Foresyndo Global Indonesia dirancang untuk transparansi operasional, kepatuhan hukum yang ketat, serta efisiensi eksekusi proyek sipil.",
+      viewDiagram: "Bagan Hierarki",
+      viewGrid: "Detail Tim & Divisi",
+      roles: {
+        rups: "Rapat Umum Pemegang Saham (RUPS)",
+        rupsDesc: "Organ kekuasaan tertinggi perusahaan yang menetapkan arah kebijakan strategis jangka panjang, pengesahan anggaran, dan keputusan pemegang saham.",
+        komisaris: "Dewan Komisaris",
+        komisarisDesc: "Melakukan pengawasan atas jalannya kebijakan pengurusan perusahaan secara umum serta memberikan nasihat kepada jajaran Direksi secara berkala.",
+        ceo: "Direktur Utama (President Director / CEO)",
+        ceoDesc: "Memimpin seluruh roda operasional perusahaan, menjalin kemitraan investasi strategis, serta mengesahkan keputusan eksekutif tertinggi.",
+        cfo: "Direktur Keuangan & Administrasi (CFO)",
+        cfoDesc: "Mengelola aliran dana, audit laporan keuangan, transparansi biaya pembangunan (RAB), kepatuhan pajak, serta urusan administratif.",
+        coo: "Direktur Operasional & Konstruksi (COO)",
+        cooDesc: "Mengawasi jalannya pengerjaan fisik proyek di lapangan, memastikan standar mutu bahan, keselamatan kerja (K3), dan ketepatan timeline.",
+        architecture: "Divisi Arsitektur & Perencanaan",
+        architectureDesc: "Merancang desain tata kota, masterplan perumahan, visualisasi 3D photorealistic, serta detail teknis tata ruang estetis.",
+        civil: "Divisi Konstruksi & Rekayasa Sipil",
+        civilDesc: "Melaksanakan kalkulasi kekuatan struktur beton, drainase pracetak, jalan aspal, serta pengawasan teknis kekuatan bangunan.",
+        legal: "Divisi Legalitas & Perizinan",
+        legalDesc: "Menjamin seluruh perizinan AMDAL, sertifikat tanah (SHM/HGB), izin mendirikan bangunan (PBG/IMB), dan kontrak hukum clean & clear.",
+        pmo: "Manajemen Proyek (PMO) & Logistik",
+        pmoDesc: "Mengatur penjadwalan proyek melalui Gantt Chart, mengelola rantai pasok material berkualitas tinggi, dan koordinasi mandor lapangan."
+      }
     },
     services: {
       sub: "LAYANAN UTAMA",
@@ -571,6 +659,7 @@ const TRANSLATIONS = {
     nav: {
       beranda: "Home",
       "tentang-kami": "About Us",
+      struktur: "Structure",
       layanan: "Services",
       proyek: "Projects",
       "visi-misi": "Vision & Mission",
@@ -609,6 +698,33 @@ const TRANSLATIONS = {
       p3Sub: "From initial design to physical construction.",
       p4: "Trusted Partnership",
       p4Sub: "Serving government, corporate, and private clients.",
+    },
+    org: {
+      sub: "ORGANIZATIONAL STRUCTURE",
+      title: "FGI Governance & Organization Structure",
+      desc: "The management structure of PT. Foresyndo Global Indonesia is engineered for operational transparency, strict legal compliance, and high-efficiency civil project execution.",
+      viewDiagram: "Hierarchy Chart",
+      viewGrid: "Team & Division Details",
+      roles: {
+        rups: "General Meeting of Shareholders (RUPS)",
+        rupsDesc: "The supreme governing body of the company that establishes long-term strategic directions, approves corporate budgets, and handles major shareholder decisions.",
+        komisaris: "Board of Commissioners",
+        komisarisDesc: "Responsible for supervising general corporate management and advising the Board of Directors on operational compliance and strategy.",
+        ceo: "President Director & CEO",
+        ceoDesc: "Leads the company's overall operations, establishes strategic investment partnerships, and authorizes key executive decisions.",
+        cfo: "Director of Finance & Administration (CFO)",
+        cfoDesc: "Manages capital flow, audits financial records, ensures construction cost transparency (RAB), tax compliance, and general administration.",
+        coo: "Director of Operations & Construction (COO)",
+        cooDesc: "Supervises on-site physical construction, enforces material quality standards, K3 safety protocols, and strict schedule adherence.",
+        architecture: "Architecture & Planning Division",
+        architectureDesc: "Designs town plans, residential masterplans, photorealistic 3D visualization, and aesthetic spatial details.",
+        civil: "Construction & Civil Engineering Division",
+        civilDesc: "Handles structural concrete calculations, precast drainage engineering, asphalt paving, and building stability audits.",
+        legal: "Legality & Compliance Division",
+        legalDesc: "Ensures all environmental licenses (AMDAL), land titles (SHM/HGB), building permits (PBG/IMB), and contract law remain clean & clear.",
+        pmo: "Project Management (PMO) & Logistics",
+        pmoDesc: "Schedules construction phases via Gantt Charts, coordinates raw material supply chains, and manages site foremen."
+      }
     },
     services: {
       sub: "CORE SERVICES",
@@ -906,8 +1022,15 @@ export default function App() {
   const [darkMode, setDarkMode] = useState<boolean>(true);
   const [mobileMenuOpen, setMobileMenuOpen] = useState<boolean>(false);
   const [activeSection, setActiveSection] = useState<string>("beranda");
+  const [orgView, setOrgView] = useState<"diagram" | "grid">("diagram");
+  const [selectedOrgCard, setSelectedOrgCard] = useState<string | null>(null);
   const [projectFilter, setProjectFilter] = useState<"Semua" | "Perumahan" | "Komersial" | "Infrastruktur">("Semua");
   const [selectedProject, setSelectedProject] = useState<Project | null>(null);
+  const [activeImageIndex, setActiveImageIndex] = useState<number>(0);
+
+  useEffect(() => {
+    setActiveImageIndex(0);
+  }, [selectedProject]);
   const [scrolled, setScrolled] = useState<boolean>(false);
   const [showBackToTop, setShowBackToTop] = useState<boolean>(false);
   const [faqOpen, setFaqOpen] = useState<number | null>(null);
@@ -981,7 +1104,7 @@ export default function App() {
 
   // Intersection Observer to highlight active navigation link
   useEffect(() => {
-    const sections = ["beranda", "tentang-kami", "layanan", "proyek", "visi-misi", "mengapa-kami", "karir", "kontak"];
+    const sections = ["beranda", "tentang-kami", "struktur", "layanan", "proyek", "visi-misi", "mengapa-kami", "karir", "kontak"];
     const observerOptions = {
       root: null,
       rootMargin: "-20% 0px -60% 0px", // Active when section covers a good center portion
@@ -1054,6 +1177,10 @@ export default function App() {
         kontak: {
           title: "Hubungi Kami | PT. FORESYNDO GLOBAL INDONESIA",
           desc: "Hubungi kantor pemasaran dan tim teknis PT. FORESYNDO GLOBAL INDONESIA (FGI) untuk konsultasi rencana proyek konstruksi atau pembelian unit properti."
+        },
+        struktur: {
+          title: "Struktur Organisasi | PT. FORESYNDO GLOBAL INDONESIA",
+          desc: "Tata kelola dan bagan hierarki manajemen PT. FORESYNDO GLOBAL INDONESIA (FGI) dari Komisaris, Direksi, hingga Divisi Teknis dan Legalitas."
         }
       },
       en: {
@@ -1092,6 +1219,10 @@ export default function App() {
         kontak: {
           title: "Contact Us | PT. FORESYNDO GLOBAL INDONESIA",
           desc: "Get in touch with PT. FORESYNDO GLOBAL INDONESIA (FGI). Reach out for construction project consultations or premium property unit inquiries."
+        },
+        struktur: {
+          title: "Organizational Structure | PT. FORESYNDO GLOBAL INDONESIA",
+          desc: "Corporate governance and management hierarchy chart of PT. FORESYNDO GLOBAL INDONESIA (FGI) spanning the Board of Commissioners, Directors, and Technical teams."
         }
       }
     };
@@ -1311,6 +1442,7 @@ export default function App() {
             {[
               { id: "beranda", label: TRANSLATIONS[lang].nav.beranda },
               { id: "tentang-kami", label: TRANSLATIONS[lang].nav["tentang-kami"] },
+              { id: "struktur", label: TRANSLATIONS[lang].nav.struktur },
               { id: "layanan", label: TRANSLATIONS[lang].nav.layanan },
               { id: "proyek", label: TRANSLATIONS[lang].nav.proyek },
               { id: "visi-misi", label: TRANSLATIONS[lang].nav["visi-misi"] },
@@ -1468,6 +1600,7 @@ export default function App() {
                     {[
                       { id: "beranda", label: TRANSLATIONS[lang].nav.beranda },
                       { id: "tentang-kami", label: TRANSLATIONS[lang].nav["tentang-kami"] },
+                      { id: "struktur", label: TRANSLATIONS[lang].nav.struktur },
                       { id: "layanan", label: TRANSLATIONS[lang].nav.layanan },
                       { id: "proyek", label: TRANSLATIONS[lang].nav.proyek },
                       { id: "visi-misi", label: TRANSLATIONS[lang].nav["visi-misi"] },
@@ -1796,6 +1929,623 @@ export default function App() {
             </motion.div>
 
           </div>
+        </div>
+      </section>
+
+
+      {/* --- STRUKTUR ORGANISASI SECTION --- */}
+      <section id="struktur" className={`py-24 relative overflow-hidden z-10 border-b ${darkMode ? "bg-[#0B0F19] border-slate-900" : "bg-slate-50 border-slate-100"}`}>
+        {/* Subtle decorative background gradients */}
+        <div className="absolute top-1/4 left-1/4 w-96 h-96 bg-blue-500/5 rounded-full blur-3xl" />
+        <div className="absolute bottom-1/4 right-1/4 w-96 h-96 bg-amber-500/5 rounded-full blur-3xl" />
+
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+          
+          {/* Section Heading */}
+          <div className="max-w-3xl mx-auto text-center mb-16 space-y-4">
+            <div className="flex justify-between items-center max-w-[240px] mx-auto mb-2">
+              <div className="h-[1px] w-8 bg-slate-200 dark:bg-slate-800"></div>
+              <h3 className="text-xs font-black uppercase tracking-[0.25em] text-slate-400">
+                {TRANSLATIONS[lang].org.sub}
+              </h3>
+              <div className="h-[1px] w-8 bg-slate-200 dark:bg-slate-800"></div>
+            </div>
+            
+            <h2 className="text-3xl sm:text-4xl font-extrabold tracking-tight">
+              {TRANSLATIONS[lang].org.title}
+            </h2>
+            
+            <p className={`text-sm sm:text-base leading-relaxed ${darkMode ? "text-slate-400" : "text-slate-600"}`}>
+              {TRANSLATIONS[lang].org.desc}
+            </p>
+
+            {/* View Selector Buttons */}
+            <div className="pt-6 flex justify-center">
+              <div className={`inline-flex p-1 rounded-lg border ${
+                darkMode ? "bg-slate-950/50 border-slate-800" : "bg-white border-slate-200 shadow-sm"
+              }`}>
+                <button
+                  onClick={() => {
+                    setOrgView("diagram");
+                    setSelectedOrgCard(null);
+                  }}
+                  className={`px-4 py-2 text-xs font-bold uppercase tracking-wider rounded-md transition-all cursor-pointer ${
+                    orgView === "diagram"
+                      ? "bg-amber-500 text-slate-950 shadow-md"
+                      : darkMode
+                      ? "text-slate-400 hover:text-white hover:bg-slate-900/50"
+                      : "text-slate-600 hover:text-slate-900 hover:bg-slate-50"
+                  }`}
+                >
+                  {TRANSLATIONS[lang].org.viewDiagram}
+                </button>
+                <button
+                  onClick={() => {
+                    setOrgView("grid");
+                    setSelectedOrgCard(null);
+                  }}
+                  className={`px-4 py-2 text-xs font-bold uppercase tracking-wider rounded-md transition-all cursor-pointer ${
+                    orgView === "grid"
+                      ? "bg-amber-500 text-slate-950 shadow-md"
+                      : darkMode
+                      ? "text-slate-400 hover:text-white hover:bg-slate-900/50"
+                      : "text-slate-600 hover:text-slate-900 hover:bg-slate-50"
+                  }`}
+                >
+                  {TRANSLATIONS[lang].org.viewGrid}
+                </button>
+              </div>
+            </div>
+          </div>
+
+          <AnimatePresence mode="wait">
+            {orgView === "diagram" ? (
+              <motion.div
+                key="diagram"
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                exit={{ opacity: 0, y: -20 }}
+                transition={{ duration: 0.4 }}
+                className="space-y-12 max-w-5xl mx-auto"
+                id="org-diagram-view"
+              >
+                {/* STAGE 1: RUPS */}
+                <div className="flex flex-col items-center relative">
+                  <motion.div
+                    whileHover={{ scale: 1.02 }}
+                    onClick={() => setSelectedOrgCard(selectedOrgCard === "rups" ? null : "rups")}
+                    className={`p-6 rounded-lg border text-center max-w-sm w-full cursor-pointer transition-all ${
+                      selectedOrgCard === "rups"
+                        ? "border-amber-500 bg-amber-500/10 shadow-lg shadow-amber-500/5"
+                        : darkMode
+                        ? "bg-slate-900/40 border-slate-800 hover:border-slate-700"
+                        : "bg-white border-slate-200 hover:border-slate-300 shadow-sm"
+                    }`}
+                  >
+                    <div className="mx-auto w-10 h-10 rounded-full bg-blue-500/10 text-blue-500 flex items-center justify-center mb-3">
+                      <Users size={20} />
+                    </div>
+                    <h4 className="text-sm font-black uppercase tracking-wider">
+                      {TRANSLATIONS[lang].org.roles.rups}
+                    </h4>
+                    <p className="text-[10px] text-amber-500 uppercase tracking-widest font-black mt-1">
+                      {lang === "id" ? "Wewenang Tertinggi" : "Supreme Authority"}
+                    </p>
+                    
+                    {selectedOrgCard === "rups" && (
+                      <motion.p
+                        initial={{ opacity: 0, height: 0 }}
+                        animate={{ opacity: 1, height: "auto" }}
+                        className={`text-xs mt-3 leading-relaxed border-t pt-3 ${
+                          darkMode ? "text-slate-300 border-slate-800" : "text-slate-600 border-slate-100"
+                        }`}
+                      >
+                        {TRANSLATIONS[lang].org.roles.rupsDesc}
+                      </motion.p>
+                    )}
+                  </motion.div>
+                  
+                  {/* Dotted link down */}
+                  <div className="w-[2px] h-12 border-l-2 border-dashed border-slate-300 dark:border-slate-800" />
+                </div>
+
+                {/* STAGE 2: BOARD OF COMMISSIONERS */}
+                <div className="flex flex-col items-center relative">
+                  <motion.div
+                    whileHover={{ scale: 1.02 }}
+                    onClick={() => setSelectedOrgCard(selectedOrgCard === "komisaris" ? null : "komisaris")}
+                    className={`p-6 rounded-lg border text-center max-w-sm w-full cursor-pointer transition-all ${
+                      selectedOrgCard === "komisaris"
+                        ? "border-amber-500 bg-amber-500/10 shadow-lg shadow-amber-500/5"
+                        : darkMode
+                        ? "bg-slate-900/40 border-slate-800 hover:border-slate-700"
+                        : "bg-white border-slate-200 hover:border-slate-300 shadow-sm"
+                    }`}
+                  >
+                    <div className="mx-auto w-10 h-10 rounded-full bg-purple-500/10 text-purple-500 flex items-center justify-center mb-3">
+                      <Award size={20} />
+                    </div>
+                    <h4 className="text-sm font-black uppercase tracking-wider">
+                      {TRANSLATIONS[lang].org.roles.komisaris}
+                    </h4>
+                    <p className="text-[10px] text-amber-500 uppercase tracking-widest font-black mt-1">
+                      {lang === "id" ? "Pengawasan & Governance" : "Governance & Advisory"}
+                    </p>
+
+                    {selectedOrgCard === "komisaris" && (
+                      <motion.p
+                        initial={{ opacity: 0, height: 0 }}
+                        animate={{ opacity: 1, height: "auto" }}
+                        className={`text-xs mt-3 leading-relaxed border-t pt-3 ${
+                          darkMode ? "text-slate-300 border-slate-800" : "text-slate-600 border-slate-100"
+                        }`}
+                      >
+                        {TRANSLATIONS[lang].org.roles.komisarisDesc}
+                      </motion.p>
+                    )}
+                  </motion.div>
+
+                  {/* Dotted link down */}
+                  <div className="w-[2px] h-12 border-l-2 border-dashed border-slate-300 dark:border-slate-800" />
+                </div>
+
+                {/* STAGE 3: EXECUTIVE LEADERSHIP (CEO) */}
+                <div className="flex flex-col items-center relative">
+                  <motion.div
+                    whileHover={{ scale: 1.02 }}
+                    onClick={() => setSelectedOrgCard(selectedOrgCard === "ceo" ? null : "ceo")}
+                    className={`p-6 rounded-lg border text-center max-w-md w-full cursor-pointer transition-all relative ${
+                      selectedOrgCard === "ceo"
+                        ? "border-amber-500 bg-amber-500/10 shadow-lg shadow-amber-500/5"
+                        : darkMode
+                        ? "bg-slate-900/40 border-slate-800 hover:border-slate-700"
+                        : "bg-white border-slate-200 hover:border-slate-300 shadow-sm"
+                    }`}
+                  >
+                    {/* Glowing Accent Border for CEO */}
+                    <div className="absolute top-0 inset-x-0 h-[2px] bg-gradient-to-r from-amber-400 to-amber-600 rounded-t-lg" />
+                    
+                    <div className="mx-auto w-10 h-10 rounded-full bg-amber-500/10 text-amber-500 flex items-center justify-center mb-3">
+                      <Briefcase size={20} />
+                    </div>
+                    <h4 className="text-sm font-black uppercase tracking-wider">
+                      {TRANSLATIONS[lang].org.roles.ceo}
+                    </h4>
+                    <p className="text-xs font-bold text-slate-400 mt-0.5">
+                      Hasanudin
+                    </p>
+                    <p className="text-[10px] text-amber-500 uppercase tracking-widest font-black mt-1">
+                      {lang === "id" ? "Pimpinan Eksekutif Tertinggi" : "Chief Executive Leadership"}
+                    </p>
+
+                    {selectedOrgCard === "ceo" && (
+                      <motion.p
+                        initial={{ opacity: 0, height: 0 }}
+                        animate={{ opacity: 1, height: "auto" }}
+                        className={`text-xs mt-3 leading-relaxed border-t pt-3 ${
+                          darkMode ? "text-slate-300 border-slate-800" : "text-slate-600 border-slate-100"
+                        }`}
+                      >
+                        {TRANSLATIONS[lang].org.roles.ceoDesc}
+                      </motion.p>
+                    )}
+                  </motion.div>
+
+                  {/* Dotted link down to split */}
+                  <div className="w-[2px] h-12 border-l-2 border-dashed border-slate-300 dark:border-slate-800 mx-auto" />
+                </div>
+
+                {/* STAGE 4: CFO & COO (DIRECTORS SPLIT) */}
+                <div className="relative">
+                  {/* Horizontal Connector Line */}
+                  <div className="absolute top-0 left-1/4 right-1/4 h-[2px] border-t-2 border-dashed border-slate-300 dark:border-slate-800 hidden md:block" />
+                  
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-8 md:pt-6 relative">
+                    {/* Vertical link helper lines for desktop */}
+                    <div className="absolute top-0 left-1/4 w-[2px] h-6 border-l-2 border-dashed border-slate-300 dark:border-slate-800 hidden md:block" />
+                    <div className="absolute top-0 right-1/4 w-[2px] h-6 border-l-2 border-dashed border-slate-300 dark:border-slate-800 hidden md:block" />
+
+                    {/* CFO CARD */}
+                    <div className="flex flex-col items-center">
+                      <motion.div
+                        whileHover={{ scale: 1.02 }}
+                        onClick={() => setSelectedOrgCard(selectedOrgCard === "cfo" ? null : "cfo")}
+                        className={`p-6 rounded-lg border text-center w-full max-w-sm cursor-pointer transition-all ${
+                          selectedOrgCard === "cfo"
+                            ? "border-amber-500 bg-amber-500/10 shadow-lg shadow-amber-500/5"
+                            : darkMode
+                            ? "bg-slate-900/40 border-slate-800 hover:border-slate-700"
+                            : "bg-white border-slate-200 hover:border-slate-300 shadow-sm"
+                        }`}
+                      >
+                        <div className="mx-auto w-10 h-10 rounded-full bg-emerald-500/10 text-emerald-500 flex items-center justify-center mb-3">
+                          <Coins size={20} />
+                        </div>
+                        <h4 className="text-sm font-black uppercase tracking-wider">
+                          {TRANSLATIONS[lang].org.roles.cfo}
+                        </h4>
+                        <p className="text-xs font-bold text-slate-400 mt-0.5">
+                          Rina Amelia, S.E., M.Ak.
+                        </p>
+                        <p className="text-[10px] text-amber-500 uppercase tracking-widest font-black mt-1">
+                          {lang === "id" ? "Manajemen Keuangan & Legal" : "Finance & Compliance Director"}
+                        </p>
+
+                        {selectedOrgCard === "cfo" && (
+                          <motion.p
+                            initial={{ opacity: 0, height: 0 }}
+                            animate={{ opacity: 1, height: "auto" }}
+                            className={`text-xs mt-3 leading-relaxed border-t pt-3 ${
+                              darkMode ? "text-slate-300 border-slate-800" : "text-slate-600 border-slate-100"
+                            }`}
+                          >
+                            {TRANSLATIONS[lang].org.roles.cfoDesc}
+                          </motion.p>
+                        )}
+                      </motion.div>
+                    </div>
+
+                    {/* COO CARD */}
+                    <div className="flex flex-col items-center">
+                      <motion.div
+                        whileHover={{ scale: 1.02 }}
+                        onClick={() => setSelectedOrgCard(selectedOrgCard === "coo" ? null : "coo")}
+                        className={`p-6 rounded-lg border text-center w-full max-w-sm cursor-pointer transition-all ${
+                          selectedOrgCard === "coo"
+                            ? "border-amber-500 bg-amber-500/10 shadow-lg shadow-amber-500/5"
+                            : darkMode
+                            ? "bg-slate-900/40 border-slate-800 hover:border-slate-700"
+                            : "bg-white border-slate-200 hover:border-slate-300 shadow-sm"
+                        }`}
+                      >
+                        <div className="mx-auto w-10 h-10 rounded-full bg-orange-500/10 text-orange-500 flex items-center justify-center mb-3">
+                          <Hammer size={20} />
+                        </div>
+                        <h4 className="text-sm font-black uppercase tracking-wider">
+                          {TRANSLATIONS[lang].org.roles.coo}
+                        </h4>
+                        <p className="text-xs font-bold text-slate-400 mt-0.5">
+                          Hendra Kurniawan, S.T., M.Sc.
+                        </p>
+                        <p className="text-[10px] text-amber-500 uppercase tracking-widest font-black mt-1">
+                          {lang === "id" ? "Manajemen Operasi & Konstruksi" : "Operations & Construction Director"}
+                        </p>
+
+                        {selectedOrgCard === "coo" && (
+                          <motion.p
+                            initial={{ opacity: 0, height: 0 }}
+                            animate={{ opacity: 1, height: "auto" }}
+                            className={`text-xs mt-3 leading-relaxed border-t pt-3 ${
+                              darkMode ? "text-slate-300 border-slate-800" : "text-slate-600 border-slate-100"
+                            }`}
+                          >
+                            {TRANSLATIONS[lang].org.roles.cooDesc}
+                          </motion.p>
+                        )}
+                      </motion.div>
+                    </div>
+                  </div>
+
+                  {/* Dotted split down to Division level */}
+                  <div className="w-[2px] h-12 border-l-2 border-dashed border-slate-300 dark:border-slate-800 mx-auto" />
+                </div>
+
+                {/* STAGE 5: DIVISIONS */}
+                <div className="relative">
+                  {/* Horizontal Connection Line */}
+                  <div className="absolute top-0 left-[12.5%] right-[12.5%] h-[2px] border-t-2 border-dashed border-slate-300 dark:border-slate-800 hidden lg:block" />
+                  
+                  <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 lg:pt-6 relative">
+                    {/* Vertical connectors for large screens */}
+                    <div className="absolute top-0 left-[12.5%] w-[2px] h-6 border-l-2 border-dashed border-slate-300 dark:border-slate-800 hidden lg:block" />
+                    <div className="absolute top-0 left-[37.5%] w-[2px] h-6 border-l-2 border-dashed border-slate-300 dark:border-slate-800 hidden lg:block" />
+                    <div className="absolute top-0 left-[62.5%] w-[2px] h-6 border-l-2 border-dashed border-slate-300 dark:border-slate-800 hidden lg:block" />
+                    <div className="absolute top-0 left-[87.5%] w-[2px] h-6 border-l-2 border-dashed border-slate-300 dark:border-slate-800 hidden lg:block" />
+
+                    {/* Architecture Division */}
+                    <motion.div
+                      whileHover={{ scale: 1.02 }}
+                      onClick={() => setSelectedOrgCard(selectedOrgCard === "architecture" ? null : "architecture")}
+                      className={`p-5 rounded-lg border cursor-pointer transition-all flex flex-col justify-between ${
+                        selectedOrgCard === "architecture"
+                          ? "border-amber-500 bg-amber-500/10 shadow-lg shadow-amber-500/5"
+                          : darkMode
+                          ? "bg-slate-900/40 border-slate-800 hover:border-slate-700"
+                          : "bg-white border-slate-200 hover:border-slate-300 shadow-sm"
+                      }`}
+                    >
+                      <div>
+                        <div className="w-8 h-8 rounded bg-blue-500/10 text-blue-500 flex items-center justify-center mb-3">
+                          <Ruler size={16} />
+                        </div>
+                        <h5 className="text-xs font-black uppercase tracking-wider">
+                          {TRANSLATIONS[lang].org.roles.architecture}
+                        </h5>
+                        <p className="text-[9px] text-slate-400 uppercase tracking-widest font-semibold mt-1">
+                          {lang === "id" ? "Perencanaan Kreatif" : "Creative Planning"}
+                        </p>
+                      </div>
+                      
+                      {selectedOrgCard === "architecture" ? (
+                        <motion.p
+                          initial={{ opacity: 0, height: 0 }}
+                          animate={{ opacity: 1, height: "auto" }}
+                          className={`text-[11px] mt-3 leading-relaxed border-t pt-3 ${
+                            darkMode ? "text-slate-300 border-slate-800" : "text-slate-600 border-slate-100"
+                          }`}
+                        >
+                          {TRANSLATIONS[lang].org.roles.architectureDesc}
+                        </motion.p>
+                      ) : (
+                        <p className="text-[10px] text-amber-500 mt-3 font-semibold uppercase tracking-widest text-right flex items-center justify-end gap-1">
+                          {lang === "id" ? "Info Detail" : "View Info"} <ArrowRight size={10} />
+                        </p>
+                      )}
+                    </motion.div>
+
+                    {/* Civil Construction Division */}
+                    <motion.div
+                      whileHover={{ scale: 1.02 }}
+                      onClick={() => setSelectedOrgCard(selectedOrgCard === "civil" ? null : "civil")}
+                      className={`p-5 rounded-lg border cursor-pointer transition-all flex flex-col justify-between ${
+                        selectedOrgCard === "civil"
+                          ? "border-amber-500 bg-amber-500/10 shadow-lg shadow-amber-500/5"
+                          : darkMode
+                          ? "bg-slate-900/40 border-slate-800 hover:border-slate-700"
+                          : "bg-white border-slate-200 hover:border-slate-300 shadow-sm"
+                      }`}
+                    >
+                      <div>
+                        <div className="w-8 h-8 rounded bg-orange-500/10 text-orange-500 flex items-center justify-center mb-3">
+                          <Building size={16} />
+                        </div>
+                        <h5 className="text-xs font-black uppercase tracking-wider">
+                          {TRANSLATIONS[lang].org.roles.civil}
+                        </h5>
+                        <p className="text-[9px] text-slate-400 uppercase tracking-widest font-semibold mt-1">
+                          {lang === "id" ? "Rekayasa Struktur" : "Structural Engineering"}
+                        </p>
+                      </div>
+
+                      {selectedOrgCard === "civil" ? (
+                        <motion.p
+                          initial={{ opacity: 0, height: 0 }}
+                          animate={{ opacity: 1, height: "auto" }}
+                          className={`text-[11px] mt-3 leading-relaxed border-t pt-3 ${
+                            darkMode ? "text-slate-300 border-slate-800" : "text-slate-600 border-slate-100"
+                          }`}
+                        >
+                          {TRANSLATIONS[lang].org.roles.civilDesc}
+                        </motion.p>
+                      ) : (
+                        <p className="text-[10px] text-amber-500 mt-3 font-semibold uppercase tracking-widest text-right flex items-center justify-end gap-1">
+                          {lang === "id" ? "Info Detail" : "View Info"} <ArrowRight size={10} />
+                        </p>
+                      )}
+                    </motion.div>
+
+                    {/* Legal & Compliance Division */}
+                    <motion.div
+                      whileHover={{ scale: 1.02 }}
+                      onClick={() => setSelectedOrgCard(selectedOrgCard === "legal" ? null : "legal")}
+                      className={`p-5 rounded-lg border cursor-pointer transition-all flex flex-col justify-between ${
+                        selectedOrgCard === "legal"
+                          ? "border-amber-500 bg-amber-500/10 shadow-lg shadow-amber-500/5"
+                          : darkMode
+                          ? "bg-slate-900/40 border-slate-800 hover:border-slate-700"
+                          : "bg-white border-slate-200 hover:border-slate-300 shadow-sm"
+                      }`}
+                    >
+                      <div>
+                        <div className="w-8 h-8 rounded bg-emerald-500/10 text-emerald-500 flex items-center justify-center mb-3">
+                          <ShieldCheck size={16} />
+                        </div>
+                        <h5 className="text-xs font-black uppercase tracking-wider">
+                          {TRANSLATIONS[lang].org.roles.legal}
+                        </h5>
+                        <p className="text-[9px] text-slate-400 uppercase tracking-widest font-semibold mt-1">
+                          {lang === "id" ? "Keamanan Legalitas" : "Legal & Compliance"}
+                        </p>
+                      </div>
+
+                      {selectedOrgCard === "legal" ? (
+                        <motion.p
+                          initial={{ opacity: 0, height: 0 }}
+                          animate={{ opacity: 1, height: "auto" }}
+                          className={`text-[11px] mt-3 leading-relaxed border-t pt-3 ${
+                            darkMode ? "text-slate-300 border-slate-800" : "text-slate-600 border-slate-100"
+                          }`}
+                        >
+                          {TRANSLATIONS[lang].org.roles.legalDesc}
+                        </motion.p>
+                      ) : (
+                        <p className="text-[10px] text-amber-500 mt-3 font-semibold uppercase tracking-widest text-right flex items-center justify-end gap-1">
+                          {lang === "id" ? "Info Detail" : "View Info"} <ArrowRight size={10} />
+                        </p>
+                      )}
+                    </motion.div>
+
+                    {/* PMO Division */}
+                    <motion.div
+                      whileHover={{ scale: 1.02 }}
+                      onClick={() => setSelectedOrgCard(selectedOrgCard === "pmo" ? null : "pmo")}
+                      className={`p-5 rounded-lg border cursor-pointer transition-all flex flex-col justify-between ${
+                        selectedOrgCard === "pmo"
+                          ? "border-amber-500 bg-amber-500/10 shadow-lg shadow-amber-500/5"
+                          : darkMode
+                          ? "bg-slate-900/40 border-slate-800 hover:border-slate-700"
+                          : "bg-white border-slate-200 hover:border-slate-300 shadow-sm"
+                      }`}
+                    >
+                      <div>
+                        <div className="w-8 h-8 rounded bg-purple-500/10 text-purple-500 flex items-center justify-center mb-3">
+                          <Clock size={16} />
+                        </div>
+                        <h5 className="text-xs font-black uppercase tracking-wider">
+                          {TRANSLATIONS[lang].org.roles.pmo}
+                        </h5>
+                        <p className="text-[9px] text-slate-400 uppercase tracking-widest font-semibold mt-1">
+                          {lang === "id" ? "Timeline & Logistik" : "Timelines & Logistics"}
+                        </p>
+                      </div>
+
+                      {selectedOrgCard === "pmo" ? (
+                        <motion.p
+                          initial={{ opacity: 0, height: 0 }}
+                          animate={{ opacity: 1, height: "auto" }}
+                          className={`text-[11px] mt-3 leading-relaxed border-t pt-3 ${
+                            darkMode ? "text-slate-300 border-slate-800" : "text-slate-600 border-slate-100"
+                          }`}
+                        >
+                          {TRANSLATIONS[lang].org.roles.pmoDesc}
+                        </motion.p>
+                      ) : (
+                        <p className="text-[10px] text-amber-500 mt-3 font-semibold uppercase tracking-widest text-right flex items-center justify-end gap-1">
+                          {lang === "id" ? "Info Detail" : "View Info"} <ArrowRight size={10} />
+                        </p>
+                      )}
+                    </motion.div>
+
+                  </div>
+                </div>
+
+                {/* Helpful Instruction Tip */}
+                <p className="text-center text-[10px] uppercase font-bold tracking-widest text-slate-500 pt-6">
+                  {lang === "id" ? "💡 Klik pada masing-masing jabatan untuk membaca detail rincian tugas & wewenang" : "💡 Click on each position card to read the detail scope of roles & duties"}
+                </p>
+              </motion.div>
+            ) : (
+              <motion.div
+                key="grid"
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                exit={{ opacity: 0, y: -20 }}
+                transition={{ duration: 0.4 }}
+                className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8"
+                id="org-grid-view"
+              >
+                {[
+                  {
+                    key: "rups",
+                    title: TRANSLATIONS[lang].org.roles.rups,
+                    subtitle: lang === "id" ? "Wewenang Strategis Tertinggi" : "Supreme Strategic Authority",
+                    desc: TRANSLATIONS[lang].org.roles.rupsDesc,
+                    icon: <Users size={20} />,
+                    color: "bg-blue-500/10 text-blue-500 border-blue-500/10",
+                    staff: lang === "id" ? "Pemegang Saham Utama FGI" : "Key Shareholders & Founders"
+                  },
+                  {
+                    key: "komisaris",
+                    title: TRANSLATIONS[lang].org.roles.komisaris,
+                    subtitle: lang === "id" ? "Dewan Pengawas Utama" : "Principal Board of Oversight",
+                    desc: TRANSLATIONS[lang].org.roles.komisarisDesc,
+                    icon: <Award size={20} />,
+                    color: "bg-purple-500/10 text-purple-500 border-purple-500/10",
+                    staff: "Drs. M. Taufik, M.B.A."
+                  },
+                  {
+                    key: "ceo",
+                    title: TRANSLATIONS[lang].org.roles.ceo,
+                    subtitle: lang === "id" ? "Manajemen Direksi Utama" : "President Director & CEO",
+                    desc: TRANSLATIONS[lang].org.roles.ceoDesc,
+                    icon: <Briefcase size={20} />,
+                    color: "bg-amber-500/10 text-amber-500 border-amber-500/20",
+                    staff: "Hasanudin"
+                  },
+                  {
+                    key: "cfo",
+                    title: TRANSLATIONS[lang].org.roles.cfo,
+                    subtitle: lang === "id" ? "Direktur Keuangan & Legalitas" : "Finance & Admin Director",
+                    desc: TRANSLATIONS[lang].org.roles.cfoDesc,
+                    icon: <Coins size={20} />,
+                    color: "bg-emerald-500/10 text-emerald-500 border-emerald-500/10",
+                    staff: "Rina Amelia, S.E., M.Ak."
+                  },
+                  {
+                    key: "coo",
+                    title: TRANSLATIONS[lang].org.roles.coo,
+                    subtitle: lang === "id" ? "Direktur Operasional & Teknik" : "Operations & Technical Director",
+                    desc: TRANSLATIONS[lang].org.roles.cooDesc,
+                    icon: <Hammer size={20} />,
+                    color: "bg-orange-500/10 text-orange-500 border-orange-500/10",
+                    staff: "Hendra Kurniawan, S.T., M.Sc."
+                  },
+                  {
+                    key: "architecture",
+                    title: TRANSLATIONS[lang].org.roles.architecture,
+                    subtitle: lang === "id" ? "Kepala Tim Arsitek & Desain" : "Chief of Architecture",
+                    desc: TRANSLATIONS[lang].org.roles.architectureDesc,
+                    icon: <Ruler size={20} />,
+                    color: "bg-sky-500/10 text-sky-500 border-sky-500/10",
+                    staff: "Aditya Pratama, S.Ars., IAI"
+                  },
+                  {
+                    key: "civil",
+                    title: TRANSLATIONS[lang].org.roles.civil,
+                    subtitle: lang === "id" ? "Kepala Tim Insinyur Sipil" : "Lead Civil Engineer",
+                    desc: TRANSLATIONS[lang].org.roles.civilDesc,
+                    icon: <Building size={20} />,
+                    color: "bg-rose-500/10 text-rose-500 border-rose-500/10",
+                    staff: "Ir. Yusuf Nugroho, S.T., IPM"
+                  },
+                  {
+                    key: "legal",
+                    title: TRANSLATIONS[lang].org.roles.legal,
+                    subtitle: lang === "id" ? "Kepala Bagian Hukum & Izin" : "Chief Legal Officer",
+                    desc: TRANSLATIONS[lang].org.roles.legalDesc,
+                    icon: <ShieldCheck size={20} />,
+                    color: "bg-teal-500/10 text-teal-500 border-teal-500/10",
+                    staff: "Farhan Syahputra, S.H., M.H."
+                  },
+                  {
+                    key: "pmo",
+                    title: TRANSLATIONS[lang].org.roles.pmo,
+                    subtitle: lang === "id" ? "Manajer Proyek & Logistik" : "Project Manager & Logistics Head",
+                    desc: TRANSLATIONS[lang].org.roles.pmoDesc,
+                    icon: <Clock size={20} />,
+                    color: "bg-indigo-500/10 text-indigo-500 border-indigo-500/10",
+                    staff: "Bambang Setiawan, S.T."
+                  }
+                ].map((member) => (
+                  <motion.div
+                    key={member.key}
+                    whileHover={{ y: -4, transition: { duration: 0.2 } }}
+                    className={`p-6 rounded-lg border flex flex-col justify-between ${
+                      darkMode ? "bg-slate-900/40 border-slate-800" : "bg-white border-slate-200 shadow-sm"
+                    }`}
+                  >
+                    <div className="space-y-4">
+                      <div className="flex items-center gap-3">
+                        <div className={`p-2.5 rounded-lg ${member.color}`}>
+                          {member.icon}
+                        </div>
+                        <div>
+                          <h4 className="text-sm font-black uppercase tracking-wider">{member.title}</h4>
+                          <p className="text-[10px] text-slate-400 uppercase tracking-widest font-bold mt-0.5">{member.subtitle}</p>
+                        </div>
+                      </div>
+                      
+                      <p className={`text-xs leading-relaxed ${darkMode ? "text-slate-300" : "text-slate-600"}`}>
+                        {member.desc}
+                      </p>
+                    </div>
+
+                    <div className={`mt-6 pt-4 border-t flex items-center justify-between text-xs ${
+                      darkMode ? "border-slate-800" : "border-slate-100"
+                    }`}>
+                      <span className="text-[10px] text-slate-400 uppercase tracking-widest font-semibold">
+                        {lang === "id" ? "Penanggung Jawab / Tim" : "Responsible Personnel"}
+                      </span>
+                      <span className="font-bold text-amber-500 text-right">
+                        {member.staff}
+                      </span>
+                    </div>
+                  </motion.div>
+                ))}
+              </motion.div>
+            )}
+          </AnimatePresence>
+
         </div>
       </section>
 
@@ -3220,7 +3970,7 @@ export default function App() {
                     <Instagram size={15} />
                   </a>
                   <a
-                    href="https://www.facebook.com/foresyndoglobalindonesia"
+                    href="https://www.facebook.com/profile.php?id=61577198932542"
                     target="_blank"
                     rel="noopener noreferrer"
                     className="w-8 h-8 rounded bg-slate-800/50 border border-slate-850 hover:border-amber-500 hover:text-amber-500 text-slate-400 flex items-center justify-center transition-all duration-300 hover:-translate-y-0.5 active:translate-y-0 cursor-pointer"
@@ -3250,6 +4000,7 @@ export default function App() {
                 {[
                   { id: "beranda", label: TRANSLATIONS[lang].nav.beranda },
                   { id: "tentang-kami", label: TRANSLATIONS[lang].nav["tentang-kami"] },
+                  { id: "struktur", label: TRANSLATIONS[lang].nav.struktur },
                   { id: "layanan", label: TRANSLATIONS[lang].nav.layanan },
                   { id: "proyek", label: TRANSLATIONS[lang].projects.sub },
                   { id: "visi-misi", label: TRANSLATIONS[lang].nav["visi-misi"] },
@@ -3474,25 +4225,110 @@ export default function App() {
               </button>
 
               <div className="overflow-y-auto">
-                {/* Hero image header */}
-                <div className="relative h-[250px] sm:h-[320px] w-full">
-                  <img
-                    src={selectedProject.image}
-                    alt={lang === "en" && selectedProject.enTitle ? selectedProject.enTitle : selectedProject.title}
-                    className="w-full h-full object-cover object-center"
-                  />
-                  <div className="absolute inset-0 bg-gradient-to-t from-slate-950 via-slate-950/40 to-transparent z-10" />
-                  <div className="absolute bottom-6 left-6 right-6 z-20">
-                    <span className="bg-gradient-to-r from-amber-400 to-amber-600 text-slate-950 text-[9px] font-black tracking-widest uppercase px-2.5 py-1 rounded">
-                      {selectedProject.category === "Perumahan" ? TRANSLATIONS[lang].projects.filterPerumahan :
-                       selectedProject.category === "Komersial" ? TRANSLATIONS[lang].projects.filterKomersial :
-                       TRANSLATIONS[lang].projects.filterInfrastruktur}
-                    </span>
-                    <h3 className="text-xl sm:text-2xl font-bold text-white mt-2 leading-tight">
-                      {lang === "en" && selectedProject.enTitle ? selectedProject.enTitle : selectedProject.title}
-                    </h3>
-                  </div>
-                </div>
+                {/* Hero image carousel header */}
+                {(() => {
+                  const carouselImages = selectedProject.images || [selectedProject.image];
+                  return (
+                    <>
+                      <div className="relative h-[250px] sm:h-[350px] w-full bg-slate-950 overflow-hidden">
+                        <AnimatePresence mode="wait">
+                          <motion.img
+                            key={activeImageIndex}
+                            src={carouselImages[activeImageIndex]}
+                            alt={`${lang === "en" && selectedProject.enTitle ? selectedProject.enTitle : selectedProject.title} - Image ${activeImageIndex + 1}`}
+                            initial={{ opacity: 0 }}
+                            animate={{ opacity: 1 }}
+                            exit={{ opacity: 0 }}
+                            transition={{ duration: 0.3 }}
+                            className="w-full h-full object-cover object-center"
+                          />
+                        </AnimatePresence>
+
+                        {/* Gradient overlays */}
+                        <div className="absolute inset-x-0 bottom-0 h-32 bg-gradient-to-t from-slate-950 to-transparent z-10 pointer-events-none" />
+                        <div className="absolute inset-x-0 top-0 h-16 bg-gradient-to-b from-slate-950/40 to-transparent z-10 pointer-events-none" />
+
+                        {/* Carousel Left/Right Buttons */}
+                        {carouselImages.length > 1 && (
+                          <>
+                            <button
+                              onClick={(e) => {
+                                e.stopPropagation();
+                                setActiveImageIndex((prev) => (prev === 0 ? carouselImages.length - 1 : prev - 1));
+                              }}
+                              className="absolute left-4 top-1/2 -translate-y-1/2 z-20 p-2 rounded-full bg-slate-950/60 hover:bg-amber-500 hover:text-slate-950 text-white transition-all cursor-pointer shadow-md focus:outline-none focus:ring-2 focus:ring-amber-500"
+                              aria-label="Previous image"
+                            >
+                              <ChevronLeft size={20} />
+                            </button>
+                            <button
+                              onClick={(e) => {
+                                e.stopPropagation();
+                                setActiveImageIndex((prev) => (prev === carouselImages.length - 1 ? 0 : prev + 1));
+                              }}
+                              className="absolute right-4 top-1/2 -translate-y-1/2 z-20 p-2 rounded-full bg-slate-950/60 hover:bg-amber-500 hover:text-slate-950 text-white transition-all cursor-pointer shadow-md focus:outline-none focus:ring-2 focus:ring-amber-500"
+                              aria-label="Next image"
+                            >
+                              <ChevronRight size={20} />
+                            </button>
+                          </>
+                        )}
+
+                        {/* Indicator info badges */}
+                        <div className="absolute top-4 left-4 z-20 flex items-center gap-2">
+                          <span className="bg-slate-950/70 backdrop-blur-md text-[10px] font-black tracking-widest text-white px-2 py-1 rounded">
+                            {selectedProject.category === "Perumahan" ? TRANSLATIONS[lang].projects.filterPerumahan :
+                             selectedProject.category === "Komersial" ? TRANSLATIONS[lang].projects.filterKomersial :
+                             TRANSLATIONS[lang].projects.filterInfrastruktur}
+                          </span>
+                          {carouselImages.length > 1 && (
+                            <span className="bg-amber-500 text-slate-950 text-[10px] font-mono font-black tracking-wider px-2 py-1 rounded">
+                              {activeImageIndex + 1} / {carouselImages.length}
+                            </span>
+                          )}
+                        </div>
+
+                        <div className="absolute bottom-6 left-6 right-6 z-20 pointer-events-none">
+                          <h3 className="text-xl sm:text-2xl font-bold text-white leading-tight drop-shadow-md">
+                            {lang === "en" && selectedProject.enTitle ? selectedProject.enTitle : selectedProject.title}
+                          </h3>
+                        </div>
+                      </div>
+
+                      {/* Horizontal scrollable thumbnails row */}
+                      {carouselImages.length > 1 && (
+                        <div className={`px-6 sm:px-8 pt-4 pb-3 border-b flex gap-3 overflow-x-auto scrollbar-thin ${
+                          darkMode ? "border-slate-800 bg-slate-950/20" : "border-slate-100 bg-slate-50/50"
+                        }`}>
+                          {carouselImages.map((img, idx) => (
+                            <button
+                              key={idx}
+                              onClick={() => setActiveImageIndex(idx)}
+                              className={`relative w-16 h-12 sm:w-20 sm:h-14 rounded overflow-hidden flex-shrink-0 transition-all border-2 cursor-pointer ${
+                                activeImageIndex === idx
+                                  ? "border-amber-500 scale-105 shadow-sm"
+                                  : darkMode
+                                  ? "border-slate-800 opacity-60 hover:opacity-100 hover:border-slate-600"
+                                  : "border-slate-200 opacity-60 hover:opacity-100 hover:border-slate-400"
+                              }`}
+                            >
+                              <img
+                                src={img}
+                                alt={`Thumbnail ${idx + 1}`}
+                                className="w-full h-full object-cover object-center"
+                              />
+                              {activeImageIndex === idx && (
+                                <div className="absolute inset-0 bg-amber-500/10 flex items-center justify-center">
+                                  <div className="w-1.5 h-1.5 rounded-full bg-amber-500" />
+                                </div>
+                              )}
+                            </button>
+                          ))}
+                        </div>
+                      )}
+                    </>
+                  );
+                })()}
 
                 {/* Details Content */}
                 <div className="p-6 sm:p-8 space-y-6">

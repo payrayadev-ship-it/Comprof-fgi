@@ -1,6 +1,10 @@
 # https://www.robotstxt.org/robotstxt.html
 User-agent: *
 Allow: /
+Disallow:
+
+# Host
+Host: www.foresyndoglobalindonesia.my.id
 
 # Sitemaps
 Sitemap: https://www.foresyndoglobalindonesia.my.id/sitemap.xml
