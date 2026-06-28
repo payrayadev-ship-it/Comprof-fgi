@@ -46,7 +46,7 @@ const FGILogo = ({ className = "", darkMode = true }: { className?: string; dark
   <div className={`flex items-center space-x-3 ${className}`} id="fgi-logo">
     <div className="w-11 h-11 flex items-center justify-center rounded-lg overflow-hidden bg-white shadow-md flex-shrink-0 border border-slate-200 p-0.5">
       <img
-        src="/src/assets/images/fgi_bold_navy_logo_1782399447952.jpg"
+        src="/assets/images/fgi_bold_navy_logo_1782399447952.jpg"
         alt="PT. Foresyndo Global Indonesia Logo"
         className="w-full h-full object-contain rounded-md"
         referrerPolicy="no-referrer"
@@ -274,9 +274,9 @@ const PROJECTS_DATA: Project[] = [
     title: "Hunian Hotel & Smart Living - Foresyndo Residence 2",
     enTitle: "Boutique Hotel & Smart Living - Foresyndo Residence 2",
     category: "Perumahan",
-    image: "/src/assets/images/foresyndo_residence_two_1782634018176.jpg",
+    image: "/assets/images/foresyndo_residence_two_1782634018176.jpg",
     images: [
-      "/src/assets/images/foresyndo_residence_two_1782634018176.jpg",
+      "/assets/images/foresyndo_residence_two_1782634018176.jpg",
       "https://images.unsplash.com/photo-1566073771259-6a8506099945?q=80&w=800&auto=format&fit=crop",
       "https://images.unsplash.com/photo-1582719478250-c89cae4dc85b?q=80&w=800&auto=format&fit=crop",
       "https://images.unsplash.com/photo-1551882547-ff40c63fe5fa?q=80&w=800&auto=format&fit=crop"
