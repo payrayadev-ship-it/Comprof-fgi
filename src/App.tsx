@@ -294,6 +294,54 @@ const PROJECTS_DATA: Project[] = [
   }
 ];
 
+const HERO_SLIDES = [
+  {
+    image: "https://images.unsplash.com/photo-1600585154340-be6161a56a0c?q=80&w=1600&auto=format&fit=crop",
+    titleId: "Perumahan Modern - Grand Foresyndo Hills",
+    titleEn: "Modern Housing Estate - Grand Foresyndo Hills",
+    categoryId: "Perumahan",
+    categoryEn: "Residential",
+    locationId: "Bandung Selatan, Jawa Barat",
+    locationEn: "South Bandung, West Java",
+  },
+  {
+    image: "https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?q=80&w=1600&auto=format&fit=crop",
+    titleId: "Ruko Komersial - Golden Square Boulevard",
+    titleEn: "Commercial Shophouse - Golden Square Boulevard",
+    categoryId: "Komersial",
+    categoryEn: "Commercial",
+    locationId: "Banjaran Raya, Bandung",
+    locationEn: "Banjaran Raya, Bandung",
+  },
+  {
+    image: "https://images.unsplash.com/photo-1541888946425-d81bb19240f5?q=80&w=1600&auto=format&fit=crop",
+    titleId: "Infrastruktur Kawasan - Site Development & Akses Jalan",
+    titleEn: "Regional Infrastructure - Site Development & Access Road",
+    categoryId: "Infrastruktur",
+    categoryEn: "Infrastructure",
+    locationId: "Langonsari, Kabupaten Bandung",
+    locationEn: "Langonsari, Bandung Regency",
+  },
+  {
+    image: "https://images.unsplash.com/photo-1586528116311-ad8dd3c8310d?q=80&w=1600&auto=format&fit=crop",
+    titleId: "Gudang Industri - FGI Logistics Park",
+    titleEn: "Industrial Warehouse - FGI Logistics Park",
+    categoryId: "Komersial",
+    categoryEn: "Commercial",
+    locationId: "Kawasan Industri Bandung, Jawa Barat",
+    locationEn: "Bandung Industrial Area, West Java",
+  },
+  {
+    image: "/assets/images/foresyndo_residence_two_1782634018176.jpg",
+    titleId: "Hunian Hotel & Smart Living - Foresyndo Residence 2",
+    titleEn: "Boutique Hotel & Smart Living - Foresyndo Residence 2",
+    categoryId: "Perumahan",
+    categoryEn: "Residential / Hospitality",
+    locationId: "Jatitujuh, Kabupaten Majalengka, Jawa Barat",
+    locationEn: "Jatitujuh, Majalengka Regency, West Java",
+  }
+];
+
 const TRANSLATIONS = {
   id: {
     nav: {
@@ -1027,10 +1075,18 @@ export default function App() {
   const [projectFilter, setProjectFilter] = useState<"Semua" | "Perumahan" | "Komersial" | "Infrastruktur">("Semua");
   const [selectedProject, setSelectedProject] = useState<Project | null>(null);
   const [activeImageIndex, setActiveImageIndex] = useState<number>(0);
+  const [heroSlideIndex, setHeroSlideIndex] = useState<number>(0);
 
   useEffect(() => {
     setActiveImageIndex(0);
   }, [selectedProject]);
+
+  useEffect(() => {
+    const timer = setInterval(() => {
+      setHeroSlideIndex((prev) => (prev + 1) % HERO_SLIDES.length);
+    }, 5000);
+    return () => clearInterval(timer);
+  }, []);
   const [scrolled, setScrolled] = useState<boolean>(false);
   const [showBackToTop, setShowBackToTop] = useState<boolean>(false);
   const [faqOpen, setFaqOpen] = useState<number | null>(null);
@@ -1685,15 +1741,58 @@ export default function App() {
 
       {/* --- HERO SECTION --- */}
       <section id="beranda" className="relative min-h-screen flex flex-col justify-center pt-28 pb-16 overflow-hidden z-10">
-        {/* Background Overlay Image */}
+        {/* Background Overlay Image (Auto-sliding Carousel) */}
         <div className="absolute inset-0 z-0">
           <div className="absolute inset-0 bg-slate-950/70 dark:bg-slate-950/85 mix-blend-multiply z-10" />
-          <img
-            src="https://images.unsplash.com/photo-1600585154340-be6161a56a0c?q=80&w=1600&auto=format&fit=crop"
-            alt="Modern Property FGI Background"
-            className="w-full h-full object-cover object-center scale-105 select-none"
-            loading="eager"
-          />
+          <AnimatePresence mode="wait">
+            <motion.img
+              key={heroSlideIndex}
+              src={HERO_SLIDES[heroSlideIndex].image}
+              alt="PT Foresyndo Global Indonesia Project Showcase"
+              initial={{ opacity: 0, scale: 1.02 }}
+              animate={{ opacity: 1, scale: 1.05 }}
+              exit={{ opacity: 0 }}
+              transition={{ duration: 0.8 }}
+              className="absolute inset-0 w-full h-full object-cover object-center select-none"
+              loading="eager"
+            />
+          </AnimatePresence>
+
+          {/* Interactive Slide Indicators & Showcase Badge */}
+          <div className="absolute bottom-8 right-4 sm:right-12 z-20 flex flex-col items-end space-y-3 pointer-events-auto">
+            {/* Project Title Badge */}
+            <motion.div 
+              key={`badge-${heroSlideIndex}`}
+              initial={{ opacity: 0, x: 20 }}
+              animate={{ opacity: 1, x: 0 }}
+              transition={{ duration: 0.5 }}
+              className="bg-slate-950/80 backdrop-blur-md border border-slate-800 px-4 py-2 rounded-xl text-right max-w-xs shadow-2xl"
+            >
+              <div className="text-[10px] font-bold text-amber-400 tracking-wider uppercase">
+                {lang === "en" ? HERO_SLIDES[heroSlideIndex].categoryEn : HERO_SLIDES[heroSlideIndex].categoryId}
+              </div>
+              <div className="text-[12px] font-bold text-white mt-0.5 truncate leading-tight">
+                {lang === "en" ? HERO_SLIDES[heroSlideIndex].titleEn : HERO_SLIDES[heroSlideIndex].titleId}
+              </div>
+              <div className="text-[10px] text-slate-400 italic mt-0.5">
+                {lang === "en" ? HERO_SLIDES[heroSlideIndex].locationEn : HERO_SLIDES[heroSlideIndex].locationId}
+              </div>
+            </motion.div>
+
+            {/* Pagination dots */}
+            <div className="flex space-x-2 bg-slate-950/40 backdrop-blur-sm px-3 py-1.5 rounded-full border border-slate-800/40">
+              {HERO_SLIDES.map((_, idx) => (
+                <button
+                  key={idx}
+                  onClick={() => setHeroSlideIndex(idx)}
+                  className={`h-2 rounded-full transition-all duration-300 cursor-pointer ${
+                    heroSlideIndex === idx ? "w-6 bg-amber-500" : "w-2 bg-slate-600 hover:bg-slate-400"
+                  }`}
+                  aria-label={`Go to slide ${idx + 1}`}
+                />
+              ))}
+            </div>
+          </div>
         </div>
 
         {/* Content Container */}
