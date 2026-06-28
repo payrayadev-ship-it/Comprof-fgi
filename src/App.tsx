@@ -38,7 +38,14 @@ import {
   Calculator,
   Ruler,
   ChevronLeft,
-  ChevronRight
+  ChevronRight,
+  Video,
+  Sparkles,
+  Play,
+  RotateCcw,
+  Info,
+  Sliders,
+  Loader2
 } from "lucide-react";
 
 // --- CUSTOM LOGO FOR PT. FORESYNDO GLOBAL INDONESIA (FGI) ---
@@ -701,6 +708,22 @@ const TRANSLATIONS = {
       shareTitle: "Bagikan Proyek",
       shareDesc: "Bagikan detail proyek ini dengan calon mitra atau kolega.",
       shareCopied: "Tautan disalin!",
+    },
+    videoShowcase: {
+      tabGallery: "Galeri Foto",
+      tabVideo: "Video Showcase (Veo AI)",
+      introTitle: "Eksplorasi Proyek dengan Google Veo",
+      introDesc: "Rasakan masa depan hunian ini melalui tayangan video promosi sinematik resolusi tinggi yang ditenagai oleh Google Veo (AI Video Generation).",
+      stylePreset: "Pilihan Gaya Visual Video",
+      customPromptLabel: "Modifikasi Kreatif (Opsional)",
+      customPromptPlaceholder: "Contoh: tambahkan efek matahari terbenam keemasan atau suasana gerimis sinematik...",
+      enableAILabel: "Gunakan AI Generatif Google Veo (Butuh API Key)",
+      enableAISimulated: "Mode Simulasi Interaktif (Instan & Tanpa API Key)",
+      generateBtn: "Hasilkan Video Promosi (Veo)",
+      renderingTitle: "Menyiapkan Tayangan Sinematik...",
+      backToSetup: "Sesuaikan Ulang Gaya",
+      apiNotConfiguredAlert: "Kunci API (GEMINI_API_KEY) belum dikonfigurasi di server FGI. Menjalankan Mode Simulasi Interaktif dengan visual stok premium berkualitas tinggi untuk kemudahan demonstrasi.",
+      simulationModeActive: "Mode Simulasi Aktif - Stok Video Premium"
     }
   },
   en: {
@@ -1061,6 +1084,22 @@ const TRANSLATIONS = {
       shareTitle: "Share Project",
       shareDesc: "Share this project details with potential partners or colleagues.",
       shareCopied: "Link copied!",
+    },
+    videoShowcase: {
+      tabGallery: "Photo Gallery",
+      tabVideo: "Video Showcase (Veo AI)",
+      introTitle: "Explore Project with Google Veo",
+      introDesc: "Experience the future of this project through a high-definition cinematic promotional video powered by Google Veo (AI Video Generation).",
+      stylePreset: "Visual Style Preset",
+      customPromptLabel: "Creative Modification (Optional)",
+      customPromptPlaceholder: "Example: add golden sunset sunset flare or cinematic rainy mood...",
+      enableAILabel: "Use Google Veo Generative AI (Requires API Key)",
+      enableAISimulated: "Interactive Simulation Mode (Instant, No API Key)",
+      generateBtn: "Generate Promotional Video (Veo)",
+      renderingTitle: "Preparing Cinematic Showcase...",
+      backToSetup: "Reconfigure Visual Style",
+      apiNotConfiguredAlert: "API Key (GEMINI_API_KEY) is not configured on the server FGI. Using Interactive Simulation Mode with premium quality stock videos for high-fidelity demonstration.",
+      simulationModeActive: "Simulation Mode Active - Premium Stock Video"
     }
   }
 };
@@ -1077,9 +1116,41 @@ export default function App() {
   const [activeImageIndex, setActiveImageIndex] = useState<number>(0);
   const [heroSlideIndex, setHeroSlideIndex] = useState<number>(0);
 
+  // Veo Video Showcase State Variables
+  const [videoTabActive, setVideoTabActive] = useState<boolean>(false);
+  const [apiKeyConfigured, setApiKeyConfigured] = useState<boolean>(false);
+  const [videoMode, setVideoMode] = useState<"none" | "generating" | "completed" | "error">("none");
+  const [videoProgressText, setVideoProgressText] = useState<string>("");
+  const [videoProgressPercent, setVideoProgressPercent] = useState<number>(0);
+  const [generatedVideoUrl, setGeneratedVideoUrl] = useState<string | null>(null);
+  const [videoStyle, setVideoStyle] = useState<string>("Sunset Golden Hour");
+  const [videoCustomPrompt, setVideoCustomPrompt] = useState<string>("");
+  const [useAIVideo, setUseAIVideo] = useState<boolean>(false);
+
   useEffect(() => {
     setActiveImageIndex(0);
+    // Reset video states when switching projects
+    setVideoTabActive(false);
+    setVideoMode("none");
+    setVideoProgressText("");
+    setVideoProgressPercent(0);
+    setGeneratedVideoUrl(null);
+    setVideoStyle("Sunset Golden Hour");
+    setVideoCustomPrompt("");
   }, [selectedProject]);
+
+  useEffect(() => {
+    // Fetch video configuration from Express server on mount
+    fetch("/api/video-config")
+      .then((res) => res.json())
+      .then((data) => {
+        setApiKeyConfigured(data.apiKeyConfigured);
+        if (data.apiKeyConfigured) {
+          setUseAIVideo(true);
+        }
+      })
+      .catch((err) => console.error("Error fetching video config:", err));
+  }, []);
 
   useEffect(() => {
     const timer = setInterval(() => {
@@ -1087,6 +1158,149 @@ export default function App() {
     }, 5000);
     return () => clearInterval(timer);
   }, []);
+  const handleGenerateVideo = async () => {
+    if (!selectedProject) return;
+    setVideoMode("generating");
+    setVideoProgressPercent(0);
+
+    const updates = lang === "en" ? [
+      "Analyzing project architectural lines...",
+      "Generating high-fidelity 3D volume grids...",
+      "Synthesizing customized lighting & textures...",
+      "Computing camera flythrough trajectory...",
+      "Rendering final video keyframes via Google Veo...",
+      "Optimizing media encoding parameters..."
+    ] : [
+      "Menganalisis garis arsitektur proyek...",
+      "Membangun grid volume 3D presisi tinggi...",
+      "Mensintesis pencahayaan & tekstur khusus...",
+      "Menghitung lintasan drone kamera sinematik...",
+      "Rendering keyframe video final via Google Veo...",
+      "Mengoptimalkan kompresi & parameter tayangan..."
+    ];
+
+    let currentUpdateIndex = 0;
+    setVideoProgressText(updates[0]);
+
+    if (!useAIVideo || !apiKeyConfigured) {
+      const interval = setInterval(() => {
+        setVideoProgressPercent((prev) => {
+          if (prev >= 100) {
+            clearInterval(interval);
+            setVideoMode("completed");
+            const fallbackMap: Record<number, string> = {
+              1: "https://assets.mixkit.co/videos/preview/mixkit-modern-suburban-houses-aerial-view-41584-large.mp4",
+              2: "https://assets.mixkit.co/videos/preview/mixkit-drone-shot-of-a-modern-residential-area-44245-large.mp4",
+              3: "https://assets.mixkit.co/videos/preview/mixkit-aerial-view-of-city-streets-and-buildings-42284-large.mp4",
+              4: "https://assets.mixkit.co/videos/preview/mixkit-interior-of-a-large-empty-warehouse-with-shelves-43033-large.mp4",
+              5: "https://assets.mixkit.co/videos/preview/mixkit-modern-apartment-building-exterior-44243-large.mp4",
+              6: "https://assets.mixkit.co/videos/preview/mixkit-highway-road-surrounded-by-forest-aerial-view-41595-large.mp4",
+              7: "https://assets.mixkit.co/videos/preview/mixkit-luxury-home-interior-44247-large.mp4"
+            };
+            setGeneratedVideoUrl(fallbackMap[selectedProject.id] || fallbackMap[1]);
+            return 100;
+          }
+          
+          const nextPercent = prev + Math.floor(Math.random() * 15) + 10;
+          const pct = nextPercent > 100 ? 100 : nextPercent;
+          
+          const updateIdx = Math.floor((pct / 100) * updates.length);
+          if (updates[updateIdx]) {
+            setVideoProgressText(updates[updateIdx]);
+          }
+          
+          return pct;
+        });
+      }, 700);
+    } else {
+      try {
+        const response = await fetch("/api/generate-video", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            projectId: selectedProject.id,
+            style: videoStyle,
+            customPrompt: videoCustomPrompt,
+            useAI: true
+          })
+        });
+
+        const data = await response.json();
+        if (!data.success) {
+          throw new Error("Failed to trigger video generation");
+        }
+
+        if (data.mode === "simulation") {
+          setGeneratedVideoUrl(data.fallbackUrl);
+          setVideoMode("completed");
+          return;
+        }
+
+        const operationName = data.operationName;
+        let pollCount = 0;
+        const maxPolls = 60;
+        
+        const pollInterval = setInterval(async () => {
+          pollCount++;
+          
+          setVideoProgressPercent((prev) => {
+            const next = prev + Math.floor(Math.random() * 3) + 1;
+            return next > 95 ? 95 : next;
+          });
+
+          const currentTextIdx = Math.floor((pollCount % updates.length));
+          setVideoProgressText(updates[currentTextIdx]);
+
+          try {
+            const statusRes = await fetch("/api/video-status", {
+              method: "POST",
+              headers: { "Content-Type": "application/json" },
+              body: JSON.stringify({ operationName })
+            });
+            const statusData = await statusRes.json();
+            
+            if (statusData.done) {
+              clearInterval(pollInterval);
+              
+              if (statusData.error) {
+                console.error("Veo operation completed with error:", statusData.error);
+                setVideoMode("error");
+                return;
+              }
+
+              setVideoProgressPercent(100);
+              setVideoProgressText(lang === "en" ? "Streaming high-definition video..." : "Membuka aliran video resolusi tinggi...");
+              
+              const downloadRes = await fetch("/api/video-download", {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({ operationName })
+              });
+
+              if (!downloadRes.ok) {
+                throw new Error("Failed to stream video file");
+              }
+
+              const blob = await downloadRes.blob();
+              const blobUrl = URL.createObjectURL(blob);
+              setGeneratedVideoUrl(blobUrl);
+              setVideoMode("completed");
+            } else if (pollCount >= maxPolls) {
+              clearInterval(pollInterval);
+              console.error("Video generation timed out");
+              setVideoMode("error");
+            }
+          } catch (pollErr) {
+            console.error("Error polling video status:", pollErr);
+          }
+        }, 5000);
+      } catch (err) {
+        console.error("Error triggering video generation:", err);
+        setVideoMode("error");
+      }
+    }
+  };
+
   const [scrolled, setScrolled] = useState<boolean>(false);
   const [showBackToTop, setShowBackToTop] = useState<boolean>(false);
   const [faqOpen, setFaqOpen] = useState<number | null>(null);
@@ -4323,111 +4537,333 @@ export default function App() {
                 <X size={18} />
               </button>
 
+              {/* Tab Selector Bar */}
+              <div className="flex border-b border-slate-500/10 flex-shrink-0 bg-slate-950/20">
+                <button
+                  onClick={() => setVideoTabActive(false)}
+                  className={`flex-1 py-3 text-center text-xs font-bold tracking-wider uppercase transition-all flex items-center justify-center gap-1.5 border-b-2 cursor-pointer ${
+                    !videoTabActive
+                      ? "border-amber-500 text-amber-500 bg-slate-500/5"
+                      : "border-transparent text-slate-400 hover:text-white"
+                  }`}
+                >
+                  <Building size={14} />
+                  {TRANSLATIONS[lang].videoShowcase.tabGallery}
+                </button>
+                <button
+                  onClick={() => setVideoTabActive(true)}
+                  className={`flex-1 py-3 text-center text-xs font-bold tracking-wider uppercase transition-all flex items-center justify-center gap-1.5 border-b-2 cursor-pointer ${
+                    videoTabActive
+                      ? "border-amber-500 text-amber-500 bg-slate-500/5"
+                      : "border-transparent text-slate-400 hover:text-white"
+                  }`}
+                >
+                  <Video size={14} />
+                  {TRANSLATIONS[lang].videoShowcase.tabVideo}
+                </button>
+              </div>
+
               <div className="overflow-y-auto">
-                {/* Hero image carousel header */}
-                {(() => {
-                  const carouselImages = selectedProject.images || [selectedProject.image];
-                  return (
-                    <>
-                      <div className="relative h-[250px] sm:h-[350px] w-full bg-slate-950 overflow-hidden">
-                        <AnimatePresence mode="wait">
-                          <motion.img
-                            key={activeImageIndex}
-                            src={carouselImages[activeImageIndex]}
-                            alt={`${lang === "en" && selectedProject.enTitle ? selectedProject.enTitle : selectedProject.title} - Image ${activeImageIndex + 1}`}
-                            initial={{ opacity: 0 }}
-                            animate={{ opacity: 1 }}
-                            exit={{ opacity: 0 }}
-                            transition={{ duration: 0.3 }}
-                            className="w-full h-full object-cover object-center"
-                          />
-                        </AnimatePresence>
-
-                        {/* Gradient overlays */}
-                        <div className="absolute inset-x-0 bottom-0 h-32 bg-gradient-to-t from-slate-950 to-transparent z-10 pointer-events-none" />
-                        <div className="absolute inset-x-0 top-0 h-16 bg-gradient-to-b from-slate-950/40 to-transparent z-10 pointer-events-none" />
-
-                        {/* Carousel Left/Right Buttons */}
-                        {carouselImages.length > 1 && (
-                          <>
-                            <button
-                              onClick={(e) => {
-                                e.stopPropagation();
-                                setActiveImageIndex((prev) => (prev === 0 ? carouselImages.length - 1 : prev - 1));
-                              }}
-                              className="absolute left-4 top-1/2 -translate-y-1/2 z-20 p-2 rounded-full bg-slate-950/60 hover:bg-amber-500 hover:text-slate-950 text-white transition-all cursor-pointer shadow-md focus:outline-none focus:ring-2 focus:ring-amber-500"
-                              aria-label="Previous image"
-                            >
-                              <ChevronLeft size={20} />
-                            </button>
-                            <button
-                              onClick={(e) => {
-                                e.stopPropagation();
-                                setActiveImageIndex((prev) => (prev === carouselImages.length - 1 ? 0 : prev + 1));
-                              }}
-                              className="absolute right-4 top-1/2 -translate-y-1/2 z-20 p-2 rounded-full bg-slate-950/60 hover:bg-amber-500 hover:text-slate-950 text-white transition-all cursor-pointer shadow-md focus:outline-none focus:ring-2 focus:ring-amber-500"
-                              aria-label="Next image"
-                            >
-                              <ChevronRight size={20} />
-                            </button>
-                          </>
-                        )}
-
-                        {/* Indicator info badges */}
-                        <div className="absolute top-4 left-4 z-20 flex items-center gap-2">
-                          <span className="bg-slate-950/70 backdrop-blur-md text-[10px] font-black tracking-widest text-white px-2 py-1 rounded">
-                            {selectedProject.category === "Perumahan" ? TRANSLATIONS[lang].projects.filterPerumahan :
-                             selectedProject.category === "Komersial" ? TRANSLATIONS[lang].projects.filterKomersial :
-                             TRANSLATIONS[lang].projects.filterInfrastruktur}
-                          </span>
-                          {carouselImages.length > 1 && (
-                            <span className="bg-amber-500 text-slate-950 text-[10px] font-mono font-black tracking-wider px-2 py-1 rounded">
-                              {activeImageIndex + 1} / {carouselImages.length}
-                            </span>
-                          )}
+                {videoTabActive ? (
+                  <div className="relative w-full bg-slate-950 overflow-hidden flex flex-col min-h-[250px] sm:min-h-[350px]" id="veo-video-panel">
+                    {/* Video presentation panel */}
+                    {videoMode === "none" && (
+                      <div className="p-6 sm:p-8 flex flex-col justify-center items-center text-center space-y-4 h-full bg-gradient-to-b from-slate-900 to-slate-950">
+                        <div className="p-3 bg-amber-500/10 rounded-full text-amber-500 animate-pulse">
+                          <Sparkles size={28} />
+                        </div>
+                        <div className="space-y-1 max-w-lg">
+                          <h4 className="text-base sm:text-lg font-bold text-white tracking-wide">
+                            {TRANSLATIONS[lang].videoShowcase.introTitle}
+                          </h4>
+                          <p className="text-[11px] sm:text-xs text-slate-400 leading-relaxed">
+                            {TRANSLATIONS[lang].videoShowcase.introDesc}
+                          </p>
                         </div>
 
-                        <div className="absolute bottom-6 left-6 right-6 z-20 pointer-events-none">
-                          <h3 className="text-xl sm:text-2xl font-bold text-white leading-tight drop-shadow-md">
-                            {lang === "en" && selectedProject.enTitle ? selectedProject.enTitle : selectedProject.title}
-                          </h3>
+                        {/* Style Selectors & Controls */}
+                        <div className="w-full max-w-md bg-slate-900/60 border border-slate-800 rounded-xl p-4 text-left space-y-3.5">
+                          {/* Visual Style Preset */}
+                          <div>
+                            <label className="block text-[10px] font-black uppercase text-slate-400 tracking-wider mb-1.5 flex items-center gap-1">
+                              <Sliders size={11} className="text-amber-500" />
+                              {TRANSLATIONS[lang].videoShowcase.stylePreset}
+                            </label>
+                            <div className="grid grid-cols-2 sm:grid-cols-3 gap-1.5">
+                              {["Sunset Golden Hour", "Crisp Bright Daylight", "Rainy Cinematic Mood", "Futuristic Neon Accents", "Cozy Warm Evening"].map((style) => (
+                                <button
+                                  key={style}
+                                  onClick={() => setVideoStyle(style)}
+                                  className={`px-2 py-1.5 text-[10px] font-semibold rounded text-center transition-all cursor-pointer border ${
+                                    videoStyle === style
+                                      ? "bg-amber-500/10 border-amber-500 text-amber-500"
+                                      : "bg-slate-950/40 border-slate-800/60 text-slate-400 hover:border-slate-700"
+                                  }`}
+                                >
+                                  {style}
+                                </button>
+                              ))}
+                            </div>
+                          </div>
+
+                          {/* Custom prompt input */}
+                          <div>
+                            <label className="block text-[10px] font-black uppercase text-slate-400 tracking-wider mb-1 flex items-center gap-1">
+                              <Sparkles size={11} className="text-amber-500" />
+                              {TRANSLATIONS[lang].videoShowcase.customPromptLabel}
+                            </label>
+                            <input
+                              type="text"
+                              value={videoCustomPrompt}
+                              onChange={(e) => setVideoCustomPrompt(e.target.value)}
+                              placeholder={TRANSLATIONS[lang].videoShowcase.customPromptPlaceholder}
+                              className="w-full px-3 py-2 text-xs bg-slate-950 border border-slate-800 rounded text-slate-200 placeholder-slate-600 focus:outline-none focus:border-amber-500"
+                            />
+                          </div>
+
+                          {/* AI vs Simulation Control */}
+                          <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between pt-1.5 border-t border-slate-800 gap-2">
+                            <div className="flex items-center gap-2">
+                              <input
+                                type="checkbox"
+                                id="ai-toggle"
+                                checked={useAIVideo}
+                                disabled={!apiKeyConfigured}
+                                onChange={(e) => setUseAIVideo(e.target.checked)}
+                                className="w-3.5 h-3.5 rounded bg-slate-950 border-slate-800 text-amber-500 focus:ring-0 cursor-pointer disabled:opacity-50"
+                              />
+                              <label htmlFor="ai-toggle" className={`text-[10px] font-semibold cursor-pointer ${!apiKeyConfigured ? "text-slate-500" : "text-slate-300"}`}>
+                                {apiKeyConfigured 
+                                  ? TRANSLATIONS[lang].videoShowcase.enableAILabel 
+                                  : TRANSLATIONS[lang].videoShowcase.enableAISimulated}
+                              </label>
+                            </div>
+                            
+                            {!apiKeyConfigured && (
+                              <span className="text-[9px] text-amber-500 bg-amber-500/5 px-2 py-0.5 rounded border border-amber-500/20 uppercase tracking-widest font-black flex items-center gap-1">
+                                <Info size={10} /> {lang === "en" ? "DEMO ACTIVE" : "SIMULASI AKTIF"}
+                              </span>
+                            )}
+                          </div>
+                        </div>
+
+                        {/* Generate Button */}
+                        <button
+                          onClick={handleGenerateVideo}
+                          className="px-6 py-2.5 bg-gradient-to-r from-amber-500 to-amber-600 hover:from-amber-600 hover:to-amber-700 text-slate-950 rounded-lg text-xs font-bold tracking-wider uppercase shadow-xl transition-all cursor-pointer flex items-center gap-2 hover:scale-[1.02] active:scale-[0.98]"
+                        >
+                          <Video size={14} />
+                          {TRANSLATIONS[lang].videoShowcase.generateBtn}
+                        </button>
+                      </div>
+                    )}
+
+                    {videoMode === "generating" && (
+                      <div className="p-8 flex flex-col justify-center items-center text-center space-y-6 h-full min-h-[300px] sm:min-h-[380px] bg-slate-950">
+                        <div className="relative flex items-center justify-center">
+                          <div className="absolute w-24 h-24 rounded-full border border-amber-500/20 animate-ping" />
+                          <div className="absolute w-16 h-16 rounded-full border border-amber-500/40 animate-pulse" />
+                          <div className="w-12 h-12 bg-amber-500/10 rounded-full flex items-center justify-center text-amber-500">
+                            <Loader2 size={24} className="animate-spin" />
+                          </div>
+                        </div>
+
+                        <div className="space-y-2 max-w-sm">
+                          <h4 className="text-sm font-bold tracking-wider uppercase text-amber-500 animate-pulse">
+                            {TRANSLATIONS[lang].videoShowcase.renderingTitle}
+                          </h4>
+                          <p className="text-[11px] text-slate-400 font-mono tracking-wide h-4">
+                            {videoProgressText}
+                          </p>
+                        </div>
+
+                        {/* Progress Bar */}
+                        <div className="w-full max-w-xs bg-slate-900 rounded-full h-1.5 overflow-hidden border border-slate-800">
+                          <motion.div
+                            initial={{ width: 0 }}
+                            animate={{ width: `${videoProgressPercent}%` }}
+                            transition={{ duration: 0.3 }}
+                            className="bg-amber-500 h-full rounded-full"
+                          />
+                        </div>
+
+                        <div className="text-[10px] font-mono text-slate-500">
+                          {videoProgressPercent}% Complete
                         </div>
                       </div>
+                    )}
 
-                      {/* Horizontal scrollable thumbnails row */}
-                      {carouselImages.length > 1 && (
-                        <div className={`px-6 sm:px-8 pt-4 pb-3 border-b flex gap-3 overflow-x-auto scrollbar-thin ${
-                          darkMode ? "border-slate-800 bg-slate-950/20" : "border-slate-100 bg-slate-50/50"
-                        }`}>
-                          {carouselImages.map((img, idx) => (
-                            <button
-                              key={idx}
-                              onClick={() => setActiveImageIndex(idx)}
-                              className={`relative w-16 h-12 sm:w-20 sm:h-14 rounded overflow-hidden flex-shrink-0 transition-all border-2 cursor-pointer ${
-                                activeImageIndex === idx
-                                  ? "border-amber-500 scale-105 shadow-sm"
-                                  : darkMode
-                                  ? "border-slate-800 opacity-60 hover:opacity-100 hover:border-slate-600"
-                                  : "border-slate-200 opacity-60 hover:opacity-100 hover:border-slate-400"
-                              }`}
-                            >
-                              <img
-                                src={img}
-                                alt={`Thumbnail ${idx + 1}`}
+                    {videoMode === "completed" && generatedVideoUrl && (
+                      <div className="relative h-[250px] sm:h-[350px] w-full bg-slate-950 flex flex-col justify-center items-center">
+                        <video
+                          src={generatedVideoUrl}
+                          className="w-full h-full object-cover animate-fade-in"
+                          controls
+                          autoPlay
+                          loop
+                          playsInline
+                        />
+                        
+                        {/* Overlay tags and watermark */}
+                        <div className="absolute top-4 left-4 z-20 flex flex-col gap-1.5 pointer-events-none">
+                          <span className="bg-slate-950/80 backdrop-blur-md text-[9px] font-black tracking-widest text-white px-2.5 py-1 rounded border border-slate-800">
+                            {useAIVideo ? "GOOGLE VEO 3.1 AI VIDEO" : TRANSLATIONS[lang].videoShowcase.simulationModeActive}
+                          </span>
+                          <span className="bg-amber-500/90 text-slate-950 text-[9px] font-mono font-black tracking-wider px-2 py-0.5 rounded mr-auto">
+                            {videoStyle}
+                          </span>
+                        </div>
+
+                        {/* Adjust Style Button */}
+                        <button
+                          onClick={() => setVideoMode("none")}
+                          className="absolute bottom-4 right-4 z-20 bg-slate-950/80 hover:bg-slate-900 border border-slate-800 hover:border-slate-700 px-3 py-1.5 rounded-lg text-[10px] text-slate-300 hover:text-white font-bold tracking-wider uppercase cursor-pointer flex items-center gap-1.5 transition-all shadow-xl"
+                        >
+                          <RotateCcw size={11} />
+                          {TRANSLATIONS[lang].videoShowcase.backToSetup}
+                        </button>
+                      </div>
+                    )}
+
+                    {videoMode === "error" && (
+                      <div className="p-8 flex flex-col justify-center items-center text-center space-y-4 h-full bg-slate-950 min-h-[300px]">
+                        <div className="w-12 h-12 bg-red-500/10 rounded-full flex items-center justify-center text-red-500">
+                          <X size={24} />
+                        </div>
+                        <div className="space-y-1 max-w-sm">
+                          <h4 className="text-sm font-bold text-white">Generation Failed</h4>
+                          <p className="text-xs text-slate-400">
+                            We encountered an issue communicating with the Google Veo service.
+                          </p>
+                        </div>
+                        <div className="flex gap-2">
+                          <button
+                            onClick={() => setVideoMode("none")}
+                            className="px-4 py-2 bg-slate-800 hover:bg-slate-700 text-white rounded text-xs font-bold uppercase tracking-wider cursor-pointer"
+                          >
+                            Try Again
+                          </button>
+                          <button
+                            onClick={() => {
+                              setUseAIVideo(false);
+                              setVideoMode("none");
+                            }}
+                            className="px-4 py-2 bg-amber-500 hover:bg-amber-600 text-slate-950 rounded text-xs font-bold uppercase tracking-wider cursor-pointer"
+                          >
+                            Use Demo Mode
+                          </button>
+                        </div>
+                      </div>
+                    )}
+                  </div>
+                ) : (
+                  <>
+                    {/* Hero image carousel header */}
+                    {(() => {
+                      const carouselImages = selectedProject.images || [selectedProject.image];
+                      return (
+                        <>
+                          <div className="relative h-[250px] sm:h-[350px] w-full bg-slate-950 overflow-hidden">
+                            <AnimatePresence mode="wait">
+                              <motion.img
+                                key={activeImageIndex}
+                                src={carouselImages[activeImageIndex]}
+                                alt={`${lang === "en" && selectedProject.enTitle ? selectedProject.enTitle : selectedProject.title} - Image ${activeImageIndex + 1}`}
+                                initial={{ opacity: 0 }}
+                                animate={{ opacity: 1 }}
+                                exit={{ opacity: 0 }}
+                                transition={{ duration: 0.3 }}
                                 className="w-full h-full object-cover object-center"
                               />
-                              {activeImageIndex === idx && (
-                                <div className="absolute inset-0 bg-amber-500/10 flex items-center justify-center">
-                                  <div className="w-1.5 h-1.5 rounded-full bg-amber-500" />
-                                </div>
+                            </AnimatePresence>
+
+                            {/* Gradient overlays */}
+                            <div className="absolute inset-x-0 bottom-0 h-32 bg-gradient-to-t from-slate-950 to-transparent z-10 pointer-events-none" />
+                            <div className="absolute inset-x-0 top-0 h-16 bg-gradient-to-b from-slate-950/40 to-transparent z-10 pointer-events-none" />
+
+                            {/* Carousel Left/Right Buttons */}
+                            {carouselImages.length > 1 && (
+                              <>
+                                <button
+                                  onClick={(e) => {
+                                    e.stopPropagation();
+                                    setActiveImageIndex((prev) => (prev === 0 ? carouselImages.length - 1 : prev - 1));
+                                  }}
+                                  className="absolute left-4 top-1/2 -translate-y-1/2 z-20 p-2 rounded-full bg-slate-950/60 hover:bg-amber-500 hover:text-slate-950 text-white transition-all cursor-pointer shadow-md focus:outline-none focus:ring-2 focus:ring-amber-500"
+                                  aria-label="Previous image"
+                                >
+                                  <ChevronLeft size={20} />
+                                </button>
+                                <button
+                                  onClick={(e) => {
+                                    e.stopPropagation();
+                                    setActiveImageIndex((prev) => (prev === carouselImages.length - 1 ? 0 : prev + 1));
+                                  }}
+                                  className="absolute right-4 top-1/2 -translate-y-1/2 z-20 p-2 rounded-full bg-slate-950/60 hover:bg-amber-500 hover:text-slate-950 text-white transition-all cursor-pointer shadow-md focus:outline-none focus:ring-2 focus:ring-amber-500"
+                                  aria-label="Next image"
+                                >
+                                  <ChevronRight size={20} />
+                                </button>
+                              </>
+                            )}
+
+                            {/* Indicator info badges */}
+                            <div className="absolute top-4 left-4 z-20 flex items-center gap-2">
+                              <span className="bg-slate-950/70 backdrop-blur-md text-[10px] font-black tracking-widest text-white px-2 py-1 rounded">
+                                {selectedProject.category === "Perumahan" ? TRANSLATIONS[lang].projects.filterPerumahan :
+                                 selectedProject.category === "Komersial" ? TRANSLATIONS[lang].projects.filterKomersial :
+                                 TRANSLATIONS[lang].projects.filterInfrastruktur}
+                              </span>
+                              {carouselImages.length > 1 && (
+                                <span className="bg-amber-500 text-slate-950 text-[10px] font-mono font-black tracking-wider px-2 py-1 rounded">
+                                  {activeImageIndex + 1} / {carouselImages.length}
+                                </span>
                               )}
-                            </button>
-                          ))}
-                        </div>
-                      )}
-                    </>
-                  );
-                })()}
+                            </div>
+
+                            <div className="absolute bottom-6 left-6 right-6 z-20 pointer-events-none">
+                              <h3 className="text-xl sm:text-2xl font-bold text-white leading-tight drop-shadow-md">
+                                {lang === "en" && selectedProject.enTitle ? selectedProject.enTitle : selectedProject.title}
+                              </h3>
+                            </div>
+                          </div>
+
+                          {/* Horizontal scrollable thumbnails row */}
+                          {carouselImages.length > 1 && (
+                            <div className={`px-6 sm:px-8 pt-4 pb-3 border-b flex gap-3 overflow-x-auto scrollbar-thin ${
+                              darkMode ? "border-slate-800 bg-slate-950/20" : "border-slate-100 bg-slate-50/50"
+                            }`}>
+                              {carouselImages.map((img, idx) => (
+                                <button
+                                  key={idx}
+                                  onClick={() => setActiveImageIndex(idx)}
+                                  className={`relative w-16 h-12 sm:w-20 sm:h-14 rounded overflow-hidden flex-shrink-0 transition-all border-2 cursor-pointer ${
+                                    activeImageIndex === idx
+                                      ? "border-amber-500 scale-105 shadow-sm"
+                                      : darkMode
+                                      ? "border-slate-800 opacity-60 hover:opacity-100 hover:border-slate-600"
+                                      : "border-slate-200 opacity-60 hover:opacity-100 hover:border-slate-400"
+                                  }`}
+                                >
+                                  <img
+                                    src={img}
+                                    alt={`Thumbnail ${idx + 1}`}
+                                    className="w-full h-full object-cover object-center"
+                                  />
+                                  {activeImageIndex === idx && (
+                                    <div className="absolute inset-0 bg-amber-500/10 flex items-center justify-center">
+                                      <div className="w-1.5 h-1.5 rounded-full bg-amber-500" />
+                                    </div>
+                                  )}
+                                </button>
+                              ))}
+                            </div>
+                          )}
+                        </>
+                      );
+                    })()}
+                  </>
+                )}
 
                 {/* Details Content */}
                 <div className="p-6 sm:p-8 space-y-6">
