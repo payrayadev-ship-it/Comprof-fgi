@@ -3,4 +3,4 @@ User-agent: *
 Allow: /
 
 # Sitemaps
-Sitemap: https://foresyndoglobalindonesia.my.id/sitemap.xml
+Sitemap: https://www.foresyndoglobalindonesia.my.id/sitemap.xml
