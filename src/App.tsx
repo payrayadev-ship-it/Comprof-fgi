@@ -46,7 +46,7 @@ const FGILogo = ({ className = "", darkMode = true }: { className?: string; dark
   <div className={`flex items-center space-x-3 ${className}`} id="fgi-logo">
     <div className="w-11 h-11 flex items-center justify-center rounded-lg overflow-hidden bg-white shadow-md flex-shrink-0 border border-slate-200 p-0.5">
       <img
-        src="/assets/images/fgi_bold_navy_logo_1782399447952.jpg"
+        src="/assets/images/fgi_logo_new_1782645239893.jpg"
         alt="PT. Foresyndo Global Indonesia Logo"
         className="w-full h-full object-contain rounded-md"
         referrerPolicy="no-referrer"
