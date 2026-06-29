@@ -61,6 +61,7 @@ import {
 import { generateProjectBrochure } from "./utils/brochure";
 import { downloadCompanyProfilePDF, downloadJVAgreementDraftPDF, downloadOpportunityProspectusPDF } from "./utils/pdfGenerator";
 import { InvestorD3Chart } from "./components/InvestorD3Chart";
+import HeroCarousel from "./components/HeroCarousel";
 import { QRCodeSVG } from "qrcode.react";
 
 // --- CUSTOM LOGO FOR PT. FORESYNDO GLOBAL INDONESIA (FGI) ---
@@ -313,54 +314,6 @@ const PROJECTS_DATA: Project[] = [
     enYear: "2026 - Newly Launched",
     highlights: ["Sistem IoT Smart Living Terintegrasi", "Boutique Hotel Concept Suite", "Desain Arsitektur Modern Tropis", "Sertifikasi Efisiensi Energi Terpadu"],
     enHighlights: ["Integrated IoT Smart Living System", "Boutique Hotel Concept Suite", "Modern Tropical Architectural Design", "Integrated Energy Efficiency Certification"]
-  }
-];
-
-const HERO_SLIDES = [
-  {
-    image: "https://images.unsplash.com/photo-1600585154340-be6161a56a0c?q=80&w=1600&auto=format&fit=crop",
-    titleId: "Perumahan Modern - Grand Foresyndo Hills",
-    titleEn: "Modern Housing Estate - Grand Foresyndo Hills",
-    categoryId: "Perumahan",
-    categoryEn: "Residential",
-    locationId: "Bandung Selatan, Jawa Barat",
-    locationEn: "South Bandung, West Java",
-  },
-  {
-    image: "https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?q=80&w=1600&auto=format&fit=crop",
-    titleId: "Ruko Komersial - Golden Square Boulevard",
-    titleEn: "Commercial Shophouse - Golden Square Boulevard",
-    categoryId: "Komersial",
-    categoryEn: "Commercial",
-    locationId: "Banjaran Raya, Bandung",
-    locationEn: "Banjaran Raya, Bandung",
-  },
-  {
-    image: "https://images.unsplash.com/photo-1541888946425-d81bb19240f5?q=80&w=1600&auto=format&fit=crop",
-    titleId: "Infrastruktur Kawasan - Site Development & Akses Jalan",
-    titleEn: "Regional Infrastructure - Site Development & Access Road",
-    categoryId: "Infrastruktur",
-    categoryEn: "Infrastructure",
-    locationId: "Langonsari, Kabupaten Bandung",
-    locationEn: "Langonsari, Bandung Regency",
-  },
-  {
-    image: "https://images.unsplash.com/photo-1586528116311-ad8dd3c8310d?q=80&w=1600&auto=format&fit=crop",
-    titleId: "Gudang Industri - FGI Logistics Park",
-    titleEn: "Industrial Warehouse - FGI Logistics Park",
-    categoryId: "Komersial",
-    categoryEn: "Commercial",
-    locationId: "Kawasan Industri Bandung, Jawa Barat",
-    locationEn: "Bandung Industrial Area, West Java",
-  },
-  {
-    image: "/assets/images/foresyndo_residence_two_1782634018176.jpg",
-    titleId: "Hunian Hotel & Smart Living - Foresyndo Residence 2",
-    titleEn: "Boutique Hotel & Smart Living - Foresyndo Residence 2",
-    categoryId: "Perumahan",
-    categoryEn: "Residential / Hospitality",
-    locationId: "Jatitujuh, Kabupaten Majalengka, Jawa Barat",
-    locationEn: "Jatitujuh, Majalengka Regency, West Java",
   }
 ];
 
@@ -694,6 +647,7 @@ const TRANSLATIONS = {
       btnSend: "Kirim Form Pesan",
       btnSending: "Mengirimkan...",
       btnContactWa: "Hubungi via WA",
+      btnContactEmail: "Hubungi via Email",
       headOffice: "FGI Kantor Pusat",
       officeAddrLabel: "Alamat Kantor",
       officeAddr: "Jalan Banjaran Raya KM 13 Langonsari, Pameungpeuk, Kabupaten Bandung, Jawa Barat, Indonesia.",
@@ -721,6 +675,7 @@ const TRANSLATIONS = {
       projectDesc: "Deskripsi Proyek",
       projectHighlights: "Spesifikasi & Keunggulan",
       askCta: "Tanyakan Proyek Ini via WA",
+      askEmailCta: "Tanyakan via Email",
       shareTitle: "Bagikan Proyek",
       shareDesc: "Bagikan detail proyek ini dengan calon mitra atau kolega.",
       shareCopied: "Tautan disalin!",
@@ -1074,6 +1029,7 @@ const TRANSLATIONS = {
       btnSend: "Submit Message Form",
       btnSending: "Sending...",
       btnContactWa: "Contact via WA",
+      btnContactEmail: "Contact via Email",
       headOffice: "FGI Headquarters",
       officeAddrLabel: "Office Address",
       officeAddr: "Jalan Banjaran Raya KM 13 Langonsari, Pameungpeuk, Bandung Regency, West Java, Indonesia.",
@@ -1101,6 +1057,7 @@ const TRANSLATIONS = {
       projectDesc: "Project Description",
       projectHighlights: "Specifications & Highlights",
       askCta: "Inquire About This Project on WA",
+      askEmailCta: "Inquire via Email",
       shareTitle: "Share Project",
       shareDesc: "Share this project details with potential partners or colleagues.",
       shareCopied: "Link copied!",
@@ -1274,7 +1231,6 @@ export default function App() {
   const [projectFilter, setProjectFilter] = useState<"Semua" | "Perumahan" | "Komersial" | "Infrastruktur">("Semua");
   const [selectedProject, setSelectedProject] = useState<Project | null>(null);
   const [activeImageIndex, setActiveImageIndex] = useState<number>(0);
-  const [heroSlideIndex, setHeroSlideIndex] = useState<number>(0);
 
   // Veo Video Showcase State Variables
   const [videoTabActive, setVideoTabActive] = useState<boolean>(false);
@@ -1332,12 +1288,6 @@ export default function App() {
       .catch((err) => console.error("Error fetching video config:", err));
   }, []);
 
-  useEffect(() => {
-    const timer = setInterval(() => {
-      setHeroSlideIndex((prev) => (prev + 1) % HERO_SLIDES.length);
-    }, 5000);
-    return () => clearInterval(timer);
-  }, []);
   const handleGenerateVideo = async () => {
     if (!selectedProject) return;
     setVideoMode("generating");
@@ -1867,6 +1817,15 @@ export default function App() {
     window.open(`https://wa.me/6287797330546?text=${encodedText}`, "_blank");
   };
 
+  // Convert contact form to Email link
+  const sendToEmail = () => {
+    const isId = lang === "id";
+    const subjectLine = formSubject.trim() || (isId ? "Pertanyaan Hubungi Kami - PT. FGI" : "Contact Inquiry - PT. FGI");
+    const encodedSubject = encodeURIComponent(subjectLine);
+    const encodedBody = encodeURIComponent(formattedEnquiryMessage);
+    window.open(`mailto:cs.fgi@zohomail.com?subject=${encodedSubject}&body=${encodedBody}`, "_blank");
+  };
+
   // Filtered projects
   const filteredProjects = projectFilter === "Semua"
     ? PROJECTS_DATA
@@ -2143,162 +2102,35 @@ export default function App() {
 
 
       {/* --- HERO SECTION --- */}
-      <section id="beranda" className="relative min-h-screen flex flex-col justify-center pt-28 pb-16 overflow-hidden z-10">
-        {/* Background Overlay Image (Auto-sliding Carousel) */}
-        <div className="absolute inset-0 z-0">
-          <div className="absolute inset-0 bg-slate-950/70 dark:bg-slate-950/85 mix-blend-multiply z-10" />
-          <AnimatePresence mode="wait">
-            <motion.img
-              key={heroSlideIndex}
-              src={HERO_SLIDES[heroSlideIndex].image}
-              alt="PT Foresyndo Global Indonesia Project Showcase"
-              initial={{ opacity: 0, scale: 1.02 }}
-              animate={{ opacity: 1, scale: 1.05 }}
-              exit={{ opacity: 0 }}
-              transition={{ duration: 0.8 }}
-              className="absolute inset-0 w-full h-full object-cover object-center select-none"
-              loading="eager"
-            />
-          </AnimatePresence>
+      <section id="beranda" className="relative pt-28 pb-12 overflow-hidden z-10 bg-[#F8FAFC] dark:bg-[#0c1220]">
+        
+        {/* Main Premium Banner Carousel */}
+        <HeroCarousel lang={lang} darkMode={darkMode} scrollTo={scrollTo} />
 
-          {/* Interactive Slide Indicators & Showcase Badge */}
-          <div className="absolute bottom-8 right-4 sm:right-12 z-20 flex flex-col items-end space-y-3 pointer-events-auto">
-            {/* Project Title Badge */}
-            <motion.div 
-              key={`badge-${heroSlideIndex}`}
-              initial={{ opacity: 0, x: 20 }}
-              animate={{ opacity: 1, x: 0 }}
-              transition={{ duration: 0.5 }}
-              className="bg-slate-950/80 backdrop-blur-md border border-slate-800 px-4 py-2 rounded-xl text-right max-w-xs shadow-2xl"
-            >
-              <div className="text-[10px] font-bold text-amber-400 tracking-wider uppercase">
-                {lang === "en" ? HERO_SLIDES[heroSlideIndex].categoryEn : HERO_SLIDES[heroSlideIndex].categoryId}
-              </div>
-              <div className="text-[12px] font-bold text-white mt-0.5 truncate leading-tight">
-                {lang === "en" ? HERO_SLIDES[heroSlideIndex].titleEn : HERO_SLIDES[heroSlideIndex].titleId}
-              </div>
-              <div className="text-[10px] text-slate-400 italic mt-0.5">
-                {lang === "en" ? HERO_SLIDES[heroSlideIndex].locationEn : HERO_SLIDES[heroSlideIndex].locationId}
-              </div>
-            </motion.div>
-
-            {/* Pagination dots */}
-            <div className="flex space-x-2 bg-slate-950/40 backdrop-blur-sm px-3 py-1.5 rounded-full border border-slate-800/40">
-              {HERO_SLIDES.map((_, idx) => (
-                <button
-                  key={idx}
-                  onClick={() => setHeroSlideIndex(idx)}
-                  className={`h-2 rounded-full transition-all duration-300 cursor-pointer ${
-                    heroSlideIndex === idx ? "w-6 bg-amber-500" : "w-2 bg-slate-600 hover:bg-slate-400"
-                  }`}
-                  aria-label={`Go to slide ${idx + 1}`}
-                />
-              ))}
-            </div>
-          </div>
-        </div>
-
-        {/* Content Container */}
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-20 w-full mt-12 sm:mt-16">
-          <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
-            
-            {/* Left Column: Heading, Subhead, and CTA */}
-            <motion.div
-              initial={{ opacity: 0, y: 40 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.8, ease: "easeOut" }}
-              className="lg:col-span-8 text-left space-y-6 sm:space-y-8"
-              id="hero-left-content"
-            >
-              <div className="inline-block px-3.5 py-1 bg-amber-500/10 border border-amber-500/30 text-amber-400 text-[10px] font-bold uppercase tracking-widest rounded-full italic">
-                {TRANSLATIONS[lang].hero.sub}
-              </div>
-              
-              <h1 className="text-4xl sm:text-5xl lg:text-6xl font-extrabold text-white leading-tight tracking-tight">
-                {TRANSLATIONS[lang].hero.title1} <br />
-                <span className="text-transparent bg-clip-text bg-gradient-to-r from-amber-400 via-yellow-400 to-amber-500 font-black">
-                  {TRANSLATIONS[lang].hero.title2}
-                </span>
-              </h1>
-
-              <p className="text-base sm:text-lg text-slate-200 max-w-2xl leading-relaxed font-normal border-l-4 border-amber-500 pl-4">
-                {TRANSLATIONS[lang].hero.desc}
-              </p>
-
-              <div className="flex flex-col sm:flex-row gap-4 pt-2">
-                <button
-                  onClick={() => scrollTo("kontak")}
-                  className="px-5 py-3 bg-gradient-to-r from-amber-400 to-amber-600 text-slate-950 text-[11px] font-black uppercase tracking-widest rounded hover:from-amber-500 hover:to-amber-700 transition-all duration-300 shadow-lg cursor-pointer flex items-center justify-center gap-2"
-                >
-                  {TRANSLATIONS[lang].hero.ctaConsult}
-                  <Phone size={14} />
-                </button>
-                <button
-                  onClick={() => scrollTo("proyek")}
-                  className="px-5 py-3 border-2 border-amber-500/80 text-amber-400 text-[11px] font-bold uppercase tracking-widest rounded hover:bg-amber-500 hover:text-slate-950 hover:border-amber-500 transition-all duration-300 cursor-pointer flex items-center justify-center gap-2"
-                >
-                  {TRANSLATIONS[lang].hero.ctaProjects}
-                  <Building size={14} />
-                </button>
-              </div>
-            </motion.div>
-
-            {/* Right Column: Mini Floating Stats Badge or Premium Geometric Shape */}
-            <motion.div
-              initial={{ opacity: 0, scale: 0.9 }}
-              animate={{ opacity: 1, scale: 1 }}
-              transition={{ duration: 0.8, delay: 0.2 }}
-              className="hidden lg:col-span-4 flex justify-center relative"
-              id="hero-right-badge"
-            >
-              {/* Premium Floating Ring Badge */}
-              <div className="relative w-72 h-72 rounded border border-amber-500/35 bg-gradient-to-br from-slate-900 to-slate-950 p-8 flex flex-col justify-between shadow-2xl overflow-hidden group">
-                <div className="absolute top-[-30px] right-[-30px] w-24 h-24 rounded-full bg-blue-600/20 blur-xl group-hover:bg-blue-600/30 transition-all duration-500" />
-                <div className="absolute bottom-[-30px] left-[-30px] w-24 h-24 rounded-full bg-amber-500/15 blur-xl group-hover:bg-amber-500/25 transition-all duration-500" />
-                
-                <div className="z-10 flex justify-between items-start">
-                  <div className="bg-amber-500/10 p-2.5 rounded text-amber-400">
-                    <Award size={32} />
-                  </div>
-                  <span className="text-[10px] text-slate-400 font-mono tracking-wider">{TRANSLATIONS[lang].hero.cardEst}</span>
-                </div>
-                
-                <div className="z-10 mt-8">
-                  <h3 className="text-lg font-bold text-white mb-2 uppercase tracking-wide">PT. FGI</h3>
-                  <p className="text-xs text-slate-300 leading-relaxed">
-                    {TRANSLATIONS[lang].hero.cardDesc}
-                  </p>
-                </div>
-
-                <div className="z-10 pt-4 border-t border-amber-500/20 flex items-center justify-between text-[11px] font-bold uppercase tracking-wider text-amber-400 group-hover:text-amber-300 cursor-pointer" onClick={() => scrollTo("tentang-kami")}>
-                  <span>{TRANSLATIONS[lang].hero.cardExplore}</span>
-                  <ArrowRight size={14} className="group-hover:translate-x-1 transition-transform" />
-                </div>
-              </div>
-            </motion.div>
-          </div>
-
+        {/* Statistics Grid and Scroll Indicator */}
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mt-12 relative z-20">
+          
           {/* --- HERO STATISTICS GRID --- */}
-          <div className="mt-20 lg:mt-28" id="hero-statistics">
+          <div id="hero-statistics" className="mt-8">
             <div className="grid grid-cols-2 md:grid-cols-4 gap-4 sm:gap-6 lg:gap-8">
               {[
-                { end: 100, suffix: "+", label: TRANSLATIONS[lang].hero.statCompleted, icon: <CheckCircle2 className="text-amber-500" size={24} />, highlight: false },
+                { end: 100, suffix: "+", label: TRANSLATIONS[lang].hero.statCompleted, icon: <CheckCircle2 className="text-[#0B5ED7]" size={24} />, highlight: false },
                 { end: 10, suffix: "+", label: TRANSLATIONS[lang].hero.statYears, icon: <Clock className="text-slate-600 dark:text-slate-300" size={24} />, highlight: false },
                 { end: 50, suffix: "+", label: TRANSLATIONS[lang].hero.statPartners, icon: <Users className="text-slate-600 dark:text-slate-300" size={24} />, highlight: false },
-                { end: 100, suffix: "%", label: TRANSLATIONS[lang].hero.statSatisfaction, icon: <Award className="text-amber-400" size={24} />, highlight: true }
+                { end: 100, suffix: "%", label: TRANSLATIONS[lang].hero.statSatisfaction, icon: <Award className="text-[#F4B400]" size={24} />, highlight: true }
               ].map((stat, idx) => (
                 <div
                   key={idx}
-                  className={`p-6 rounded shadow-md border transition-all duration-300 hover:shadow-lg ${
+                  className={`p-6 rounded-[16px] shadow-sm border transition-all duration-300 hover:shadow-md ${
                     stat.highlight
-                      ? "bg-gradient-to-br from-blue-800 via-blue-600 to-slate-100 border-amber-500/40 text-white"
+                      ? "bg-gradient-to-br from-[#0B5ED7] via-blue-700 to-[#0B5ED7] border-blue-400/20 text-white"
                       : "bg-white dark:bg-[#131926] border-slate-200 dark:border-slate-800 text-slate-900 dark:text-white"
                   }`}
                 >
-                  <div className={`mb-3 p-2 rounded inline-block ${stat.highlight ? "bg-black/10 text-amber-400" : "bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-300"}`}>
+                  <div className={`mb-3 p-2 rounded-lg inline-block ${stat.highlight ? "bg-white/10 text-[#F4B400]" : "bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-300"}`}>
                     {stat.icon}
                   </div>
-                  <div className={`text-2xl sm:text-3xl font-black leading-none ${stat.highlight ? "text-amber-400" : "text-amber-500 dark:text-amber-400"}`}>
+                  <div className={`text-2xl sm:text-3xl font-black leading-none ${stat.highlight ? "text-[#F4B400]" : "text-[#0B5ED7] dark:text-amber-400"}`}>
                     <Counter end={stat.end} suffix={stat.suffix} />
                   </div>
                   <div className={`text-[10px] uppercase font-bold mt-2 tracking-wider ${stat.highlight ? "text-slate-100" : "text-slate-400"}`}>
@@ -2309,18 +2141,18 @@ export default function App() {
             </div>
           </div>
 
-        </div>
+          {/* Floating Scroll Down Arrow */}
+          <div className="flex flex-col items-center justify-center gap-1 mt-10 cursor-pointer select-none text-center" onClick={() => scrollTo("tentang-kami")}>
+            <span className="text-[10px] text-slate-400 dark:text-slate-500 font-bold tracking-widest uppercase">Explore PT. FGI</span>
+            <motion.div
+              animate={{ y: [0, 6, 0] }}
+              transition={{ repeat: Infinity, duration: 1.5 }}
+              className="text-[#0B5ED7] dark:text-amber-400"
+            >
+              <ChevronDown size={18} />
+            </motion.div>
+          </div>
 
-        {/* Floating Scroll Down Arrow */}
-        <div className="absolute bottom-6 left-1/2 transform -translate-x-1/2 flex flex-col items-center gap-1 z-20 cursor-pointer select-none" onClick={() => scrollTo("tentang-kami")}>
-          <span className="text-xs text-slate-400 tracking-wider">SCROLL</span>
-          <motion.div
-            animate={{ y: [0, 8, 0] }}
-            transition={{ repeat: Infinity, duration: 1.5 }}
-            className="text-amber-500"
-          >
-            <ChevronDown size={18} />
-          </motion.div>
         </div>
       </section>
 
@@ -4965,11 +4797,11 @@ export default function App() {
                       </div>
                     </div>
 
-                    <div className="flex flex-col sm:flex-row gap-3 pt-2">
+                    <div className="flex flex-col sm:flex-row flex-wrap gap-3 pt-2">
                       <button
                         type="submit"
                         disabled={isSubmitting}
-                        className="bg-gradient-to-r from-amber-400 to-amber-600 hover:from-amber-500 hover:to-amber-700 disabled:from-amber-600 disabled:to-amber-700 text-slate-950 text-xs font-black uppercase tracking-wider px-6 py-3.5 rounded shadow-md cursor-pointer flex items-center justify-center gap-2 flex-1 border border-amber-400/20 transition-all"
+                        className="bg-gradient-to-r from-amber-400 to-amber-600 hover:from-amber-500 hover:to-amber-700 disabled:from-amber-600 disabled:to-amber-700 text-slate-950 text-xs font-black uppercase tracking-wider px-6 py-3.5 rounded shadow-md cursor-pointer flex items-center justify-center gap-2 flex-1 min-w-[200px] border border-amber-400/20 transition-all"
                       >
                         {isSubmitting ? (
                           <>{TRANSLATIONS[lang].contact.btnSending}</>
@@ -4980,13 +4812,23 @@ export default function App() {
                         )}
                       </button>
                       
-                      <button
-                        type="button"
-                        onClick={sendToWhatsApp}
-                        className="bg-emerald-600 hover:bg-emerald-700 text-white text-xs font-bold uppercase tracking-wider px-6 py-3.5 rounded shadow-md cursor-pointer flex items-center justify-center gap-1.5"
-                      >
-                        {TRANSLATIONS[lang].contact.btnContactWa} <ExternalLink size={14} />
-                      </button>
+                      <div className="flex gap-3 flex-1 min-w-[260px]">
+                        <button
+                          type="button"
+                          onClick={sendToWhatsApp}
+                          className="bg-emerald-600 hover:bg-emerald-700 text-white text-xs font-bold uppercase tracking-wider px-4 py-3.5 rounded shadow-md cursor-pointer flex items-center justify-center gap-1.5 flex-1 transition-all"
+                        >
+                          {TRANSLATIONS[lang].contact.btnContactWa} <ExternalLink size={14} />
+                        </button>
+
+                        <button
+                          type="button"
+                          onClick={sendToEmail}
+                          className="bg-sky-600 hover:bg-sky-700 text-white text-xs font-bold uppercase tracking-wider px-4 py-3.5 rounded shadow-md cursor-pointer flex items-center justify-center gap-1.5 flex-1 transition-all"
+                        >
+                          {TRANSLATIONS[lang].contact.btnContactEmail} <Mail size={14} />
+                        </button>
+                      </div>
                     </div>
                   </form>
                 )}
@@ -6056,6 +5898,21 @@ export default function App() {
                       className="bg-emerald-600 hover:bg-emerald-700 text-white font-bold text-xs uppercase tracking-wider px-5 py-3 rounded shadow-sm flex items-center justify-center gap-2 flex-1 cursor-pointer"
                     >
                       {TRANSLATIONS[lang].modal.askCta} <ExternalLink size={14} />
+                    </button>
+
+                    <button
+                      onClick={() => {
+                        const messageText = lang === "en"
+                          ? `Hello FGI, I am interested in inquiring about the project: *${selectedProject.enTitle || selectedProject.title}* in *${selectedProject.enLocation || selectedProject.location}*. Please send me more information.`
+                          : `Halo FGI, saya tertarik menanyakan tentang proyek: *${selectedProject.title}* di *${selectedProject.location}*. Mohon informasi unit / pelaksanaannya lebih lanjut.`;
+                        const subjectText = lang === "en"
+                          ? `Inquiry for Project: ${selectedProject.enTitle || selectedProject.title}`
+                          : `Tanya Proyek: ${selectedProject.title}`;
+                        window.open(`mailto:cs.fgi@zohomail.com?subject=${encodeURIComponent(subjectText)}&body=${encodeURIComponent(messageText)}`, "_blank");
+                      }}
+                      className="bg-sky-600 hover:bg-sky-700 text-white font-bold text-xs uppercase tracking-wider px-5 py-3 rounded shadow-sm flex items-center justify-center gap-2 flex-1 cursor-pointer transition-all"
+                    >
+                      {TRANSLATIONS[lang].modal.askEmailCta} <Mail size={14} />
                     </button>
 
                     <button
