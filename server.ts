@@ -3,6 +3,7 @@ import path from "path";
 import { createServer as createViteServer } from "vite";
 import { GoogleGenAI, GenerateVideosOperation } from "@google/genai";
 import dotenv from "dotenv";
+import { Readable } from "stream";
 
 dotenv.config();
 
@@ -12,14 +13,15 @@ const PORT = 3000;
 app.use(express.json());
 
 // Fallback stock videos mapping for PT Foresyndo Global Indonesia projects
+// Using ultra-reliable Google Cloud Storage Public GTV bucket videos which support streaming, range requests, and hotlinking perfectly.
 const FALLBACK_VIDEOS: Record<number, string> = {
-  1: "https://assets.mixkit.co/videos/preview/mixkit-modern-suburban-houses-aerial-view-41584-large.mp4", // Grand Foresyndo Hills
-  2: "https://assets.mixkit.co/videos/preview/mixkit-drone-shot-of-a-modern-residential-area-44245-large.mp4", // Emerald Residence
-  3: "https://assets.mixkit.co/videos/preview/mixkit-aerial-view-of-city-streets-and-buildings-42284-large.mp4", // Golden Square Boulevard
-  4: "https://assets.mixkit.co/videos/preview/mixkit-interior-of-a-large-empty-warehouse-with-shelves-43033-large.mp4", // FGI Logistics Park
-  5: "https://assets.mixkit.co/videos/preview/mixkit-modern-apartment-building-exterior-44243-large.mp4", // Central Plaza & Commercial Hub
-  6: "https://assets.mixkit.co/videos/preview/mixkit-highway-road-surrounded-by-forest-aerial-view-41595-large.mp4", // Site Development
-  7: "https://assets.mixkit.co/videos/preview/mixkit-luxury-home-interior-44247-large.mp4" // Foresyndo Residence 2
+  1: "https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerEscapes.mp4", // Grand Foresyndo Hills
+  2: "https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerFun.mp4", // Emerald Residence
+  3: "https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerJoyrides.mp4", // Golden Square Boulevard
+  4: "https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerBlazes.mp4", // FGI Logistics Park
+  5: "https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerMeltdowns.mp4", // Central Plaza & Commercial Hub
+  6: "https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/SubaruOutbackOnStreetAndDirt.mp4", // Site Development
+  7: "https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/TearsOfSteel.mp4" // Foresyndo Residence 2
 };
 
 const BASE_PROJECT_PROMPTS: Record<number, string> = {
@@ -34,10 +36,49 @@ const BASE_PROJECT_PROMPTS: Record<number, string> = {
 
 // API Endpoint 1: Check if API Key is configured
 app.get("/api/video-config", (req, res) => {
+  const proxiedFallbacks: Record<number, string> = {};
+  for (const key of Object.keys(FALLBACK_VIDEOS)) {
+    proxiedFallbacks[Number(key)] = `/api/fallback-video/${key}`;
+  }
   res.json({
     apiKeyConfigured: !!process.env.GEMINI_API_KEY,
-    fallbackVideos: FALLBACK_VIDEOS
+    fallbackVideos: proxiedFallbacks
   });
+});
+
+// New Endpoint to proxy fallback video streaming from public CDNs and bypass browser-side CORS checks
+app.get("/api/fallback-video/:id", async (req, res) => {
+  const id = Number(req.params.id);
+  const videoUrl = FALLBACK_VIDEOS[id] || FALLBACK_VIDEOS[1];
+
+  try {
+    const videoRes = await fetch(videoUrl, {
+      headers: {
+        "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36"
+      }
+    });
+
+    if (!videoRes.ok) {
+      throw new Error(`Failed to stream video: ${videoRes.statusText}`);
+    }
+
+    res.setHeader("Content-Type", "video/mp4");
+    res.setHeader("Cache-Control", "public, max-age=86400"); // Cache for 24 hours
+
+    if (videoRes.body) {
+      Readable.fromWeb(videoRes.body as any).pipe(res);
+    } else {
+      res.status(500).json({ error: "No body stream available." });
+    }
+  } catch (err: any) {
+    console.error(`Error proxying fallback video ${id}:`, err);
+    // Redirect to the external URL as final resort in case streaming fails
+    if (!res.headersSent) {
+      res.redirect(videoUrl);
+    } else {
+      res.end();
+    }
+  }
 });
 
 // API Endpoint 2: Trigger Video Generation with Veo
@@ -73,7 +114,7 @@ app.post("/api/generate-video", async (req, res) => {
       return res.json({
         success: true,
         mode: "simulation",
-        fallbackUrl: FALLBACK_VIDEOS[id] || FALLBACK_VIDEOS[1],
+        fallbackUrl: `/api/fallback-video/${id}`,
         prompt: promptText,
         error: err.message
       });
@@ -83,7 +124,7 @@ app.post("/api/generate-video", async (req, res) => {
     return res.json({
       success: true,
       mode: "simulation",
-      fallbackUrl: FALLBACK_VIDEOS[id] || FALLBACK_VIDEOS[1],
+      fallbackUrl: `/api/fallback-video/${id}`,
       prompt: promptText
     });
   }
@@ -147,20 +188,7 @@ app.post("/api/video-download", async (req, res) => {
     
     // Pipe video stream back to client
     if (videoRes.body) {
-      videoRes.body.pipeTo(
-        new WritableStream({
-          write(chunk) {
-            res.write(chunk);
-          },
-          close() {
-            res.end();
-          },
-          abort(err) {
-            console.error("Video streaming aborted:", err);
-            res.end();
-          }
-        })
-      );
+      Readable.fromWeb(videoRes.body as any).pipe(res);
     } else {
       res.status(500).json({ error: "No video body stream available." });
     }

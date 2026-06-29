@@ -30,11 +30,13 @@ import {
   HelpCircle,
   Star,
   ArrowRight,
+  ArrowUpRight,
   Share2,
   Linkedin,
   Copy,
   Instagram,
   Facebook,
+  Twitter,
   Calculator,
   Ruler,
   ChevronLeft,
@@ -42,11 +44,23 @@ import {
   Video,
   Sparkles,
   Play,
+  Pause,
+  Volume2,
+  VolumeX,
   RotateCcw,
   Info,
   Sliders,
-  Loader2
+  Loader2,
+  Printer,
+  Wallet,
+  Calendar,
+  Percent,
+  Download
 } from "lucide-react";
+
+import { generateProjectBrochure } from "./utils/brochure";
+import { InvestorD3Chart } from "./components/InvestorD3Chart";
+import { QRCodeSVG } from "qrcode.react";
 
 // --- CUSTOM LOGO FOR PT. FORESYNDO GLOBAL INDONESIA (FGI) ---
 const FGILogo = ({ className = "", darkMode = true }: { className?: string; darkMode?: boolean }) => (
@@ -357,6 +371,7 @@ const TRANSLATIONS = {
       struktur: "Struktur",
       layanan: "Layanan",
       proyek: "Proyek",
+      investor: "Investor",
       "visi-misi": "Visi & Misi",
       "mengapa-kami": "Mengapa Kami",
       karir: "Karir",
@@ -708,6 +723,8 @@ const TRANSLATIONS = {
       shareTitle: "Bagikan Proyek",
       shareDesc: "Bagikan detail proyek ini dengan calon mitra atau kolega.",
       shareCopied: "Tautan disalin!",
+      printBrochure: "Cetak Brosur Proyek",
+      printingBrochure: "Menyiapkan Brosur...",
     },
     videoShowcase: {
       tabGallery: "Galeri Foto",
@@ -723,7 +740,8 @@ const TRANSLATIONS = {
       renderingTitle: "Menyiapkan Tayangan Sinematik...",
       backToSetup: "Sesuaikan Ulang Gaya",
       apiNotConfiguredAlert: "Kunci API (GEMINI_API_KEY) belum dikonfigurasi di server FGI. Menjalankan Mode Simulasi Interaktif dengan visual stok premium berkualitas tinggi untuk kemudahan demonstrasi.",
-      simulationModeActive: "Mode Simulasi Aktif - Stok Video Premium"
+      simulationModeActive: "Mode Simulasi Aktif - Stok Video Premium",
+      quotaExceededWarning: "Batas Kuota Gemini Terlampaui (429): Tayangan dialihkan secara aman ke Mode Simulasi Premium dengan pemutaran video sinematik presisi tinggi."
     }
   },
   en: {
@@ -733,6 +751,7 @@ const TRANSLATIONS = {
       struktur: "Structure",
       layanan: "Services",
       proyek: "Projects",
+      investor: "Investor",
       "visi-misi": "Vision & Mission",
       "mengapa-kami": "Why Us",
       karir: "Careers",
@@ -1084,6 +1103,8 @@ const TRANSLATIONS = {
       shareTitle: "Share Project",
       shareDesc: "Share this project details with potential partners or colleagues.",
       shareCopied: "Link copied!",
+      printBrochure: "Print Project Brochure",
+      printingBrochure: "Preparing Brochure...",
     },
     videoShowcase: {
       tabGallery: "Photo Gallery",
@@ -1099,7 +1120,145 @@ const TRANSLATIONS = {
       renderingTitle: "Preparing Cinematic Showcase...",
       backToSetup: "Reconfigure Visual Style",
       apiNotConfiguredAlert: "API Key (GEMINI_API_KEY) is not configured on the server FGI. Using Interactive Simulation Mode with premium quality stock videos for high-fidelity demonstration.",
-      simulationModeActive: "Simulation Mode Active - Premium Stock Video"
+      simulationModeActive: "Simulation Mode Active - Premium Stock Video",
+      quotaExceededWarning: "Gemini API Quota Exceeded (429): Streaming automatically transitioned to Premium Simulation Mode with a high-fidelity cinematic project flythrough."
+    }
+  }
+};
+
+const INVESTOR_TRANSLATIONS = {
+  id: {
+    sub: "HUBUNGAN INVESTOR & KEMITRAAN",
+    title: "Membangun Nilai Bersama FGI",
+    desc: "PT. Foresyndo Global Indonesia membuka peluang kolaborasi bagi investor ritel, pemilik lahan, dan lembaga keuangan melalui model pembiayaan proyek konstruksi (Joint Venture) yang transparan, aman secara hukum, dan menguntungkan.",
+    calculator: {
+      title: "Kalkulator Simulasi ROI",
+      desc: "Simulasikan potensi imbal hasil investasi Anda berdasarkan modal, sektor proyek, dan durasi pendanaan.",
+      amountLabel: "Jumlah Investasi Anda:",
+      durationLabel: "Durasi Pendanaan:",
+      typeLabel: "Sektor Sifat Proyek:",
+      years: "Tahun",
+      types: {
+        residential: "Hunian & Hospitality (ROI ~14% p.a.)",
+        commercial: "Komersial & Ruko (ROI ~17% p.a.)",
+        infrastructure: "Infrastruktur & Kawasan (ROI ~12% p.a.)"
+      },
+      resultsTitle: "Proyeksi Keuntungan Finansial",
+      yieldRate: "Estimasi Imbal Hasil (p.a.)",
+      netProfit: "Proyeksi Keuntungan Bersih",
+      totalPayout: "Total Pengembalian Dana",
+      quarterlyPayout: "Estimasi Bagi Hasil Triwulan",
+      cta: "Hubungi Tim Keuangan"
+    },
+    opportunities: {
+      title: "Peluang Kemitraan Aktif",
+      desc: "Daftar proyek konstruksi FGI yang saat ini membuka pembiayaan partisipasi modal kerja (JV) dengan kuota terbatas.",
+      funded: "Terdanai",
+      minTicket: "Minimal Investasi",
+      targetPool: "Target Pool Modal",
+      estimatedRoi: "Proyeksi Bagi Hasil",
+      statusOpen: "Terbuka untuk Pendanaan",
+      statusProgress: "Pematangan Lahan & Izin",
+      ctaInquire: "Ajukan Minat",
+      downloadPro: "Unduh Prospektus (PDF)"
+    },
+    form: {
+      title: "Formulir Kemitraan Investor",
+      desc: "Silakan isi formulir di bawah ini untuk menjadwalkan konsultasi formal tatap muka dengan Direksi FGI.",
+      name: "Nama Lengkap Anda *",
+      email: "Alamat Email Aktif *",
+      phone: "Nomor WhatsApp / HP *",
+      projectInterest: "Pilihan Proyek Investasi",
+      projectPlaceholder: "-- Pilih Proyek / Sektor --",
+      message: "Catatan atau Kebutuhan Khusus",
+      submit: "Kirim Formulir Pernyataan Minat",
+      successTitle: "Minat Investasi Terkirim!",
+      successDesc: "Terima kasih atas kepercayaan Anda. Data minat investasi Anda telah dicatat oleh sistem kami. Silakan klik tombol di bawah untuk berkomunikasi langsung dengan Direksi Keuangan PT. FGI via WhatsApp resmi.",
+      waCta: "Hubungi Direksi FGI via WA"
+    },
+    faq: {
+      title: "Pertanyaan Umum Investor",
+      q1: "Bagaimana sistem pembagian keuntungan (profit sharing) dilakukan?",
+      a1: "Bagi hasil ditransfer langsung ke rekening bank terdaftar setiap triwulan (3 bulan) sekali, berdasarkan laporan keuangan progress lapangan yang transparan.",
+      q2: "Apakah investasi dilindungi oleh jaminan aset nyata?",
+      a2: "Ya, setiap perjanjian Joint Venture (JV) di PT. FGI diikat di hadapan Notaris resmi dan dijaminkan melalui hak opsi kepemilikan aset tanah/bangunan proyek proporsional terhadap nilai modal investasi Anda.",
+      q3: "Berapa batas minimum investasi di PT. FGI?",
+      a3: "Batas minimum partisipasi modal kerja berbeda-beda untuk tiap proyek, dimulai dari Rp 250 Juta untuk klaster hunian, hingga Rp 1 Miliar untuk proyek infrastruktur industri.",
+      q4: "Apakah investor berhak ikut mengawasi jalannya proyek?",
+      a4: "Tentu. FGI menyediakan portal laporan progress bulanan (berupa dokumentasi foto udara, kemajuan fisik konstruksi, dan pembukuan) yang dapat diakses oleh seluruh mitra investor secara daring."
+    },
+    downloads: {
+      title: "Dokumen Hubungan Investor",
+      desc: "Unduh materi resmi kami untuk mempelajari tata kelola dan legalitas perusahaan secara mendalam.",
+      doc1: "Profil Perusahaan & Portofolio FGI.pdf",
+      doc2: "Draft Standar Perjanjian Joint Venture.pdf"
+    }
+  },
+  en: {
+    sub: "INVESTOR RELATIONS & PARTNERSHIP",
+    title: "Building Shared Value with FGI",
+    desc: "PT. Foresyndo Global Indonesia opens collaborative opportunities for retail investors, landowners, and financial institutions through a Joint Venture model that is transparent, legally secure, and profitable.",
+    calculator: {
+      title: "ROI Simulation Calculator",
+      desc: "Simulate your potential investment yields based on your capital, project sector, and funding duration.",
+      amountLabel: "Your Capital Investment:",
+      durationLabel: "Funding Duration:",
+      typeLabel: "Project Sector Type:",
+      years: "Years",
+      types: {
+        residential: "Residential & Hospitality (ROI ~14% p.a.)",
+        commercial: "Commercial & Retail (ROI ~17% p.a.)",
+        infrastructure: "Infrastructure & Logistics (ROI ~12% p.a.)"
+      },
+      resultsTitle: "Financial Profit Projection",
+      yieldRate: "Estimated Yield Rate (p.a.)",
+      netProfit: "Projected Net Profit",
+      totalPayout: "Total Fund Payout",
+      quarterlyPayout: "Est. Quarterly Profit Payout",
+      cta: "Contact Finance Team"
+    },
+    opportunities: {
+      title: "Active Partnership Opportunities",
+      desc: "FGI construction projects currently open for working capital participation (JV) with limited slots.",
+      funded: "Funded",
+      minTicket: "Minimum Ticket Size",
+      targetPool: "Target Capital Pool",
+      estimatedRoi: "Projected Dividend Yield",
+      statusOpen: "Open for Funding",
+      statusProgress: "Land Clearing & Permitting",
+      ctaInquire: "Inquire Interest",
+      downloadPro: "Download Prospectus (PDF)"
+    },
+    form: {
+      title: "Investor Partnership Form",
+      desc: "Please fill out the form below to schedule a formal face-to-face consultation with FGI Directors.",
+      name: "Your Full Name *",
+      email: "Active Email Address *",
+      phone: "WhatsApp / Phone Number *",
+      projectInterest: "Investment Project Choice",
+      projectPlaceholder: "-- Choose Project / Sector --",
+      message: "Special Notes or Requirements",
+      submit: "Submit Letter of Interest",
+      successTitle: "Investment Interest Registered!",
+      successDesc: "Thank you for your trust. Your investment interest has been securely recorded. Please click the button below to connect directly with the Finance Director of PT. FGI via official WhatsApp.",
+      waCta: "Connect with FGI Directors via WA"
+    },
+    faq: {
+      title: "Investor FAQ",
+      q1: "How is the profit-sharing distributed?",
+      a1: "Dividends are transferred directly to your registered bank account every quarter (3 months), based on transparent progress reports of the project.",
+      q2: "Is my investment secured by physical assets?",
+      a2: "Yes, every Joint Venture (JV) agreement at PT. FGI is signed in front of an official Notary and backed by proportional ownership options over project land/buildings.",
+      q3: "What is the minimum ticket size to invest?",
+      a3: "The minimum investment varies per project, starting from IDR 250 Million for housing projects, up to IDR 1 Billion for industrial infrastructure projects.",
+      q4: "Do investors have the right to inspect project progress?",
+      a4: "Absolutely. FGI provides monthly progress portals (including drone photography, structural progress, and bookkeeping) accessible online for all investment partners."
+    },
+    downloads: {
+      title: "Investor Relations Documents",
+      desc: "Download our official materials to study our corporate governance and legal standards in depth.",
+      doc1: "FGI Company Profile & Portfolio.pdf",
+      doc2: "Standard Joint Venture Agreement Draft.pdf"
     }
   }
 };
@@ -1126,6 +1285,22 @@ export default function App() {
   const [videoStyle, setVideoStyle] = useState<string>("Sunset Golden Hour");
   const [videoCustomPrompt, setVideoCustomPrompt] = useState<string>("");
   const [useAIVideo, setUseAIVideo] = useState<boolean>(false);
+  const [videoMuted, setVideoMuted] = useState<boolean>(true);
+  const [videoPlaying, setVideoPlaying] = useState<boolean>(true);
+  const [videoHasError, setVideoHasError] = useState<boolean>(false);
+  const [videoErrorReason, setVideoErrorReason] = useState<string | null>(null);
+  const [slideshowIndex, setSlideshowIndex] = useState<number>(0);
+  const videoRef = useRef<HTMLVideoElement | null>(null);
+
+  useEffect(() => {
+    let interval: any;
+    if (videoTabActive && (videoHasError || videoMode === "completed")) {
+      interval = setInterval(() => {
+        setSlideshowIndex((prev) => (prev + 1) % (selectedProject?.images?.length || 1));
+      }, 5000);
+    }
+    return () => clearInterval(interval);
+  }, [videoTabActive, videoHasError, videoMode, selectedProject]);
 
   useEffect(() => {
     setActiveImageIndex(0);
@@ -1137,6 +1312,10 @@ export default function App() {
     setGeneratedVideoUrl(null);
     setVideoStyle("Sunset Golden Hour");
     setVideoCustomPrompt("");
+    setVideoMuted(true);
+    setVideoPlaying(true);
+    setVideoHasError(false);
+    setVideoErrorReason(null);
   }, [selectedProject]);
 
   useEffect(() => {
@@ -1182,22 +1361,14 @@ export default function App() {
     let currentUpdateIndex = 0;
     setVideoProgressText(updates[0]);
 
+    setVideoHasError(false);
     if (!useAIVideo || !apiKeyConfigured) {
       const interval = setInterval(() => {
         setVideoProgressPercent((prev) => {
           if (prev >= 100) {
             clearInterval(interval);
             setVideoMode("completed");
-            const fallbackMap: Record<number, string> = {
-              1: "https://assets.mixkit.co/videos/preview/mixkit-modern-suburban-houses-aerial-view-41584-large.mp4",
-              2: "https://assets.mixkit.co/videos/preview/mixkit-drone-shot-of-a-modern-residential-area-44245-large.mp4",
-              3: "https://assets.mixkit.co/videos/preview/mixkit-aerial-view-of-city-streets-and-buildings-42284-large.mp4",
-              4: "https://assets.mixkit.co/videos/preview/mixkit-interior-of-a-large-empty-warehouse-with-shelves-43033-large.mp4",
-              5: "https://assets.mixkit.co/videos/preview/mixkit-modern-apartment-building-exterior-44243-large.mp4",
-              6: "https://assets.mixkit.co/videos/preview/mixkit-highway-road-surrounded-by-forest-aerial-view-41595-large.mp4",
-              7: "https://assets.mixkit.co/videos/preview/mixkit-luxury-home-interior-44247-large.mp4"
-            };
-            setGeneratedVideoUrl(fallbackMap[selectedProject.id] || fallbackMap[1]);
+            setGeneratedVideoUrl(`/api/fallback-video/${selectedProject.id}`);
             return 100;
           }
           
@@ -1231,6 +1402,9 @@ export default function App() {
         }
 
         if (data.mode === "simulation") {
+          if (data.error) {
+            setVideoErrorReason(data.error);
+          }
           setGeneratedVideoUrl(data.fallbackUrl);
           setVideoMode("completed");
           return;
@@ -1304,6 +1478,7 @@ export default function App() {
   const [scrolled, setScrolled] = useState<boolean>(false);
   const [showBackToTop, setShowBackToTop] = useState<boolean>(false);
   const [faqOpen, setFaqOpen] = useState<number | null>(null);
+  const [investorFaqOpen, setInvestorFaqOpen] = useState<number | null>(null);
   const [activeJobDetails, setActiveJobDetails] = useState<number | null>(null);
   const [testimonialSlide, setTestimonialSlide] = useState<number>(0);
   const [windowWidth, setWindowWidth] = useState<number>(typeof window !== "undefined" ? window.innerWidth : 1200);
@@ -1331,11 +1506,22 @@ export default function App() {
 
   // Share Copied State
   const [shareCopied, setShareCopied] = useState<boolean>(false);
+  const [isPrintingBrochure, setIsPrintingBrochure] = useState<boolean>(false);
 
   // Cost Calculator State
   const [calcProjectType, setCalcProjectType] = useState<number>(0);
   const [calcAreaSize, setCalcAreaSize] = useState<number>(100);
   const [calcQuality, setCalcQuality] = useState<"std" | "med" | "lux">("med");
+
+  // Investor Relations State
+  const [investorAmount, setInvestorAmount] = useState<number>(1000000000); // Default 1 Billion IDR
+  const [investorDuration, setInvestorDuration] = useState<number>(2); // Default 2 Years
+  const [investorType, setInvestorType] = useState<"residential" | "commercial" | "infrastructure">("residential");
+  const [investorName, setInvestorName] = useState<string>("");
+  const [investorEmail, setInvestorEmail] = useState<string>("");
+  const [investorPhone, setInvestorPhone] = useState<string>("");
+  const [investorMessage, setInvestorMessage] = useState<string>("");
+  const [investorSuccess, setInvestorSuccess] = useState<boolean>(false);
 
   // Parse URL query parameter on load to open a shared project
   useEffect(() => {
@@ -1374,7 +1560,7 @@ export default function App() {
 
   // Intersection Observer to highlight active navigation link
   useEffect(() => {
-    const sections = ["beranda", "tentang-kami", "struktur", "layanan", "proyek", "visi-misi", "mengapa-kami", "karir", "kontak"];
+    const sections = ["beranda", "tentang-kami", "struktur", "layanan", "proyek", "investor", "visi-misi", "mengapa-kami", "karir", "kontak"];
     const observerOptions = {
       root: null,
       rootMargin: "-20% 0px -60% 0px", // Active when section covers a good center portion
@@ -1677,7 +1863,7 @@ export default function App() {
   // Convert contact form to WhatsApp message link
   const sendToWhatsApp = () => {
     const encodedText = encodeURIComponent(formattedEnquiryMessage);
-    window.open(`https://wa.me/6282338094205?text=${encodedText}`, "_blank");
+    window.open(`https://wa.me/6287797330546?text=${encodedText}`, "_blank");
   };
 
   // Filtered projects
@@ -1715,6 +1901,7 @@ export default function App() {
               { id: "struktur", label: TRANSLATIONS[lang].nav.struktur },
               { id: "layanan", label: TRANSLATIONS[lang].nav.layanan },
               { id: "proyek", label: TRANSLATIONS[lang].nav.proyek },
+              { id: "investor", label: TRANSLATIONS[lang].nav.investor },
               { id: "visi-misi", label: TRANSLATIONS[lang].nav["visi-misi"] },
               { id: "mengapa-kami", label: TRANSLATIONS[lang].nav["mengapa-kami"] },
               { id: "karir", label: TRANSLATIONS[lang].nav.karir },
@@ -1873,6 +2060,7 @@ export default function App() {
                       { id: "struktur", label: TRANSLATIONS[lang].nav.struktur },
                       { id: "layanan", label: TRANSLATIONS[lang].nav.layanan },
                       { id: "proyek", label: TRANSLATIONS[lang].nav.proyek },
+                      { id: "investor", label: TRANSLATIONS[lang].nav.investor },
                       { id: "visi-misi", label: TRANSLATIONS[lang].nav["visi-misi"] },
                       { id: "mengapa-kami", label: TRANSLATIONS[lang].nav["mengapa-kami"] },
                       { id: "karir", label: TRANSLATIONS[lang].nav.karir },
@@ -3308,6 +3496,629 @@ export default function App() {
       </section>
 
 
+      {/* --- HUBUNGAN INVESTOR & KEMITRAAN PORTAL --- */}
+      <section id="investor" className={`py-24 relative z-10 border-b ${darkMode ? "bg-[#0B0F19] border-slate-900" : "bg-gradient-to-b from-white via-amber-50/10 to-white border-slate-100"}`}>
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          
+          {/* Section Heading */}
+          <div className="flex flex-col md:flex-row justify-between items-start md:items-end mb-16 gap-6" id="investor-header">
+            <div className="space-y-4 max-w-3xl w-full">
+              <div className="flex justify-between items-end mb-4">
+                <h3 className="text-xs font-black uppercase tracking-[0.25em] text-amber-500">{INVESTOR_TRANSLATIONS[lang].sub}</h3>
+                <div className="h-[1px] flex-grow mx-4 bg-slate-200 dark:bg-slate-800 mb-2"></div>
+              </div>
+              <h2 className="text-3xl sm:text-4xl font-extrabold tracking-tight">
+                {INVESTOR_TRANSLATIONS[lang].title}
+              </h2>
+              <p className={`text-sm sm:text-base leading-relaxed ${darkMode ? "text-slate-400" : "text-slate-600"}`}>
+                {INVESTOR_TRANSLATIONS[lang].desc}
+              </p>
+            </div>
+          </div>
+
+          {/* Grid Layout: Calculator & Opportunities */}
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 mb-16">
+            
+            {/* LEFT COLUMN: ROI Calculator (lg:col-span-7) */}
+            <div className={`lg:col-span-7 p-6 sm:p-8 rounded-2xl border ${
+              darkMode ? "bg-[#131926]/80 border-slate-800" : "bg-white border-slate-200/80 shadow-md shadow-slate-100"
+            }`} id="roi-calculator-box">
+              <div className="flex items-center gap-3 mb-6">
+                <TrendingUp className="text-amber-500" size={24} />
+                <div>
+                  <h3 className="text-lg font-bold">{INVESTOR_TRANSLATIONS[lang].calculator.title}</h3>
+                  <p className={`text-xs ${darkMode ? "text-slate-400" : "text-slate-500"}`}>
+                    {INVESTOR_TRANSLATIONS[lang].calculator.desc}
+                  </p>
+                </div>
+              </div>
+
+              {/* Calculator Form Fields */}
+              <div className="space-y-6">
+                
+                {/* 1. Investment Amount */}
+                <div className="space-y-2">
+                  <div className="flex justify-between items-center">
+                    <label className={`text-xs font-bold uppercase tracking-wider ${darkMode ? "text-slate-300" : "text-slate-700"}`}>
+                      {INVESTOR_TRANSLATIONS[lang].calculator.amountLabel}
+                    </label>
+                    <span className="text-sm font-black font-mono text-amber-500 bg-amber-500/10 px-3 py-1 rounded-full">
+                      {new Intl.NumberFormat(lang === "en" ? "en-US" : "id-ID", {
+                        style: "currency",
+                        currency: "IDR",
+                        maximumFractionDigits: 0
+                      }).format(investorAmount)}
+                    </span>
+                  </div>
+                  <input
+                    type="range"
+                    min={250000000} // Minimum IDR 250 million
+                    max={10000000000} // Maximum IDR 10 billion
+                    step={250000000} // Step in IDR 250 million increments
+                    value={investorAmount}
+                    onChange={(e) => setInvestorAmount(Number(e.target.value))}
+                    className="w-full h-2 rounded-lg bg-slate-200 dark:bg-slate-800 appearance-none cursor-pointer accent-amber-500"
+                  />
+                  <div className="flex justify-between text-[10px] font-mono text-slate-400">
+                    <span>Rp 250 Jt</span>
+                    <span>Rp 5 Miliar</span>
+                    <span>Rp 10 Miliar</span>
+                  </div>
+                </div>
+
+                {/* 2. Sifat Proyek / Sector */}
+                <div className="space-y-2">
+                  <label className={`text-xs font-bold uppercase tracking-wider block ${darkMode ? "text-slate-300" : "text-slate-700"}`}>
+                    {INVESTOR_TRANSLATIONS[lang].calculator.typeLabel}
+                  </label>
+                  <div className="grid grid-cols-1 sm:grid-cols-3 gap-2">
+                    {(["residential", "commercial", "infrastructure"] as const).map((type) => {
+                      const isActive = investorType === type;
+                      return (
+                        <button
+                          key={type}
+                          onClick={() => setInvestorType(type)}
+                          className={`p-3 rounded-xl border text-left transition-all cursor-pointer ${
+                            isActive
+                              ? "bg-amber-500/10 border-amber-500 text-amber-400 font-bold"
+                              : darkMode
+                              ? "bg-slate-900/50 border-slate-800 hover:border-slate-700 text-slate-300"
+                              : "bg-slate-50 border-slate-200 hover:border-slate-300 text-slate-700"
+                          }`}
+                        >
+                          <div className="text-xs uppercase tracking-wider font-extrabold mb-1">{type}</div>
+                          <div className="text-[10px] opacity-80 leading-snug">
+                            {type === "residential" ? "Hunian (14% p.a.)" : type === "commercial" ? "Ruko (17% p.a.)" : "Infrastruktur (12% p.a.)"}
+                          </div>
+                        </button>
+                      );
+                    })}
+                  </div>
+                </div>
+
+                {/* 3. Duration Selection */}
+                <div className="space-y-2">
+                  <label className={`text-xs font-bold uppercase tracking-wider block ${darkMode ? "text-slate-300" : "text-slate-700"}`}>
+                    {INVESTOR_TRANSLATIONS[lang].calculator.durationLabel}
+                  </label>
+                  <div className="flex gap-2">
+                    {([1, 2, 3, 4, 5] as const).map((year) => {
+                      const isActive = investorDuration === year;
+                      return (
+                        <button
+                          key={year}
+                          onClick={() => setInvestorDuration(year)}
+                          className={`flex-1 py-2.5 rounded-lg border font-bold text-xs uppercase tracking-wider transition-all cursor-pointer text-center ${
+                            isActive
+                              ? "bg-amber-500 border-amber-500 text-slate-950 shadow-md shadow-amber-500/10"
+                              : darkMode
+                              ? "bg-slate-900/50 border-slate-800 hover:border-slate-700 text-slate-300"
+                              : "bg-slate-50 border-slate-200 hover:border-slate-300 text-slate-700"
+                          }`}
+                        >
+                          {year} {INVESTOR_TRANSLATIONS[lang].calculator.years}
+                        </button>
+                      );
+                    })}
+                  </div>
+                </div>
+
+              </div>
+
+              {/* Dynamic Interactive D3.js Compound Growth Forecast Chart */}
+              <div className="mt-8 pt-6 border-t border-slate-200/10">
+                <InvestorD3Chart
+                  lang={lang}
+                  darkMode={darkMode}
+                  initialAmount={investorAmount}
+                  onUpdateDuration={setInvestorDuration}
+                  investorDuration={investorDuration}
+                />
+              </div>
+
+            </div>
+
+            {/* RIGHT COLUMN: Live Projections & Materials (lg:col-span-5) */}
+            <div className="lg:col-span-5 flex flex-col justify-between gap-6" id="projection-results-box">
+              
+              {/* Projections Card */}
+              <div className={`p-6 sm:p-8 rounded-2xl border flex-1 flex flex-col justify-between ${
+                darkMode ? "bg-[#131926]/80 border-slate-800" : "bg-white border-slate-200/80 shadow-md shadow-slate-100"
+              }`}>
+                <div>
+                  <h4 className="text-sm font-black uppercase tracking-wider text-amber-500 mb-6">
+                    {INVESTOR_TRANSLATIONS[lang].calculator.resultsTitle}
+                  </h4>
+                  
+                  {(() => {
+                    const yieldPct = investorType === "residential" ? 14 : investorType === "commercial" ? 17 : 12;
+                    const netProfit = investorAmount * (yieldPct / 100) * investorDuration;
+                    const totalReturn = investorAmount + netProfit;
+                    const quarterly = netProfit / (investorDuration * 4);
+                    
+                    return (
+                      <div className="space-y-5">
+                        {/* 1. Yield Rate */}
+                        <div className="flex justify-between items-center py-2.5 border-b border-slate-200/10">
+                          <div className="flex items-center gap-2">
+                            <Percent size={14} className="text-amber-500" />
+                            <span className={`text-xs ${darkMode ? "text-slate-300" : "text-slate-600"}`}>
+                              {INVESTOR_TRANSLATIONS[lang].calculator.yieldRate}
+                            </span>
+                          </div>
+                          <span className="text-sm font-black text-amber-400 font-mono">
+                            {yieldPct}% p.a.
+                          </span>
+                        </div>
+
+                        {/* 2. Projected Net Profit */}
+                        <div className="flex justify-between items-center py-2.5 border-b border-slate-200/10">
+                          <div className="flex items-center gap-2">
+                            <Coins size={14} className="text-amber-500" />
+                            <span className={`text-xs ${darkMode ? "text-slate-300" : "text-slate-600"}`}>
+                              {INVESTOR_TRANSLATIONS[lang].calculator.netProfit}
+                            </span>
+                          </div>
+                          <span className="text-sm font-black text-emerald-400 font-mono">
+                            {new Intl.NumberFormat(lang === "en" ? "en-US" : "id-ID", {
+                              style: "currency",
+                              currency: "IDR",
+                              maximumFractionDigits: 0
+                            }).format(netProfit)}
+                          </span>
+                        </div>
+
+                        {/* 3. Est. Quarterly Payout */}
+                        <div className="flex justify-between items-center py-2.5 border-b border-slate-200/10">
+                          <div className="flex items-center gap-2">
+                            <Calendar size={14} className="text-amber-500" />
+                            <span className={`text-xs ${darkMode ? "text-slate-300" : "text-slate-600"}`}>
+                              {INVESTOR_TRANSLATIONS[lang].calculator.quarterlyPayout}
+                            </span>
+                          </div>
+                          <span className="text-xs font-bold text-slate-300 font-mono">
+                            {new Intl.NumberFormat(lang === "en" ? "en-US" : "id-ID", {
+                              style: "currency",
+                              currency: "IDR",
+                              maximumFractionDigits: 0
+                            }).format(quarterly)}
+                          </span>
+                        </div>
+
+                        {/* 4. Total Payout Header */}
+                        <div className="flex justify-between items-center pt-4">
+                          <div className="flex items-center gap-2">
+                            <Wallet size={16} className="text-amber-500" />
+                            <span className="text-xs font-extrabold uppercase tracking-wider text-slate-400">
+                              {INVESTOR_TRANSLATIONS[lang].calculator.totalPayout}
+                            </span>
+                          </div>
+                          <span className="text-xl font-black text-amber-500 font-mono">
+                            {new Intl.NumberFormat(lang === "en" ? "en-US" : "id-ID", {
+                              style: "currency",
+                              currency: "IDR",
+                              maximumFractionDigits: 0
+                            }).format(totalReturn)}
+                          </span>
+                        </div>
+                      </div>
+                    );
+                  })()}
+                </div>
+
+                <div className="mt-8">
+                  <button
+                    onClick={() => {
+                      const amountFormatted = new Intl.NumberFormat("id-ID", { style: "currency", currency: "IDR", maximumFractionDigits: 0 }).format(investorAmount);
+                      const sectorLabel = investorType === "residential" ? "Hunian & Hospitality" : investorType === "commercial" ? "Ruko & Komersial" : "Infrastruktur & Site Dev";
+                      const msg = `Halo Tim Keuangan PT. FGI,\n\nSaya ingin berkonsultasi mengenai peluang investasi Joint Venture dengan estimasi rencana penempatan modal:\n- Sektor Proyek: *${sectorLabel}*\n- Nilai Modal: *${amountFormatted}*\n- Durasi: *${investorDuration} Tahun*\n\nMohon dihubungi kembali mengenai ketersediaan slot proyek kemitraan ini. Terima kasih.`;
+                      window.open(`https://wa.me/6287797330546?text=${encodeURIComponent(msg)}`, "_blank");
+                    }}
+                    className="w-full py-3.5 bg-amber-500 hover:bg-amber-600 text-slate-950 text-xs font-extrabold uppercase tracking-widest rounded-xl transition-all shadow-lg shadow-amber-500/10 flex items-center justify-center gap-2 cursor-pointer"
+                  >
+                    {INVESTOR_TRANSLATIONS[lang].calculator.cta} <ArrowUpRight size={14} />
+                  </button>
+                </div>
+              </div>
+
+              {/* Downloadable Materials Box */}
+              <div className={`p-6 sm:p-8 rounded-2xl border ${
+                darkMode ? "bg-[#131926]/80 border-slate-800" : "bg-white border-slate-200/80 shadow-md shadow-slate-100"
+              }`} id="downloadable-investor-docs">
+                <h4 className="text-sm font-black uppercase tracking-wider text-amber-500 mb-4">
+                  {INVESTOR_TRANSLATIONS[lang].downloads.title}
+                </h4>
+                <p className={`text-xs mb-6 ${darkMode ? "text-slate-400" : "text-slate-500"}`}>
+                  {INVESTOR_TRANSLATIONS[lang].downloads.desc}
+                </p>
+                <div className="space-y-3">
+                  {[
+                    { title: INVESTOR_TRANSLATIONS[lang].downloads.doc1, size: "3.8 MB" },
+                    { title: INVESTOR_TRANSLATIONS[lang].downloads.doc2, size: "1.2 MB" }
+                  ].map((doc, docIdx) => (
+                    <button
+                      key={docIdx}
+                      onClick={() => alert(lang === "en" ? "Draft document downloading simulated..." : "Simulasi dokumen terunduh secara aman...")}
+                      className={`w-full flex items-center justify-between p-3 rounded-lg border text-left transition-all hover:bg-amber-500/5 cursor-pointer ${
+                        darkMode ? "bg-[#0B0F19] border-slate-850 hover:border-amber-500/30 text-slate-300" : "bg-slate-50 border-slate-100 hover:border-amber-500/30 text-slate-700"
+                      }`}
+                    >
+                      <div className="flex items-center gap-3">
+                        <Download size={16} className="text-amber-500" />
+                        <span className="text-xs font-bold truncate max-w-[200px] sm:max-w-[300px]">{doc.title}</span>
+                      </div>
+                      <span className="text-[10px] font-mono text-slate-500 font-extrabold">{doc.size}</span>
+                    </button>
+                  ))}
+                </div>
+              </div>
+
+            </div>
+
+          </div>
+
+          {/* ACTIVE OPPORTUNITIES ROW */}
+          <div className="mb-16" id="partnership-opportunities">
+            <div className="space-y-3 mb-10 max-w-2xl">
+              <h3 className="text-xl font-bold tracking-tight">{INVESTOR_TRANSLATIONS[lang].opportunities.title}</h3>
+              <p className={`text-xs sm:text-sm ${darkMode ? "text-slate-400" : "text-slate-500"}`}>
+                {INVESTOR_TRANSLATIONS[lang].opportunities.desc}
+              </p>
+            </div>
+
+            {/* Opportunities List Grid */}
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+              {[
+                {
+                  id: 1,
+                  title: lang === "en" ? "Grand Foresyndo Phase 3 - Premium Housing" : "Grand Foresyndo Phase 3 - Hunian Premium",
+                  location: "Grogol, Kediri, Jawa Timur",
+                  progress: 82,
+                  target: "Rp 5.000.000.000",
+                  minTicket: "Rp 250.000.000",
+                  projectedRoi: "14% p.a.",
+                  sector: "residential"
+                },
+                {
+                  id: 2,
+                  title: lang === "en" ? "FGI Business Hub - Commercial Block" : "FGI Hub Business Park - Kompleks Ruko",
+                  location: "Jatitujuh, Majalengka, Jawa Barat",
+                  progress: 45,
+                  target: "Rp 12.000.000.000",
+                  minTicket: "Rp 500.000.000",
+                  projectedRoi: "17% p.a.",
+                  sector: "commercial"
+                },
+                {
+                  id: 3,
+                  title: lang === "en" ? "Smart Industrial Logistics Warehouse" : "Pusat Pergudangan Logistik Smart",
+                  location: "Kertajati, Majalengka, Jawa Barat",
+                  progress: 15,
+                  target: "Rp 25.000.000.000",
+                  minTicket: "Rp 1.000.000.000",
+                  projectedRoi: "12% p.a.",
+                  sector: "infrastructure"
+                }
+              ].map((opp) => (
+                <div
+                  key={opp.id}
+                  className={`rounded-2xl border overflow-hidden transition-all flex flex-col justify-between ${
+                    darkMode
+                      ? "bg-[#131926]/40 border-slate-800 hover:border-amber-500/20"
+                      : "bg-white border-slate-200 hover:shadow-lg shadow-slate-100"
+                  }`}
+                >
+                  {/* Top Header & Tag */}
+                  <div className="p-5 space-y-4">
+                    <div className="flex justify-between items-center">
+                      <span className="text-[10px] font-mono uppercase tracking-widest text-amber-500 bg-amber-500/10 px-2 py-0.5 rounded">
+                        {opp.sector.toUpperCase()}
+                      </span>
+                      <span className={`text-[10px] font-extrabold ${darkMode ? "text-emerald-400" : "text-emerald-600"}`}>
+                        ● {opp.id === 3 ? INVESTOR_TRANSLATIONS[lang].opportunities.statusProgress : INVESTOR_TRANSLATIONS[lang].opportunities.statusOpen}
+                      </span>
+                    </div>
+
+                    <div className="space-y-1">
+                      <h4 className="text-base font-extrabold tracking-tight line-clamp-1">{opp.title}</h4>
+                      <p className="text-[10px] text-slate-400 flex items-center gap-1">
+                        <MapPin size={10} className="text-amber-500" />
+                        {opp.location}
+                      </p>
+                    </div>
+
+                    {/* Progress Bar */}
+                    <div className="space-y-1.5">
+                      <div className="flex justify-between text-[10px] font-bold">
+                        <span className="text-slate-400">{INVESTOR_TRANSLATIONS[lang].opportunities.funded}</span>
+                        <span className="text-amber-500 font-mono">{opp.progress}%</span>
+                      </div>
+                      <div className="h-1.5 w-full bg-slate-800 rounded-full overflow-hidden">
+                        <div className="h-full bg-amber-500 rounded-full" style={{ width: `${opp.progress}%` }}></div>
+                      </div>
+                    </div>
+
+                    {/* Financial stats row */}
+                    <div className="grid grid-cols-2 gap-4 pt-3 border-t border-slate-500/10">
+                      <div>
+                        <span className="text-[9px] text-slate-400 uppercase block tracking-wider">
+                          {INVESTOR_TRANSLATIONS[lang].opportunities.minTicket}
+                        </span>
+                        <span className="text-xs font-bold font-mono text-slate-300 dark:text-slate-200">
+                          {opp.minTicket}
+                        </span>
+                      </div>
+                      <div>
+                        <span className="text-[9px] text-slate-400 uppercase block tracking-wider">
+                          {INVESTOR_TRANSLATIONS[lang].opportunities.estimatedRoi}
+                        </span>
+                        <span className="text-xs font-black font-mono text-emerald-400">
+                          {opp.projectedRoi}
+                        </span>
+                      </div>
+                    </div>
+                  </div>
+
+                  {/* CTAs */}
+                  <div className={`px-5 py-4 flex gap-2 border-t ${darkMode ? "border-slate-850 bg-[#0B0F19]/40" : "border-slate-100 bg-slate-50/50"}`}>
+                    <button
+                      onClick={() => alert(lang === "en" ? "Simulated prospectus file downloaded successfully." : "Simulasi dokumen prospektus terunduh.")}
+                      className={`flex-1 py-2 rounded text-[10px] font-bold uppercase tracking-wider text-center border cursor-pointer transition-colors ${
+                        darkMode ? "border-slate-800 hover:bg-slate-800 text-slate-300" : "border-slate-200 hover:bg-slate-100 text-slate-600"
+                      }`}
+                    >
+                      PDF Draft
+                    </button>
+                    <button
+                      onClick={() => {
+                        // Scroll to inquiry form and preset fields
+                        setInvestorType(opp.sector as any);
+                        const inquiryForm = document.getElementById("investor-inquiry-form-box");
+                        if (inquiryForm) {
+                          inquiryForm.scrollIntoView({ behavior: "smooth", block: "center" });
+                        }
+                      }}
+                      className="flex-1 py-2 bg-amber-500 hover:bg-amber-600 text-slate-950 text-[10px] font-extrabold uppercase tracking-widest rounded text-center transition-colors cursor-pointer"
+                    >
+                      {INVESTOR_TRANSLATIONS[lang].opportunities.ctaInquire}
+                    </button>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+
+          {/* LOWER SECTION: Interactive Inquiry Form & FAQ Grid */}
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
+            
+            {/* Inquiry Form (lg:col-span-7) */}
+            <div id="investor-inquiry-form-box" className={`lg:col-span-7 p-6 sm:p-8 rounded-2xl border ${
+              darkMode ? "bg-[#131926]/80 border-slate-800" : "bg-white border-slate-200/80 shadow-md shadow-slate-100"
+            }`}>
+              <h3 className="text-xl font-bold tracking-tight mb-2">
+                {INVESTOR_TRANSLATIONS[lang].form.title}
+              </h3>
+              <p className={`text-xs mb-6 ${darkMode ? "text-slate-400" : "text-slate-500"}`}>
+                {INVESTOR_TRANSLATIONS[lang].form.desc}
+              </p>
+
+              {investorSuccess ? (
+                <div className="text-center py-8 space-y-4">
+                  <div className="w-16 h-16 bg-emerald-500/10 text-emerald-400 rounded-full flex items-center justify-center mx-auto border border-emerald-500/20 shadow-md">
+                    <Check size={32} />
+                  </div>
+                  <h4 className="text-lg font-bold text-emerald-400">{INVESTOR_TRANSLATIONS[lang].form.successTitle}</h4>
+                  <p className={`text-xs leading-relaxed max-w-md mx-auto ${darkMode ? "text-slate-300" : "text-slate-600"}`}>
+                    {INVESTOR_TRANSLATIONS[lang].form.successDesc}
+                  </p>
+                  <button
+                    onClick={() => {
+                      const formattedCapital = new Intl.NumberFormat("id-ID", { style: "currency", currency: "IDR", maximumFractionDigits: 0 }).format(investorAmount);
+                      const sectorLabel = investorType === "residential" ? "Hunian & Hospitality" : investorType === "commercial" ? "Ruko & Komersial" : "Infrastruktur & Site Dev";
+                      const msg = `[PERNYATAAN MINAT INVESTOR FORMAL]\n\nHalo PT. Foresyndo Global Indonesia,\nSaya ingin mengajukan minat kemitraan Joint Venture resmi:\n- Nama: *${investorName}*\n- Email: *${investorEmail}*\n- WhatsApp: *${investorPhone}*\n- Sektor Minat: *${sectorLabel}*\n- Estimasi Modal: *${formattedCapital}*\n- Durasi: *${investorDuration} Tahun*\n- Catatan Khusus: "${investorMessage || '-'}"\n\nMohon feedback tim humas / direksi keuangan PT. FGI. Terima kasih.`;
+                      window.open(`https://wa.me/6287797330546?text=${encodeURIComponent(msg)}`, "_blank");
+                    }}
+                    className="mt-4 px-6 py-3 bg-emerald-600 hover:bg-emerald-700 text-white font-extrabold text-xs uppercase tracking-widest rounded-xl transition-all shadow-sm flex items-center justify-center gap-2 mx-auto cursor-pointer"
+                  >
+                    {INVESTOR_TRANSLATIONS[lang].form.waCta} <ExternalLink size={14} />
+                  </button>
+                  <button
+                    onClick={() => {
+                      setInvestorSuccess(false);
+                      setInvestorName("");
+                      setInvestorEmail("");
+                      setInvestorPhone("");
+                      setInvestorMessage("");
+                    }}
+                    className={`text-[10px] font-bold uppercase tracking-wider block mx-auto pt-4 ${darkMode ? "text-slate-500 hover:text-slate-400" : "text-slate-400 hover:text-slate-500"}`}
+                  >
+                    {lang === "en" ? "Submit Another Interest" : "Kirim Pernyataan Lain"}
+                  </button>
+                </div>
+              ) : (
+                <form
+                  onSubmit={(e) => {
+                    e.preventDefault();
+                    if (!investorName || !investorEmail || !investorPhone) {
+                      alert(lang === "en" ? "Please fill in all mandatory fields (Name, Email, and Phone Number)." : "Mohon isi semua kolom wajib (Nama, Email, dan No. WhatsApp).");
+                      return;
+                    }
+                    // Save to local list
+                    const lead = {
+                      id: Date.now(),
+                      name: investorName,
+                      email: investorEmail,
+                      phone: investorPhone,
+                      amount: investorAmount,
+                      duration: investorDuration,
+                      sector: investorType,
+                      message: investorMessage,
+                      date: new Date().toISOString()
+                    };
+                    try {
+                      const existingLeadsStr = localStorage.getItem("fgi_investor_leads");
+                      const existingLeads = existingLeadsStr ? JSON.parse(existingLeadsStr) : [];
+                      existingLeads.push(lead);
+                      localStorage.setItem("fgi_investor_leads", JSON.stringify(existingLeads));
+                    } catch (err) {
+                      console.error("Error saving investor lead: ", err);
+                    }
+                    setInvestorSuccess(true);
+                  }}
+                  className="space-y-4"
+                >
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                    <div className="space-y-1">
+                      <label className={`text-[10px] font-extrabold uppercase tracking-wider block ${darkMode ? "text-slate-400" : "text-slate-600"}`}>
+                        {INVESTOR_TRANSLATIONS[lang].form.name}
+                      </label>
+                      <input
+                        type="text"
+                        required
+                        value={investorName}
+                        onChange={(e) => setInvestorName(e.target.value)}
+                        className={`w-full p-3 text-xs rounded-lg border ${
+                          darkMode ? "bg-[#0B0F19] border-slate-800 focus:border-amber-500 text-white" : "bg-slate-50 border-slate-200 focus:border-amber-500 text-slate-900"
+                        }`}
+                      />
+                    </div>
+                    <div className="space-y-1">
+                      <label className={`text-[10px] font-extrabold uppercase tracking-wider block ${darkMode ? "text-slate-400" : "text-slate-600"}`}>
+                        {INVESTOR_TRANSLATIONS[lang].form.phone}
+                      </label>
+                      <input
+                        type="tel"
+                        required
+                        value={investorPhone}
+                        onChange={(e) => setInvestorPhone(e.target.value)}
+                        className={`w-full p-3 text-xs rounded-lg border ${
+                          darkMode ? "bg-[#0B0F19] border-slate-800 focus:border-amber-500 text-white" : "bg-slate-50 border-slate-200 focus:border-amber-500 text-slate-900"
+                        }`}
+                      />
+                    </div>
+                  </div>
+
+                  <div className="space-y-1">
+                    <label className={`text-[10px] font-extrabold uppercase tracking-wider block ${darkMode ? "text-slate-400" : "text-slate-600"}`}>
+                      {INVESTOR_TRANSLATIONS[lang].form.email}
+                    </label>
+                    <input
+                      type="email"
+                      required
+                      value={investorEmail}
+                      onChange={(e) => setInvestorEmail(e.target.value)}
+                      className={`w-full p-3 text-xs rounded-lg border ${
+                        darkMode ? "bg-[#0B0F19] border-slate-800 focus:border-amber-500 text-white" : "bg-slate-50 border-slate-200 focus:border-amber-500 text-slate-900"
+                      }`}
+                    />
+                  </div>
+
+                  <div className="space-y-1">
+                    <label className={`text-[10px] font-extrabold uppercase tracking-wider block ${darkMode ? "text-slate-400" : "text-slate-600"}`}>
+                      {INVESTOR_TRANSLATIONS[lang].form.message}
+                    </label>
+                    <textarea
+                      rows={3}
+                      value={investorMessage}
+                      onChange={(e) => setInvestorMessage(e.target.value)}
+                      className={`w-full p-3 text-xs rounded-lg border ${
+                        darkMode ? "bg-[#0B0F19] border-slate-800 focus:border-amber-500 text-white" : "bg-slate-50 border-slate-200 focus:border-amber-500 text-slate-900"
+                      }`}
+                    />
+                  </div>
+
+                  <button
+                    type="submit"
+                    className="w-full py-3.5 bg-amber-500 hover:bg-amber-600 text-slate-950 font-extrabold text-xs uppercase tracking-widest rounded-xl transition-all shadow-md shadow-amber-500/10 cursor-pointer"
+                  >
+                    {INVESTOR_TRANSLATIONS[lang].form.submit}
+                  </button>
+                </form>
+              )}
+
+            </div>
+
+            {/* Investor FAQ Accordion (lg:col-span-5) */}
+            <div className="lg:col-span-5 space-y-6" id="investor-faq-box">
+              <h3 className="text-xl font-bold tracking-tight">
+                {INVESTOR_TRANSLATIONS[lang].faq.title}
+              </h3>
+              
+              <div className="space-y-3">
+                {[
+                  { q: INVESTOR_TRANSLATIONS[lang].faq.q1, a: INVESTOR_TRANSLATIONS[lang].faq.a1 },
+                  { q: INVESTOR_TRANSLATIONS[lang].faq.q2, a: INVESTOR_TRANSLATIONS[lang].faq.a2 },
+                  { q: INVESTOR_TRANSLATIONS[lang].faq.q3, a: INVESTOR_TRANSLATIONS[lang].faq.a3 },
+                  { q: INVESTOR_TRANSLATIONS[lang].faq.q4, a: INVESTOR_TRANSLATIONS[lang].faq.a4 }
+                ].map((faq, idx) => {
+                  const isOpen = investorFaqOpen === idx;
+                  return (
+                    <div
+                      key={idx}
+                      className={`rounded-xl border overflow-hidden transition-all ${
+                        darkMode ? "bg-[#131926]/40 border-slate-850" : "bg-white border-slate-200 shadow-sm"
+                      }`}
+                    >
+                      <button
+                        onClick={() => setInvestorFaqOpen(isOpen ? null : idx)}
+                        className="w-full text-left p-4 font-bold text-xs uppercase tracking-wider flex justify-between items-center gap-4 hover:bg-amber-500/5 transition-colors cursor-pointer"
+                      >
+                        <span className="leading-snug">{faq.q}</span>
+                        <span className="text-amber-500 flex-shrink-0">
+                          {isOpen ? <ChevronUp size={14} /> : <ChevronDown size={14} />}
+                        </span>
+                      </button>
+
+                      <AnimatePresence>
+                        {isOpen && (
+                          <motion.div
+                            initial={{ height: 0, opacity: 0 }}
+                            animate={{ height: "auto", opacity: 1 }}
+                            exit={{ height: 0, opacity: 0 }}
+                            transition={{ duration: 0.25 }}
+                            className={`border-t ${darkMode ? "border-slate-850" : "border-slate-100"}`}
+                          >
+                            <div className={`p-4 text-xs leading-relaxed ${
+                              darkMode ? "text-slate-400 bg-slate-950/20" : "text-slate-600 bg-slate-50/50"
+                            }`}>
+                              {faq.a}
+                            </div>
+                          </motion.div>
+                        )}
+                      </AnimatePresence>
+                    </div>
+                  );
+                })}
+              </div>
+
+            </div>
+
+          </div>
+
+        </div>
+      </section>
+
+
       {/* --- VISI & MISI SECTION --- */}
       <section id="visi-misi" className={`py-24 relative z-10 border-y ${darkMode ? "bg-[#0e1422] border-slate-900/50" : "bg-gradient-to-r from-blue-50/20 via-white to-blue-50/10 border-slate-100"}`}>
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -4208,8 +5019,8 @@ export default function App() {
                     </div>
                     <div>
                       <h4 className="text-[10px] font-bold uppercase text-slate-400 tracking-wider">{TRANSLATIONS[lang].contact.officeHotlineLabel}</h4>
-                      <a href="https://wa.me/6282338094205" target="_blank" rel="noopener noreferrer" className="text-xs font-bold text-amber-500 hover:text-amber-400 hover:underline mt-1 block">
-                        0823 3809 4205
+                      <a href="https://wa.me/6287797330546" target="_blank" rel="noopener noreferrer" className="text-xs font-bold text-amber-500 hover:text-amber-400 hover:underline mt-1 block">
+                        0877 9733 0546
                       </a>
                     </div>
                   </div>
@@ -4343,8 +5154,8 @@ export default function App() {
                 <p className="flex items-center gap-2">
                   <Phone size={12} className="text-amber-500" />
                   <span className="text-slate-400">{TRANSLATIONS[lang].contact.officeHotlineLabel}:</span> 
-                  <a href="https://wa.me/6282338094205" target="_blank" rel="noopener noreferrer" className="hover:text-amber-500 hover:underline font-bold">
-                    0823 3809 4205
+                  <a href="https://wa.me/6287797330546" target="_blank" rel="noopener noreferrer" className="hover:text-amber-500 hover:underline font-bold">
+                    0877 9733 0546
                   </a>
                 </p>
                 <p className="flex items-center gap-2">
@@ -4488,7 +5299,7 @@ export default function App() {
 
         {/* WhatsApp Icon Trigger */}
         <a
-          href="https://wa.me/6282338094205"
+          href="https://wa.me/6287797330546"
           target="_blank"
           rel="noopener noreferrer"
           className="relative w-14 h-14 bg-emerald-500 hover:bg-emerald-600 rounded-full flex items-center justify-center text-white shadow-xl hover:scale-110 active:scale-95 transition-all cursor-pointer group"
@@ -4520,10 +5331,10 @@ export default function App() {
             
             {/* Modal Box */}
             <motion.div
-              initial={{ opacity: 0, scale: 0.95, y: 30 }}
+              initial={{ opacity: 0, scale: 0.98, y: 60 }}
               animate={{ opacity: 1, scale: 1, y: 0 }}
-              exit={{ opacity: 0, scale: 0.95, y: 30 }}
-              transition={{ duration: 0.4 }}
+              exit={{ opacity: 0, scale: 0.98, y: 40 }}
+              transition={{ type: "spring", damping: 28, stiffness: 220, mass: 0.9 }}
               className={`relative max-w-3xl w-full rounded border shadow-2xl overflow-hidden z-10 flex flex-col max-h-[90vh] ${
                 darkMode ? "bg-[#131926] border-slate-800 text-white" : "bg-white border-slate-200 text-slate-800"
               }`}
@@ -4565,193 +5376,303 @@ export default function App() {
 
               <div className="overflow-y-auto">
                 {videoTabActive ? (
-                  <div className="relative w-full bg-slate-950 overflow-hidden flex flex-col min-h-[250px] sm:min-h-[350px]" id="veo-video-panel">
-                    {/* Video presentation panel */}
-                    {videoMode === "none" && (
-                      <div className="p-6 sm:p-8 flex flex-col justify-center items-center text-center space-y-4 h-full bg-gradient-to-b from-slate-900 to-slate-950">
-                        <div className="p-3 bg-amber-500/10 rounded-full text-amber-500 animate-pulse">
-                          <Sparkles size={28} />
-                        </div>
-                        <div className="space-y-1 max-w-lg">
-                          <h4 className="text-base sm:text-lg font-bold text-white tracking-wide">
-                            {TRANSLATIONS[lang].videoShowcase.introTitle}
-                          </h4>
-                          <p className="text-[11px] sm:text-xs text-slate-400 leading-relaxed">
-                            {TRANSLATIONS[lang].videoShowcase.introDesc}
-                          </p>
-                        </div>
+                  <div className="flex flex-col w-full bg-slate-950">
+                    <div className="relative w-full bg-slate-950 overflow-hidden flex flex-col min-h-[250px] sm:min-h-[350px]" id="veo-video-panel">
+                      {/* Video presentation panel */}
+                      {videoMode === "none" && (
+                        <div className="p-6 sm:p-8 flex flex-col justify-center items-center text-center space-y-4 h-full bg-gradient-to-b from-slate-900 to-slate-950">
+                          <div className="p-3 bg-amber-500/10 rounded-full text-amber-500 animate-pulse">
+                            <Sparkles size={28} />
+                          </div>
+                          <div className="space-y-1 max-w-lg">
+                            <h4 className="text-base sm:text-lg font-bold text-white tracking-wide">
+                              {TRANSLATIONS[lang].videoShowcase.introTitle}
+                            </h4>
+                            <p className="text-[11px] sm:text-xs text-slate-400 leading-relaxed">
+                              {TRANSLATIONS[lang].videoShowcase.introDesc}
+                            </p>
+                          </div>
 
-                        {/* Style Selectors & Controls */}
-                        <div className="w-full max-w-md bg-slate-900/60 border border-slate-800 rounded-xl p-4 text-left space-y-3.5">
-                          {/* Visual Style Preset */}
-                          <div>
-                            <label className="block text-[10px] font-black uppercase text-slate-400 tracking-wider mb-1.5 flex items-center gap-1">
-                              <Sliders size={11} className="text-amber-500" />
-                              {TRANSLATIONS[lang].videoShowcase.stylePreset}
-                            </label>
-                            <div className="grid grid-cols-2 sm:grid-cols-3 gap-1.5">
-                              {["Sunset Golden Hour", "Crisp Bright Daylight", "Rainy Cinematic Mood", "Futuristic Neon Accents", "Cozy Warm Evening"].map((style) => (
-                                <button
-                                  key={style}
-                                  onClick={() => setVideoStyle(style)}
-                                  className={`px-2 py-1.5 text-[10px] font-semibold rounded text-center transition-all cursor-pointer border ${
-                                    videoStyle === style
-                                      ? "bg-amber-500/10 border-amber-500 text-amber-500"
-                                      : "bg-slate-950/40 border-slate-800/60 text-slate-400 hover:border-slate-700"
-                                  }`}
-                                >
-                                  {style}
-                                </button>
-                              ))}
+                          {/* Style Selectors & Controls */}
+                          <div className="w-full max-w-md bg-slate-900/60 border border-slate-800 rounded-xl p-4 text-left space-y-3.5">
+                            {/* Visual Style Preset */}
+                            <div>
+                              <label className="block text-[10px] font-black uppercase text-slate-400 tracking-wider mb-1.5 flex items-center gap-1">
+                                <Sliders size={11} className="text-amber-500" />
+                                {TRANSLATIONS[lang].videoShowcase.stylePreset}
+                              </label>
+                              <div className="grid grid-cols-2 sm:grid-cols-3 gap-1.5">
+                                {["Sunset Golden Hour", "Crisp Bright Daylight", "Rainy Cinematic Mood", "Futuristic Neon Accents", "Cozy Warm Evening"].map((style) => (
+                                  <button
+                                    key={style}
+                                    onClick={() => setVideoStyle(style)}
+                                    className={`px-2 py-1.5 text-[10px] font-semibold rounded text-center transition-all cursor-pointer border ${
+                                      videoStyle === style
+                                        ? "bg-amber-500/10 border-amber-500 text-amber-500"
+                                        : "bg-slate-950/40 border-slate-800/60 text-slate-400 hover:border-slate-700"
+                                    }`}
+                                  >
+                                    {style}
+                                  </button>
+                                ))}
+                              </div>
+                            </div>
+
+                            {/* Custom prompt input */}
+                            <div>
+                              <label className="block text-[10px] font-black uppercase text-slate-400 tracking-wider mb-1 flex items-center gap-1">
+                                <Sparkles size={11} className="text-amber-500" />
+                                {TRANSLATIONS[lang].videoShowcase.customPromptLabel}
+                              </label>
+                              <input
+                                type="text"
+                                value={videoCustomPrompt}
+                                onChange={(e) => setVideoCustomPrompt(e.target.value)}
+                                placeholder={TRANSLATIONS[lang].videoShowcase.customPromptPlaceholder}
+                                className="w-full px-3 py-2 text-xs bg-slate-950 border border-slate-800 rounded text-slate-200 placeholder-slate-600 focus:outline-none focus:border-amber-500"
+                              />
+                            </div>
+
+                            {/* AI vs Simulation Control */}
+                            <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between pt-1.5 border-t border-slate-800 gap-2">
+                              <div className="flex items-center gap-2">
+                                <input
+                                  type="checkbox"
+                                  id="ai-toggle"
+                                  checked={useAIVideo}
+                                  disabled={!apiKeyConfigured}
+                                  onChange={(e) => setUseAIVideo(e.target.checked)}
+                                  className="w-3.5 h-3.5 rounded bg-slate-950 border-slate-800 text-amber-500 focus:ring-0 cursor-pointer disabled:opacity-50"
+                                />
+                                <label htmlFor="ai-toggle" className={`text-[10px] font-semibold cursor-pointer ${!apiKeyConfigured ? "text-slate-500" : "text-slate-300"}`}>
+                                  {apiKeyConfigured 
+                                    ? TRANSLATIONS[lang].videoShowcase.enableAILabel 
+                                    : TRANSLATIONS[lang].videoShowcase.enableAISimulated}
+                                </label>
+                              </div>
+                              
+                              {!apiKeyConfigured && (
+                                <span className="text-[9px] text-amber-500 bg-amber-500/5 px-2 py-0.5 rounded border border-amber-500/20 uppercase tracking-widest font-black flex items-center gap-1">
+                                  <Info size={10} /> {lang === "en" ? "DEMO ACTIVE" : "SIMULASI AKTIF"}
+                                </span>
+                              )}
                             </div>
                           </div>
 
-                          {/* Custom prompt input */}
-                          <div>
-                            <label className="block text-[10px] font-black uppercase text-slate-400 tracking-wider mb-1 flex items-center gap-1">
-                              <Sparkles size={11} className="text-amber-500" />
-                              {TRANSLATIONS[lang].videoShowcase.customPromptLabel}
-                            </label>
-                            <input
-                              type="text"
-                              value={videoCustomPrompt}
-                              onChange={(e) => setVideoCustomPrompt(e.target.value)}
-                              placeholder={TRANSLATIONS[lang].videoShowcase.customPromptPlaceholder}
-                              className="w-full px-3 py-2 text-xs bg-slate-950 border border-slate-800 rounded text-slate-200 placeholder-slate-600 focus:outline-none focus:border-amber-500"
+                          {/* Generate Button */}
+                          <button
+                            onClick={handleGenerateVideo}
+                            className="px-6 py-2.5 bg-gradient-to-r from-amber-500 to-amber-600 hover:from-amber-600 hover:to-amber-700 text-slate-950 rounded-lg text-xs font-bold tracking-wider uppercase shadow-xl transition-all cursor-pointer flex items-center gap-2 hover:scale-[1.02] active:scale-[0.98]"
+                          >
+                            <Video size={14} />
+                            {TRANSLATIONS[lang].videoShowcase.generateBtn}
+                          </button>
+                        </div>
+                      )}
+
+                      {videoMode === "generating" && (
+                        <div className="p-8 flex flex-col justify-center items-center text-center space-y-6 h-full min-h-[300px] sm:min-h-[380px] bg-slate-950">
+                          <div className="relative flex items-center justify-center">
+                            <div className="absolute w-24 h-24 rounded-full border border-amber-500/20 animate-ping" />
+                            <div className="absolute w-16 h-16 rounded-full border border-amber-500/40 animate-pulse" />
+                            <div className="w-12 h-12 bg-amber-500/10 rounded-full flex items-center justify-center text-amber-500">
+                              <Loader2 size={24} className="animate-spin" />
+                            </div>
+                          </div>
+
+                          <div className="space-y-2 max-w-sm">
+                            <h4 className="text-sm font-bold tracking-wider uppercase text-amber-500 animate-pulse">
+                              {TRANSLATIONS[lang].videoShowcase.renderingTitle}
+                            </h4>
+                            <p className="text-[11px] text-slate-400 font-mono tracking-wide h-4">
+                              {videoProgressText}
+                            </p>
+                          </div>
+
+                          {/* Progress Bar */}
+                          <div className="w-full max-w-xs bg-slate-900 rounded-full h-1.5 overflow-hidden border border-slate-800">
+                            <motion.div
+                              initial={{ width: 0 }}
+                              animate={{ width: `${videoProgressPercent}%` }}
+                              transition={{ duration: 0.3 }}
+                              className="bg-amber-500 h-full rounded-full"
                             />
                           </div>
 
-                          {/* AI vs Simulation Control */}
-                          <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between pt-1.5 border-t border-slate-800 gap-2">
-                            <div className="flex items-center gap-2">
-                              <input
-                                type="checkbox"
-                                id="ai-toggle"
-                                checked={useAIVideo}
-                                disabled={!apiKeyConfigured}
-                                onChange={(e) => setUseAIVideo(e.target.checked)}
-                                className="w-3.5 h-3.5 rounded bg-slate-950 border-slate-800 text-amber-500 focus:ring-0 cursor-pointer disabled:opacity-50"
-                              />
-                              <label htmlFor="ai-toggle" className={`text-[10px] font-semibold cursor-pointer ${!apiKeyConfigured ? "text-slate-500" : "text-slate-300"}`}>
-                                {apiKeyConfigured 
-                                  ? TRANSLATIONS[lang].videoShowcase.enableAILabel 
-                                  : TRANSLATIONS[lang].videoShowcase.enableAISimulated}
-                              </label>
+                          <div className="text-[10px] font-mono text-slate-500">
+                            {videoProgressPercent}% Complete
+                          </div>
+                        </div>
+                      )}
+
+                      {videoMode === "completed" && generatedVideoUrl && (
+                        <div className="relative h-[250px] sm:h-[350px] w-full bg-slate-950 flex flex-col justify-center items-center group overflow-hidden">
+                          {videoHasError ? (
+                            <div className="absolute inset-0 w-full h-full bg-slate-950 overflow-hidden flex flex-col justify-center items-center">
+                              {/* Ken Burns Animated Image Slideshow Fallback */}
+                              <AnimatePresence mode="wait">
+                                <motion.img
+                                  key={slideshowIndex}
+                                  src={selectedProject.images?.[slideshowIndex] || selectedProject.image}
+                                  initial={{ scale: 1.15, opacity: 0 }}
+                                  animate={{ scale: 1.0, opacity: 0.85 }}
+                                  exit={{ opacity: 0 }}
+                                  transition={{ duration: 1.5, ease: "easeOut" }}
+                                  className="absolute inset-0 w-full h-full object-cover"
+                                />
+                              </AnimatePresence>
+
+                              {/* Gradient Overlays */}
+                              <div className="absolute inset-0 bg-slate-950/40" />
+                              <div className="absolute inset-x-0 bottom-0 h-32 bg-gradient-to-t from-slate-950 to-transparent pointer-events-none" />
+
+                              {/* Captions and Info */}
+                              <div className="absolute inset-0 flex flex-col justify-between p-4 z-20 pointer-events-none">
+                                <div className="flex justify-between items-start">
+                                  <span className="bg-amber-500 text-slate-950 text-[9px] font-black tracking-widest px-2.5 py-1 rounded shadow-md">
+                                    CINEMATIC PHOTO TOUR
+                                  </span>
+                                  <span className="bg-slate-950/80 text-[9px] font-mono text-slate-300 px-2.5 py-1 rounded border border-slate-800 backdrop-blur-sm">
+                                    {slideshowIndex + 1} / {selectedProject.images?.length || 1}
+                                  </span>
+                                </div>
+                                <div className="space-y-1 bg-slate-950/80 backdrop-blur-md p-3 rounded-lg border border-slate-800/60 max-w-sm">
+                                  <p className="text-[10px] font-black uppercase text-amber-500 tracking-widest flex items-center gap-1">
+                                    <Sparkles size={10} /> {lang === "en" ? "ACTIVE PRESENTATION" : "PRESENTASI AKTIF"}
+                                  </p>
+                                  <p className="text-[11px] text-slate-300 leading-relaxed">
+                                    {lang === "en" 
+                                      ? "Displaying cinematic high-resolution projection stream for optimal browser performance." 
+                                      : "Menampilkan proyeksi sinematik resolusi tinggi untuk performa pemutaran peramban yang optimal."}
+                                  </p>
+                                </div>
+                              </div>
                             </div>
-                            
-                            {!apiKeyConfigured && (
-                              <span className="text-[9px] text-amber-500 bg-amber-500/5 px-2 py-0.5 rounded border border-amber-500/20 uppercase tracking-widest font-black flex items-center gap-1">
-                                <Info size={10} /> {lang === "en" ? "DEMO ACTIVE" : "SIMULASI AKTIF"}
-                              </span>
-                            )}
+                          ) : (
+                            <>
+                              <video
+                                ref={videoRef}
+                                src={generatedVideoUrl}
+                                className="w-full h-full object-cover animate-fade-in"
+                                autoPlay
+                                loop
+                                playsInline
+                                muted={videoMuted}
+                                onPlay={() => setVideoPlaying(true)}
+                                onPause={() => setVideoPlaying(false)}
+                                onError={() => {
+                                  console.error("Error loading video stream, playing photo tour fallback");
+                                  setVideoHasError(true);
+                                }}
+                              />
+
+                              {/* Interactive Floating Video Controls */}
+                              <div className="absolute bottom-4 left-4 z-20 flex items-center gap-2">
+                                {/* Play / Pause Toggle */}
+                                <button
+                                  onClick={(e) => {
+                                    e.stopPropagation();
+                                    if (videoRef.current) {
+                                      if (videoPlaying) {
+                                        videoRef.current.pause();
+                                      } else {
+                                        videoRef.current.play().catch(err => console.error(err));
+                                      }
+                                    }
+                                  }}
+                                  className="w-8 h-8 rounded-full bg-slate-950/80 hover:bg-amber-500 hover:text-slate-950 text-white flex items-center justify-center backdrop-blur-sm transition-all border border-slate-800 cursor-pointer shadow-lg hover:scale-105 active:scale-95"
+                                  title={videoPlaying ? "Pause" : "Play"}
+                                >
+                                  {videoPlaying ? <Pause size={13} /> : <Play size={13} />}
+                                </button>
+
+                                {/* Mute / Unmute Toggle */}
+                                <button
+                                  onClick={(e) => {
+                                    e.stopPropagation();
+                                    if (videoRef.current) {
+                                      const nextMute = !videoMuted;
+                                      videoRef.current.muted = nextMute;
+                                      setVideoMuted(nextMute);
+                                    }
+                                  }}
+                                  className={`w-8 h-8 rounded-full flex items-center justify-center backdrop-blur-sm transition-all border cursor-pointer shadow-lg hover:scale-105 active:scale-95 ${
+                                    videoMuted
+                                      ? "bg-slate-950/80 border-slate-800 text-slate-400 hover:text-white"
+                                      : "bg-amber-500/10 border-amber-500 text-amber-500 hover:bg-amber-500 hover:text-slate-950"
+                                  }`}
+                                  title={videoMuted ? "Unmute" : "Mute"}
+                                >
+                                  {videoMuted ? <VolumeX size={13} /> : <Volume2 size={13} />}
+                                </button>
+                              </div>
+                            </>
+                          )}
+                          
+                          {/* Overlay tags and watermark */}
+                          <div className="absolute top-4 left-4 z-20 flex flex-col gap-1.5 pointer-events-none">
+                            <span className="bg-slate-950/80 backdrop-blur-md text-[9px] font-black tracking-widest text-white px-2.5 py-1 rounded border border-slate-800">
+                              {useAIVideo ? "GOOGLE VEO 3.1 AI VIDEO" : TRANSLATIONS[lang].videoShowcase.simulationModeActive}
+                            </span>
+                            <span className="bg-amber-500/90 text-slate-950 text-[9px] font-mono font-black tracking-wider px-2 py-0.5 rounded mr-auto shadow-sm">
+                              {videoStyle}
+                            </span>
                           </div>
-                        </div>
 
-                        {/* Generate Button */}
-                        <button
-                          onClick={handleGenerateVideo}
-                          className="px-6 py-2.5 bg-gradient-to-r from-amber-500 to-amber-600 hover:from-amber-600 hover:to-amber-700 text-slate-950 rounded-lg text-xs font-bold tracking-wider uppercase shadow-xl transition-all cursor-pointer flex items-center gap-2 hover:scale-[1.02] active:scale-[0.98]"
-                        >
-                          <Video size={14} />
-                          {TRANSLATIONS[lang].videoShowcase.generateBtn}
-                        </button>
-                      </div>
-                    )}
-
-                    {videoMode === "generating" && (
-                      <div className="p-8 flex flex-col justify-center items-center text-center space-y-6 h-full min-h-[300px] sm:min-h-[380px] bg-slate-950">
-                        <div className="relative flex items-center justify-center">
-                          <div className="absolute w-24 h-24 rounded-full border border-amber-500/20 animate-ping" />
-                          <div className="absolute w-16 h-16 rounded-full border border-amber-500/40 animate-pulse" />
-                          <div className="w-12 h-12 bg-amber-500/10 rounded-full flex items-center justify-center text-amber-500">
-                            <Loader2 size={24} className="animate-spin" />
-                          </div>
-                        </div>
-
-                        <div className="space-y-2 max-w-sm">
-                          <h4 className="text-sm font-bold tracking-wider uppercase text-amber-500 animate-pulse">
-                            {TRANSLATIONS[lang].videoShowcase.renderingTitle}
-                          </h4>
-                          <p className="text-[11px] text-slate-400 font-mono tracking-wide h-4">
-                            {videoProgressText}
-                          </p>
-                        </div>
-
-                        {/* Progress Bar */}
-                        <div className="w-full max-w-xs bg-slate-900 rounded-full h-1.5 overflow-hidden border border-slate-800">
-                          <motion.div
-                            initial={{ width: 0 }}
-                            animate={{ width: `${videoProgressPercent}%` }}
-                            transition={{ duration: 0.3 }}
-                            className="bg-amber-500 h-full rounded-full"
-                          />
-                        </div>
-
-                        <div className="text-[10px] font-mono text-slate-500">
-                          {videoProgressPercent}% Complete
-                        </div>
-                      </div>
-                    )}
-
-                    {videoMode === "completed" && generatedVideoUrl && (
-                      <div className="relative h-[250px] sm:h-[350px] w-full bg-slate-950 flex flex-col justify-center items-center">
-                        <video
-                          src={generatedVideoUrl}
-                          className="w-full h-full object-cover animate-fade-in"
-                          controls
-                          autoPlay
-                          loop
-                          playsInline
-                        />
-                        
-                        {/* Overlay tags and watermark */}
-                        <div className="absolute top-4 left-4 z-20 flex flex-col gap-1.5 pointer-events-none">
-                          <span className="bg-slate-950/80 backdrop-blur-md text-[9px] font-black tracking-widest text-white px-2.5 py-1 rounded border border-slate-800">
-                            {useAIVideo ? "GOOGLE VEO 3.1 AI VIDEO" : TRANSLATIONS[lang].videoShowcase.simulationModeActive}
-                          </span>
-                          <span className="bg-amber-500/90 text-slate-950 text-[9px] font-mono font-black tracking-wider px-2 py-0.5 rounded mr-auto">
-                            {videoStyle}
-                          </span>
-                        </div>
-
-                        {/* Adjust Style Button */}
-                        <button
-                          onClick={() => setVideoMode("none")}
-                          className="absolute bottom-4 right-4 z-20 bg-slate-950/80 hover:bg-slate-900 border border-slate-800 hover:border-slate-700 px-3 py-1.5 rounded-lg text-[10px] text-slate-300 hover:text-white font-bold tracking-wider uppercase cursor-pointer flex items-center gap-1.5 transition-all shadow-xl"
-                        >
-                          <RotateCcw size={11} />
-                          {TRANSLATIONS[lang].videoShowcase.backToSetup}
-                        </button>
-                      </div>
-                    )}
-
-                    {videoMode === "error" && (
-                      <div className="p-8 flex flex-col justify-center items-center text-center space-y-4 h-full bg-slate-950 min-h-[300px]">
-                        <div className="w-12 h-12 bg-red-500/10 rounded-full flex items-center justify-center text-red-500">
-                          <X size={24} />
-                        </div>
-                        <div className="space-y-1 max-w-sm">
-                          <h4 className="text-sm font-bold text-white">Generation Failed</h4>
-                          <p className="text-xs text-slate-400">
-                            We encountered an issue communicating with the Google Veo service.
-                          </p>
-                        </div>
-                        <div className="flex gap-2">
+                          {/* Adjust Style Button */}
                           <button
                             onClick={() => setVideoMode("none")}
-                            className="px-4 py-2 bg-slate-800 hover:bg-slate-700 text-white rounded text-xs font-bold uppercase tracking-wider cursor-pointer"
+                            className="absolute bottom-4 right-4 z-20 bg-slate-950/80 hover:bg-slate-900 border border-slate-800 hover:border-slate-700 px-3 py-1.5 rounded-lg text-[10px] text-slate-300 hover:text-white font-bold tracking-wider uppercase cursor-pointer flex items-center gap-1.5 transition-all shadow-xl backdrop-blur-sm"
                           >
-                            Try Again
+                            <RotateCcw size={11} />
+                            {TRANSLATIONS[lang].videoShowcase.backToSetup}
                           </button>
-                          <button
-                            onClick={() => {
-                              setUseAIVideo(false);
-                              setVideoMode("none");
-                            }}
-                            className="px-4 py-2 bg-amber-500 hover:bg-amber-600 text-slate-950 rounded text-xs font-bold uppercase tracking-wider cursor-pointer"
-                          >
-                            Use Demo Mode
-                          </button>
+                        </div>
+                      )}
+
+                      {videoMode === "error" && (
+                        <div className="p-8 flex flex-col justify-center items-center text-center space-y-4 h-full bg-slate-950 min-h-[300px]">
+                          <div className="w-12 h-12 bg-red-500/10 rounded-full flex items-center justify-center text-red-500">
+                            <X size={24} />
+                          </div>
+                          <div className="space-y-1 max-w-sm">
+                            <h4 className="text-sm font-bold text-white">Generation Failed</h4>
+                            <p className="text-xs text-slate-400">
+                              We encountered an issue communicating with the Google Veo service.
+                            </p>
+                          </div>
+                          <div className="flex gap-2">
+                            <button
+                              onClick={() => setVideoMode("none")}
+                              className="px-4 py-2 bg-slate-800 hover:bg-slate-700 text-white rounded text-xs font-bold uppercase tracking-wider cursor-pointer"
+                            >
+                              Try Again
+                            </button>
+                            <button
+                              onClick={() => {
+                                setUseAIVideo(false);
+                                setVideoMode("none");
+                              }}
+                              className="px-4 py-2 bg-amber-500 hover:bg-amber-600 text-slate-950 rounded text-xs font-bold uppercase tracking-wider cursor-pointer"
+                            >
+                              Use Demo Mode
+                            </button>
+                          </div>
+                        </div>
+                      )}
+                    </div>
+
+                    {/* Quota System Warning Notice Banner */}
+                    {videoErrorReason && (
+                      <div className="bg-amber-950/40 border-t border-b border-amber-500/20 p-4 sm:px-6 flex items-start gap-3 text-amber-200">
+                        <Info size={16} className="text-amber-500 flex-shrink-0 mt-0.5" />
+                        <div className="space-y-1">
+                          <p className="text-[10px] font-black uppercase tracking-wider text-amber-500">
+                            {lang === "en" ? "QUOTA SYSTEM NOTICE" : "PEMBERITAHUAN SISTEM KUOTA"}
+                          </p>
+                          <p className="text-xs text-amber-200/90 leading-relaxed font-medium">
+                            {TRANSLATIONS[lang].videoShowcase.quotaExceededWarning}
+                          </p>
                         </div>
                       </div>
                     )}
@@ -4949,6 +5870,36 @@ export default function App() {
                         LinkedIn
                       </button>
 
+                      {/* Facebook Share Button */}
+                      <button
+                        onClick={() => {
+                          const shareUrl = `${window.location.origin}${window.location.pathname}?project=${selectedProject.id}`;
+                          window.open(`https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(shareUrl)}`, "_blank");
+                        }}
+                        className="flex items-center justify-center gap-2 px-3 py-2 rounded text-xs font-bold uppercase tracking-wider bg-[#1877F2]/10 hover:bg-[#1877F2]/20 text-[#1877F2] dark:text-[#4e99f5] border border-[#1877F2]/20 hover:scale-[1.02] active:scale-95 transition-all cursor-pointer h-9"
+                        title="Share on Facebook"
+                      >
+                        <Facebook size={13} />
+                        Facebook
+                      </button>
+
+                      {/* Twitter Share Button */}
+                      <button
+                        onClick={() => {
+                          const projectTitle = lang === "en" && selectedProject.enTitle ? selectedProject.enTitle : selectedProject.title;
+                          const shareUrl = `${window.location.origin}${window.location.pathname}?project=${selectedProject.id}`;
+                          const text = lang === "en" 
+                            ? `Check out this amazing project: ${projectTitle}`
+                            : `Lihat proyek luar biasa ini: ${projectTitle}`;
+                          window.open(`https://twitter.com/intent/tweet?url=${encodeURIComponent(shareUrl)}&text=${encodeURIComponent(text)}`, "_blank");
+                        }}
+                        className="flex items-center justify-center gap-2 px-3 py-2 rounded text-xs font-bold uppercase tracking-wider bg-sky-500/10 hover:bg-sky-500/20 text-sky-500 border border-sky-500/20 hover:scale-[1.02] active:scale-95 transition-all cursor-pointer h-9"
+                        title="Share on X (Twitter)"
+                      >
+                        <Twitter size={13} />
+                        X / Twitter
+                      </button>
+
                       {/* Email Share Button */}
                       <button
                         onClick={() => {
@@ -4999,6 +5950,93 @@ export default function App() {
                     </div>
                   </div>
 
+                  {/* Dual QR Code Access Section */}
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mt-6" id="project-qr-section">
+                    
+                    {/* QR Code 1: Consultation */}
+                    <motion.div 
+                      initial={{ opacity: 0, y: 12 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      transition={{ duration: 0.4, ease: "easeOut" }}
+                      whileHover={{ scale: 1.025, y: -2 }}
+                      className={`p-4 rounded-xl border flex flex-col sm:flex-row items-center gap-4 transition-all duration-300 cursor-default ${
+                        darkMode 
+                          ? "bg-slate-900/60 border-slate-800 hover:border-slate-700/80 shadow-md shadow-slate-950/20" 
+                          : "bg-white border-slate-200/80 hover:border-slate-300 shadow-sm hover:shadow-md"
+                      }`}
+                    >
+                      <div className="bg-white p-3 rounded-xl shadow-lg shadow-slate-950/5 shrink-0 border border-slate-200 flex items-center justify-center hover:scale-[1.02] transition-transform duration-300">
+                        <QRCodeSVG
+                          value={`https://wa.me/6287797330546?text=${encodeURIComponent(
+                            lang === "en"
+                              ? `Hello FGI, I am interested in inquiring about the project: *${selectedProject.enTitle || selectedProject.title}* in *${selectedProject.enLocation || selectedProject.location}*. Please send me more information.`
+                              : `Halo FGI, saya tertarik menanyakan tentang proyek: *${selectedProject.title}* di *${selectedProject.location}*. Mohon informasi unit / pelaksanaannya lebih lanjut.`
+                          )}`}
+                          size={125}
+                          level="L"
+                          bgColor="#ffffff"
+                          fgColor="#000000"
+                          includeMargin={false}
+                          className="w-[125px] h-[125px] select-none"
+                        />
+                      </div>
+                      <div className="space-y-1.5 text-center sm:text-left flex-1">
+                        <h4 className="font-extrabold text-[10px] uppercase tracking-widest text-emerald-500 flex items-center justify-center sm:justify-start gap-1.5">
+                          <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse"></span>
+                          {lang === "en" ? "Consult on WhatsApp" : "Konsultasi WhatsApp"}
+                        </h4>
+                        <p className={`text-xs font-bold leading-tight ${darkMode ? "text-slate-100" : "text-slate-800"}`}>
+                          {lang === "en" ? "Direct Expert Chat" : "Tanya Spesialis FGI"}
+                        </p>
+                        <p className={`text-[10px] leading-relaxed ${darkMode ? "text-slate-400" : "text-slate-500"}`}>
+                          {lang === "en"
+                            ? "Scan this QR code with your mobile camera to chat directly about this project."
+                            : "Pindai QR code ini menggunakan kamera HP Anda untuk chat langsung mengenai proyek ini."}
+                        </p>
+                      </div>
+                    </motion.div>
+                    
+                    {/* QR Code 2: Share Link */}
+                    <motion.div 
+                      initial={{ opacity: 0, y: 12 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      transition={{ duration: 0.4, ease: "easeOut", delay: 0.1 }}
+                      whileHover={{ scale: 1.025, y: -2 }}
+                      className={`p-4 rounded-xl border flex flex-col sm:flex-row items-center gap-4 transition-all duration-300 cursor-default ${
+                        darkMode 
+                          ? "bg-slate-900/60 border-slate-800 hover:border-slate-700/80 shadow-md shadow-slate-950/20" 
+                          : "bg-white border-slate-200/80 hover:border-slate-300 shadow-sm hover:shadow-md"
+                      }`}
+                    >
+                      <div className="bg-white p-3 rounded-xl shadow-lg shadow-slate-950/5 shrink-0 border border-slate-200 flex items-center justify-center hover:scale-[1.02] transition-transform duration-300">
+                        <QRCodeSVG
+                          value={`${window.location.origin}${window.location.pathname}?project=${selectedProject.id}`}
+                          size={125}
+                          level="L"
+                          bgColor="#ffffff"
+                          fgColor="#000000"
+                          includeMargin={false}
+                          className="w-[125px] h-[125px] select-none"
+                        />
+                      </div>
+                      <div className="space-y-1.5 text-center sm:text-left flex-1">
+                        <h4 className="font-extrabold text-[10px] uppercase tracking-widest text-amber-500 flex items-center justify-center sm:justify-start gap-1.5">
+                          <span className="w-1.5 h-1.5 rounded-full bg-amber-500 animate-pulse"></span>
+                          {lang === "en" ? "Share Link" : "Bagikan Tautan"}
+                        </h4>
+                        <p className={`text-xs font-bold leading-tight ${darkMode ? "text-slate-100" : "text-slate-800"}`}>
+                          {lang === "en" ? "Instant Mobile Link" : "Pindai Link Cepat"}
+                        </p>
+                        <p className={`text-[10px] leading-relaxed ${darkMode ? "text-slate-400" : "text-slate-500"}`}>
+                          {lang === "en"
+                            ? "Scan to open this specific project description instantly on your mobile phone."
+                            : "Pindai untuk membuka deskripsi spesifik proyek ini langsung di smartphone Anda."}
+                        </p>
+                      </div>
+                    </motion.div>
+                    
+                  </div>
+
                   {/* Call to action for this specific project */}
                   <div className="pt-6 border-t border-slate-500/10 flex flex-col sm:flex-row gap-3">
                     <button
@@ -5006,16 +6044,54 @@ export default function App() {
                         const messageText = lang === "en"
                           ? `Hello FGI, I am interested in inquiring about the project: *${selectedProject.enTitle || selectedProject.title}* in *${selectedProject.enLocation || selectedProject.location}*. Please send me more information.`
                           : `Halo FGI, saya tertarik menanyakan tentang proyek: *${selectedProject.title}* di *${selectedProject.location}*. Mohon informasi unit / pelaksanaannya lebih lanjut.`;
-                        window.open(`https://wa.me/6282338094205?text=${encodeURIComponent(messageText)}`, "_blank");
+                        window.open(`https://wa.me/6287797330546?text=${encodeURIComponent(messageText)}`, "_blank");
                       }}
-                      className="bg-emerald-600 hover:bg-emerald-700 text-white font-bold text-xs uppercase tracking-wider px-6 py-3 rounded shadow-sm flex items-center justify-center gap-2 flex-1 cursor-pointer"
+                      className="bg-emerald-600 hover:bg-emerald-700 text-white font-bold text-xs uppercase tracking-wider px-5 py-3 rounded shadow-sm flex items-center justify-center gap-2 flex-1 cursor-pointer"
                     >
                       {TRANSLATIONS[lang].modal.askCta} <ExternalLink size={14} />
                     </button>
+
+                    <button
+                      disabled={isPrintingBrochure}
+                      onClick={async () => {
+                        if (!selectedProject) return;
+                        setIsPrintingBrochure(true);
+                        try {
+                          await generateProjectBrochure(selectedProject, lang);
+                        } catch (err) {
+                          console.error("Error generating brochure: ", err);
+                        } finally {
+                          setIsPrintingBrochure(false);
+                        }
+                      }}
+                      className={`font-bold text-xs uppercase tracking-wider px-5 py-3 rounded shadow-sm flex items-center justify-center gap-2 cursor-pointer transition-all border ${
+                        isPrintingBrochure
+                          ? "opacity-60 cursor-not-allowed"
+                          : ""
+                      } ${
+                        darkMode
+                          ? "bg-amber-500/10 hover:bg-amber-500 text-amber-400 hover:text-slate-950 border-amber-500/20"
+                          : "bg-amber-500 hover:bg-amber-600 text-slate-950 border-amber-600/10"
+                      }`}
+                      id="print-brochure-btn"
+                    >
+                      {isPrintingBrochure ? (
+                        <>
+                          <Loader2 size={14} className="animate-spin" />
+                          <span>{TRANSLATIONS[lang].modal.printingBrochure}</span>
+                        </>
+                      ) : (
+                        <>
+                          <Printer size={14} />
+                          <span>{TRANSLATIONS[lang].modal.printBrochure}</span>
+                        </>
+                      )}
+                    </button>
+
                     <button
                       onClick={() => setSelectedProject(null)}
-                      className={`text-xs font-bold uppercase tracking-wider px-6 py-3 rounded cursor-pointer ${
-                        darkMode ? "bg-slate-800 hover:bg-slate-700" : "bg-slate-100 hover:bg-slate-200"
+                      className={`text-xs font-bold uppercase tracking-wider px-5 py-3 rounded cursor-pointer ${
+                        darkMode ? "bg-slate-800 hover:bg-slate-700 text-slate-300" : "bg-slate-100 hover:bg-slate-200 text-slate-700"
                       }`}
                     >
                       {TRANSLATIONS[lang].modal.close}
@@ -5137,7 +6213,7 @@ export default function App() {
                     <section className="space-y-2">
                       <h4 className="font-bold uppercase tracking-wider text-xs text-slate-300">4. Kontak & Konsultasi Hak</h4>
                       <p>
-                        Anda memiliki hak penuh untuk menanyakan data pribadi apa saja yang kami simpan, memperbaruinya, atau meminta penghapusan total informasi Anda dari basis data kami. Hubungi layanan pelanggan resmi FGI via nomor Hotline kami di <strong>0823 3809 4205</strong> untuk bantuan lebih lanjut.
+                        Anda memiliki hak penuh untuk menanyakan data pribadi apa saja yang kami simpan, memperbaruinya, atau meminta penghapusan total informasi Anda dari basis data kami. Hubungi layanan pelanggan resmi FGI via nomor Hotline kami di <strong>0877 9733 0546</strong> untuk bantuan lebih lanjut.
                       </p>
                     </section>
                   </>
@@ -5196,7 +6272,7 @@ export default function App() {
                     <section className="space-y-2">
                       <h4 className="font-bold uppercase tracking-wider text-xs text-slate-300">4. Contact & Your Rights</h4>
                       <p>
-                        You maintain full rights to inquire about what personal information we hold, update it, or request complete deletion of your records from our servers. Contact the official FGI customer helpline directly at <strong>0823 3809 4205</strong> for quick assistance.
+                        You maintain full rights to inquire about what personal information we hold, update it, or request complete deletion of your records from our servers. Contact the official FGI customer helpline directly at <strong>0877 9733 0546</strong> for quick assistance.
                       </p>
                     </section>
                   </>
