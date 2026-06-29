@@ -59,6 +59,7 @@ import {
 } from "lucide-react";
 
 import { generateProjectBrochure } from "./utils/brochure";
+import { downloadCompanyProfilePDF, downloadJVAgreementDraftPDF, downloadOpportunityProspectusPDF } from "./utils/pdfGenerator";
 import { InvestorD3Chart } from "./components/InvestorD3Chart";
 import { QRCodeSVG } from "qrcode.react";
 
@@ -3758,7 +3759,13 @@ export default function App() {
                   ].map((doc, docIdx) => (
                     <button
                       key={docIdx}
-                      onClick={() => alert(lang === "en" ? "Draft document downloading simulated..." : "Simulasi dokumen terunduh secara aman...")}
+                      onClick={() => {
+                        if (docIdx === 0) {
+                          downloadCompanyProfilePDF(lang);
+                        } else {
+                          downloadJVAgreementDraftPDF(lang);
+                        }
+                      }}
                       className={`w-full flex items-center justify-between p-3 rounded-lg border text-left transition-all hover:bg-amber-500/5 cursor-pointer ${
                         darkMode ? "bg-[#0B0F19] border-slate-850 hover:border-amber-500/30 text-slate-300" : "bg-slate-50 border-slate-100 hover:border-amber-500/30 text-slate-700"
                       }`}
@@ -3882,7 +3889,7 @@ export default function App() {
                   {/* CTAs */}
                   <div className={`px-5 py-4 flex gap-2 border-t ${darkMode ? "border-slate-850 bg-[#0B0F19]/40" : "border-slate-100 bg-slate-50/50"}`}>
                     <button
-                      onClick={() => alert(lang === "en" ? "Simulated prospectus file downloaded successfully." : "Simulasi dokumen prospektus terunduh.")}
+                      onClick={() => downloadOpportunityProspectusPDF(opp, lang)}
                       className={`flex-1 py-2 rounded text-[10px] font-bold uppercase tracking-wider text-center border cursor-pointer transition-colors ${
                         darkMode ? "border-slate-800 hover:bg-slate-800 text-slate-300" : "border-slate-200 hover:bg-slate-100 text-slate-600"
                       }`}
@@ -5331,6 +5338,7 @@ export default function App() {
             
             {/* Modal Box */}
             <motion.div
+              id="project-modal"
               initial={{ opacity: 0, scale: 0.98, y: 60 }}
               animate={{ opacity: 1, scale: 1, y: 0 }}
               exit={{ opacity: 0, scale: 0.98, y: 40 }}
@@ -6052,40 +6060,18 @@ export default function App() {
                     </button>
 
                     <button
-                      disabled={isPrintingBrochure}
-                      onClick={async () => {
-                        if (!selectedProject) return;
-                        setIsPrintingBrochure(true);
-                        try {
-                          await generateProjectBrochure(selectedProject, lang);
-                        } catch (err) {
-                          console.error("Error generating brochure: ", err);
-                        } finally {
-                          setIsPrintingBrochure(false);
-                        }
+                      onClick={() => {
+                        window.print();
                       }}
                       className={`font-bold text-xs uppercase tracking-wider px-5 py-3 rounded shadow-sm flex items-center justify-center gap-2 cursor-pointer transition-all border ${
-                        isPrintingBrochure
-                          ? "opacity-60 cursor-not-allowed"
-                          : ""
-                      } ${
                         darkMode
                           ? "bg-amber-500/10 hover:bg-amber-500 text-amber-400 hover:text-slate-950 border-amber-500/20"
                           : "bg-amber-500 hover:bg-amber-600 text-slate-950 border-amber-600/10"
                       }`}
                       id="print-brochure-btn"
                     >
-                      {isPrintingBrochure ? (
-                        <>
-                          <Loader2 size={14} className="animate-spin" />
-                          <span>{TRANSLATIONS[lang].modal.printingBrochure}</span>
-                        </>
-                      ) : (
-                        <>
-                          <Printer size={14} />
-                          <span>{TRANSLATIONS[lang].modal.printBrochure}</span>
-                        </>
-                      )}
+                      <Printer size={14} />
+                      <span>{TRANSLATIONS[lang].modal.printBrochure}</span>
                     </button>
 
                     <button

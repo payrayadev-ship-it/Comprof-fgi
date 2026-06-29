@@ -58,3 +58,162 @@ body {
   background: linear-gradient(135deg, #090D16 0%, #111827 50%, #1e293b 100%);
 }
 
+/* Print Media Query for clean, simplified project brochure printing */
+@media print {
+  /* Hide all root nodes except the modal container */
+  body > *:not(#project-detail-modal),
+  #root > *:not(#project-detail-modal) {
+    display: none !important;
+  }
+
+  /* Reset body and html settings for standard single/multi page rendering */
+  html, body {
+    background: white !important;
+    color: #0f172a !important;
+    height: auto !important;
+    min-height: 0 !important;
+    overflow: visible !important;
+    padding: 0 !important;
+    margin: 0 !important;
+  }
+
+  /* Ensure the main modal container takes full viewport and allows printing flow */
+  #project-detail-modal {
+    position: absolute !important;
+    left: 0 !important;
+    top: 0 !important;
+    width: 100% !important;
+    height: auto !important;
+    max-height: none !important;
+    overflow: visible !important;
+    display: block !important;
+    background: white !important;
+    padding: 0 !important;
+    z-index: auto !important;
+  }
+
+  /* Hide modal backdrop */
+  #project-detail-modal > div:first-child {
+    display: none !important;
+  }
+
+  /* Format the modal box as a clean, white-background sheet */
+  #project-modal {
+    position: relative !important;
+    left: 0 !important;
+    top: 0 !important;
+    transform: none !important;
+    width: 100% !important;
+    max-width: 100% !important;
+    height: auto !important;
+    max-height: none !important;
+    overflow: visible !important;
+    border: none !important;
+    box-shadow: none !important;
+    background: white !important;
+    color: #0f172a !important;
+    display: block !important;
+  }
+
+  /* Make the inner content container fill naturally */
+  #project-modal .overflow-y-auto {
+    overflow: visible !important;
+    max-height: none !important;
+    height: auto !important;
+  }
+
+  /* Hide non-essential UI: Close button, Tab selectors, scrollable thumbnails row, and CTAs footer */
+  #close-modal-btn,
+  #veo-video-panel,
+  .border-b.border-slate-500\/10, /* Tab selector */
+  .scrollbar-thin, /* Gallery thumbnails row */
+  #project-sharing-section, /* Sharing panel */
+  .border-t.flex.gap-2, /* Modal CTA buttons */
+  #project-modal button {
+    display: none !important;
+  }
+
+  /* Make sure titles are styled elegantly for print */
+  #project-modal h3 {
+    color: #0f172a !important;
+    font-size: 24pt !important;
+    font-weight: 800 !important;
+    line-height: 1.2 !important;
+    margin-bottom: 8pt !important;
+  }
+
+  /* Section headers in elegant corporate blue */
+  #project-modal h4 {
+    color: #1e40af !important; /* Brand Blue */
+    font-size: 14pt !important;
+    font-weight: 700 !important;
+    border-bottom: 2px solid #e2e8f0 !important;
+    padding-bottom: 4pt !important;
+    margin-top: 16pt !important;
+    margin-bottom: 8pt !important;
+    page-break-after: avoid;
+  }
+
+  #project-modal h5 {
+    color: #64748b !important; /* Slate gray labels */
+    font-size: 9pt !important;
+    font-weight: 700 !important;
+    text-transform: uppercase !important;
+    letter-spacing: 0.05em !important;
+  }
+
+  /* Format the specifications grid block beautifully */
+  #project-modal .grid {
+    background: #f8fafc !important;
+    border: 1px solid #e2e8f0 !important;
+    border-radius: 6px !important;
+    color: #0f172a !important;
+    padding: 12pt !important;
+    page-break-inside: avoid;
+  }
+
+  #project-modal .grid p {
+    color: #0f172a !important;
+    font-size: 11pt !important;
+  }
+
+  /* Gallery Image formatting */
+  #project-modal img {
+    max-height: 380px !important;
+    width: 100% !important;
+    object-fit: cover !important;
+    border-radius: 8px !important;
+    margin-bottom: 15pt !important;
+    page-break-inside: avoid;
+  }
+
+  /* General description paragraph */
+  #project-modal p {
+    color: #334155 !important;
+    font-size: 11pt !important;
+    line-height: 1.6 !important;
+  }
+
+  /* Key highlights bullet points */
+  #project-modal .grid-cols-1 {
+    display: block !important;
+  }
+
+  #project-modal .flex.items-center.gap-2 {
+    display: flex !important;
+    margin-bottom: 6pt !important;
+    page-break-inside: avoid;
+  }
+
+  #project-modal .flex.items-center.gap-2 span.rounded-full {
+    background-color: #d4af37 !important; /* Golden bullets */
+    -webkit-print-color-adjust: exact;
+    print-color-adjust: exact;
+  }
+
+  #project-modal .flex.items-center.gap-2 span.font-medium {
+    color: #334155 !important;
+    font-size: 10.5pt !important;
+  }
+}
+
