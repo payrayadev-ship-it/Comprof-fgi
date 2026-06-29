@@ -74,8 +74,8 @@ const drawFooter = (doc: jsPDF, pageNum: number, totalPages: number, lang: "id" 
   doc.setTextColor(148, 163, 184); // slate-400
 
   const footerText = lang === "en"
-    ? "FGI Investor Relations | info@foresyndoglobal.com | +62 877-9733-0546"
-    : "Investor Relations FGI | info@foresyndoglobal.com | +62 877-9733-0546";
+    ? "FGI Investor Relations | cs.fgi@zohomail.com | +62 877-9733-0546"
+    : "Investor Relations FGI | cs.fgi@zohomail.com | +62 877-9733-0546";
   doc.text(footerText, 15, footerY);
 
   const pageStr = lang === "en" ? `Page ${pageNum} of ${totalPages}` : `Halaman ${pageNum} dari ${totalPages}`;

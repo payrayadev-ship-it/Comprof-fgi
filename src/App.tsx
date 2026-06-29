@@ -5038,8 +5038,8 @@ export default function App() {
                     </div>
                     <div>
                       <h4 className="text-[10px] font-bold uppercase text-slate-400 tracking-wider">{TRANSLATIONS[lang].contact.officeEmailLabel}</h4>
-                      <a href="mailto:info@foresyndoglobalindonesia.my.id" className="text-xs font-semibold hover:text-amber-500 hover:underline mt-1 block">
-                        info@foresyndoglobalindonesia.my.id
+                      <a href="mailto:cs.fgi@zohomail.com" className="text-xs font-semibold hover:text-amber-500 hover:underline mt-1 block">
+                        cs.fgi@zohomail.com
                       </a>
                     </div>
                   </div>
@@ -5168,8 +5168,8 @@ export default function App() {
                 <p className="flex items-center gap-2">
                   <Mail size={12} className="text-amber-500" />
                   <span className="text-slate-400">{TRANSLATIONS[lang].contact.officeEmailLabel}:</span> 
-                  <a href="mailto:info@foresyndoglobalindonesia.my.id" className="hover:text-amber-500 hover:underline font-medium">
-                    info@foresyndoglobalindonesia.my.id
+                  <a href="mailto:cs.fgi@zohomail.com" className="hover:text-amber-500 hover:underline font-medium">
+                    cs.fgi@zohomail.com
                   </a>
                 </p>
               </div>
