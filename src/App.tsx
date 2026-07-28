@@ -299,10 +299,12 @@ const PROJECTS_DATA: Project[] = [
     category: "Perumahan",
     image: "/assets/images/foresyndo_residence_two_1782634018176.jpg",
     images: [
-      "/assets/images/foresyndo_residence_two_1782634018176.jpg",
-      "https://images.unsplash.com/photo-1566073771259-6a8506099945?q=80&w=800&auto=format&fit=crop",
-      "https://images.unsplash.com/photo-1582719478250-c89cae4dc85b?q=80&w=800&auto=format&fit=crop",
-      "https://images.unsplash.com/photo-1551882547-ff40c63fe5fa?q=80&w=800&auto=format&fit=crop"
+      "/assets/images/foresyndo-2.png",
+      "/assets/images/foresyndo-22.png",
+      "/assets/images/foresyndo-23.png",
+      "/assets/images/foresyndo-24.png",
+      "/assets/images/foresyndo-25.png",
+      "/assets/images/foresyndo-26.png",
     ],
     location: "Jatitujuh, Kabupaten Majalengka, Jawa Barat",
     enLocation: "Jatitujuh, Majalengka Regency, West Java",
